@@ -14,6 +14,8 @@ import UserNewForm from './sections/@dashboard/user/UserNewForm';
 import Models from './pages/Models';
 import Constants from './pages/Constants';
 import Neighborhoods from './pages/Neighborhoods';
+import UpdateValues from './pages/UpdateValues';
+ 
 
 // ----------------------------------------------------------------------
 
@@ -26,10 +28,10 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'Neighborhoods', element: <Neighborhoods /> },
         { path: 'models', element: <Models /> },
+ 
         { path: 'constants', element: <Constants /> },
-        { path: 'user', element: <UserNewForm /> },
-        { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'user', element: <UserNewForm /> },        
+        { path: 'updateValues', element: <UpdateValues /> }        
       ]
     },
     {

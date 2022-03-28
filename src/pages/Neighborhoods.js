@@ -2,8 +2,10 @@ import { useFormik } from 'formik';
 import { useState, useEffect} from 'react';
 import { Icon } from '@iconify/react';
 // material
+import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Container, Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper,  ListItemText,  List, ListItem,ListItemAvatar, TextField } from '@mui/material';
+import { Container, Accordion, AccordionSummary, Button, Typography, Grid,
+   Dialog, TextField, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 // components
 import Page from '../components/Page';
 import useGetModels from 'src/hooks/useGetModels';
@@ -11,19 +13,39 @@ import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
 import OutputSummary from './Charts/OutputSummary';
 import firebase from './../firebase'
 import { Block } from '../components/Block';
+import Charts from './Charts/Charts';
+import AddNeighborhoods from './DialogForms/AddNeighborhoods';
+import AddPrecinct from './DialogForms/AddPrecinct';
 
 function Neighborhoods() {
+
+  const [open, setOpen] = useState(false);
+  const [openPrecinct, setPrecinctOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   let docs = useGetNeighbourhood().docs
 const [precinctData, setprecinctData] = useState([])
 const [precinctList, setprecinctList] = useState([])
 const [blockList, setblockList] = useState([])
-  const [selectedModel, setselectedModel] = useState(null)
+
   const [controlled, setControlled] = useState(false);
   const [precinctcontrolled, setprecinctControlled] = useState(false);
   const [blockcontrolled, setBlockControlled] = useState(false);
 
+  const [blockId, setblockId] = useState(null)
+  const [neighbourhood, setNeighbourhood] = useState(null)
+  const [precinct, setPrecinct] = useState(null)
+
   const handleChangeControlled = (panel) => (event, isExpanded) => {
+    setblockId(null)
+    setNeighbourhood(panel)
       getPrecinctData(panel.id)
       getListOfPrecints(panel.id)
     setControlled(isExpanded ? panel.id : false);
@@ -31,13 +53,14 @@ const [blockList, setblockList] = useState([])
 
   const handlePrecinctChangeControlled = (panel) => (event, isExpanded) => {
     //  getPrecinctData(panel.id)
-    console.log(panel)
+    setblockId(null)
        getBlocks(panel.id)
    setprecinctControlled(isExpanded ? panel.id : false);
   };
 
   const handleBlockChangeControlled = (panel) => (event, isExpanded) => {
- 
+    setblockId(null)
+    setblockId(panel)
     //   getBlocks(panel.id)
        setBlockControlled(isExpanded ? panel.id : false);
   };
@@ -95,7 +118,10 @@ const getBlocks = (id) =>{
       Neighborhoods
       </Typography>
       <Grid container spacing={1}>
-      <Grid item xs={3} md={3}>
+      <Grid item xs={2} md={2}>
+      <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
+    New Neighborhoods
+      </Button><br/><br/>
       {/* get list of neightbourhoods */}
            {docs.map((item, index) => (
             <Accordion
@@ -104,7 +130,7 @@ const getBlocks = (id) =>{
               onChange={handleChangeControlled(item)}
             >
               <AccordionSummary >
-                <Typography variant="h6" sx={{  flexShrink: 0 }}>
+                <Typography variant="h6" sx={{  }}>
                   {item.neighbourhood}
                 </Typography> 
               </AccordionSummary>
@@ -140,20 +166,39 @@ const getBlocks = (id) =>{
             </Accordion>
           ))}
         </Grid>
+   
+    <Grid container xs={10} gap={3} md={10}>  
+  
+                {/* add a new neighborhood */}
+      <Dialog open={open} onClose={()=>setOpen(false)}>
+      <AddNeighborhoods data={handleClose}/>
+      </Dialog>
+        
+                {/* add a new precinct */}
+      <Dialog open={openPrecinct} onClose={()=>setPrecinctOpen(false)}>
+      <AddPrecinct data={()=>setPrecinctOpen(false)} item={neighbourhood}/>
+      </Dialog>
 
-    {selectedModel &&   
-    <Grid item xs={5} md={5}>      
 
-      {/* <Typography variant="subtitle1" sx={{ mb: 5 }}>
-          {selectedModel && selectedModel.neighbourhood}
-                 </Typography> 
-              {precinctData &&  <OutputSummary data={precinctData}/>} */}
-       </Grid>
-    }
-    <Grid item xs={5} md={5}>      
-      <Typography variant="subtitle1" sx={{ mb: 5 }}>
-        Charts
-                 </Typography> 
+      {neighbourhood && <Button
+              variant="contained"
+               onClick={()=>setPrecinctOpen(true)}
+            >
+              Add Precinct
+            </Button>}
+
+    {blockId && <Button
+              variant="contained"
+              component={RouterLink}
+              to={"/dashboard/updateValues"} 
+              state={{data:blockId}}
+            >
+              Update Values
+            </Button>}
+
+            
+            <br/><br/>    
+      <Charts data={precinctData} />
        </Grid>
       </Grid>
 

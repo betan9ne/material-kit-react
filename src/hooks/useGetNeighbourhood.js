@@ -6,7 +6,7 @@ function useGetNeighbourhood() {
     const [docs, setdocs] = useState([])
 
     useEffect(() => {
-         firebase.firestore().collection("neighbourhood").where("user_id", "==", "SotfRAniLCTensoifIlj").where("status","==", true).get().then((doc)=>{
+         firebase.firestore().collection("neighbourhood").where("user_id", "==", "SotfRAniLCTensoifIlj").where("status","==", true).onSnapshot((doc)=>{
             const neighbourhood = [];
             doc.docs.forEach(document => {
               const nb = {

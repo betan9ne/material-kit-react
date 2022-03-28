@@ -28,7 +28,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const OutputSummary =({data}) => {
+const CarbonEmissionsBaseline =({data}) => {
     const theme = useTheme();
     const [graphSummaries, setgraphSummaries] = useState([])
     const [baselineEmissions, setbaselineEmissions] = useState([])
@@ -97,33 +97,7 @@ const OutputSummary =({data}) => {
           setgraphSummaries(scopeData)
        
       }     
-
-      const chartOptions = merge(BaseOptionChart(), {
-        colors: [
-          theme.palette.primary.main,
-          theme.palette.info.main,
-          theme.palette.warning.main,
-          theme.palette.error.main
-        ],
-        labels: graphSummaries.map((a)=>(
-            a.label
-          )),
-        stroke: { colors: [theme.palette.background.paper] },
-        legend: { floating: true, horizontalAlign: 'center' },
-        dataLabels: { enabled: true, dropShadow: { enabled: false } },
-        tooltip: {
-          fillSeriesColor: false,
-          y: {
-            formatter: (seriesName) => fNumber(seriesName),
-            title: {
-              formatter: (seriesName) => `${seriesName}`
-            }
-          }
-        },
-        plotOptions: {
-          pie: { donut: { labels: { show: false } } }
-        }
-      });
+ 
    
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
@@ -155,18 +129,17 @@ const OutputSummary =({data}) => {
   return (
     <>
      <Card>
-      <CardHeader title="GHG Emissions - Baseline" />
+      <CardHeader title="Carbon Emission Baseline" />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={graphSummaries.map((a)=>(
+        <ReactApexChart type="pie" series={baselineEmissions.map((a)=>(
               a.data/1000
-            ))} options={chartOptions} height={280} />
+            ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>
-    </Card>
-   
+    </Card>    
 </>
             
          
   )
 }
 
-export default OutputSummary
+export default CarbonEmissionsBaseline
