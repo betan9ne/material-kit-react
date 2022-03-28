@@ -1,7 +1,7 @@
 // material
 import { Box, Grid, Container, Typography } from '@mui/material';
 // components
-import Page from '../components/Page';
+import Page from '../../components/Page';
 import {
   AppTasks,
   AppNewUsers,
@@ -15,11 +15,11 @@ import {
   AppTrafficBySite,
   AppCurrentSubject,
   AppConversionRates
-} from '../sections/@dashboard/app';
+} from '../../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardApp() {
+export default function Charts() {
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">

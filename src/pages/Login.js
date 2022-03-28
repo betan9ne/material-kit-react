@@ -59,12 +59,10 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to Netzero
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
-          </Stack>
-          <AuthSocial />
-
+          </Stack>        
           <LoginForm />
 
           <Typography

@@ -6,7 +6,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "firebase.js"  ],
   "exclude": [
     "node_modules"
   ]
