@@ -64,7 +64,7 @@ const [user, setuser] = useState(null)
 
   const logout = () =>{
     firebase.auth().signOut().then(()=>{
-      navigate('/');
+     console.log("logged out")
     })
   }
   
@@ -101,10 +101,10 @@ const [user, setuser] = useState(null)
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {user[0].username}
+            {user && user[0].firstName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user[0].email}
+            {user && user[0].email}
           </Typography>
         </Box>
 

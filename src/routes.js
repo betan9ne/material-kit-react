@@ -24,10 +24,10 @@ export default function Router() {
   
   return useRoutes([
     {
-      path: '/dashboard',
+      path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+        { path: '/', element: <DashboardApp /> },
         { path: 'Neighborhoods', element: <Neighborhoods /> },
         { path: 'models', element: <Models /> },
  
@@ -36,17 +36,16 @@ export default function Router() {
         { path: 'updateValues', element: <UpdateValues /> }        
       ]
     },
-    {
-      path: '/',
-      element: <LogoOnlyLayout />,
-      children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
-        { path: 'login', element: <Login /> },
-        { path: 'register', element: <Register /> },
-        { path: '404', element: <NotFound /> },
-        { path: '*', element: <Navigate to="/404" /> }
-      ]
-    },
+    // {
+    //   path: '/',
+    //   element: <LogoOnlyLayout />,
+    //   children: [
+    //     { path: '/', element: <Navigate to="/dashboard/app" /> },
+    //     { path: 'login', element: <Login /> },
+    //     { path: '404', element: <NotFound /> },
+    //     { path: '*', element: <Navigate to="/404" /> }
+    //   ]
+    // },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }

@@ -7,6 +7,7 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import firebase from './../../../firebase';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +34,29 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+        firebase.auth().createUserWithEmailAndPassword(formik.values.email, formik.values.password)
+        .then((userCredential) => {
+          console.log(userCredential)
+          var user = userCredential.user;
+          firebase.firestore().collection("users").doc(user.id).set(
+            formik.values
+          ).then(()=>{
+            navigate('/', { replace: true });
+            console.log("added to database")
+          })
+
+          // Signed in 
+      
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage)
+          // ..
+        });
+      console.log(formik.values)
+    //  navigate('/dashboard', { replace: true });
     }
   });
 

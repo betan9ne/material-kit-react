@@ -41,7 +41,7 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard/app', { replace: true });
+      navigate('/', { replace: true });
     }
   });
 
@@ -101,6 +101,9 @@ const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
             label="Remember me"
           /> */}
 
+          <Link component={RouterLink} variant="subtitle2" to="/register" underline="hover">
+            Create an Account
+          </Link>
           <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
             Forgot password?
           </Link>
@@ -116,6 +119,7 @@ const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
         >
           Login
         </LoadingButton>
+        
         </>
     //   </Form>
     // </FormikProvider>

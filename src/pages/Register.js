@@ -40,20 +40,17 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   return (
-    <RootStyle title="Register | Minimal-UI">
+    <RootStyle title="Register">
       <AuthLayout>
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Login
-        </Link>
+      
       </AuthLayout>
 
-      <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
+      {/* <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Manage the job more effectively with Minimal
+           
         </Typography>
-        <img alt="register" src="/static/illustrations/illustration_register.png" />
-      </SectionStyle>
+     
+      </SectionStyle> */}
 
       <Container>
         <ContentStyle>
@@ -62,11 +59,9 @@ export default function Register() {
               Get started absolutely free.
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
+           
             </Typography>
           </Box>
-
-          <AuthSocial />
 
           <RegisterForm />
 
@@ -87,11 +82,11 @@ export default function Register() {
             sx={{
               mt: 3,
               textAlign: 'center',
-              display: { sm: 'none' }
+              display: { }
             }}
           >
             Already have an account?&nbsp;
-            <Link underline="hover" to="/login" component={RouterLink}>
+            <Link underline="hover" to="/" component={RouterLink}>
               Login
             </Link>
           </Typography>

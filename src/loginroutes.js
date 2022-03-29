@@ -29,9 +29,8 @@ export default function LoginRoutes() {
         element: <LogoOnlyLayout />,
         children: [
           { path: '/', element:<Login /> },  
-          { path: '404', element: <NotFound /> },
-          { path: '*', element: <Navigate to="/404" /> }
-        ]
+          { path: '/register', element:<Register /> },  
+           ]
       }
     ]);
  
