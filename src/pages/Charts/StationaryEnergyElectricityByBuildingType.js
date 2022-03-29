@@ -241,11 +241,6 @@ setAppliances(appliances)
       <CardHeader title="Stationery Energy (Electricity) By Building Type" />
       <ChartWrapperStyle dir="ltr">
       <ReactApexChart options={chartOptions} series={state.series} type="bar" height={300} />
-
-    
-        {/* <ReactApexChart type="pie" series={baselineEmissions.map((a)=>(
-              a.data/1000
-            ))} options={chartOptions2} height={280} /> */}
       </ChartWrapperStyle>
     </Card>    
 </>
