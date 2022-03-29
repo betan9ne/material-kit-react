@@ -9,7 +9,6 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from '../../firebase';
-
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
@@ -29,15 +28,13 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const TransportEmissions =({nb}) => {
+const StationaryEnergyElectricity =({nb}) => {
     const theme = useTheme();
- 
     let asd=[]
     const [_data, setdata_] = useState([])
     const [labels, setlabels] = useState([])
-
     useEffect(() => {
-      viewSiteInfo(nb, "Transport")
+      viewSiteInfo(nb, "Buildings")
     }, [nb])
 
     const viewSiteInfo = (nb, tag) =>{
@@ -90,6 +87,7 @@ const TransportEmissions =({nb}) => {
       setlabels(label)
   }
   
+ 
    
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
@@ -117,11 +115,11 @@ const TransportEmissions =({nb}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-   console.log(_data, labels)
+   
   return (
     <>
      <Card>
-      <CardHeader title="Transport Emission" />
+      <CardHeader title="Stationary Energy (Electricity)" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={_data.map((a)=>(
               a
@@ -134,4 +132,4 @@ const TransportEmissions =({nb}) => {
   )
 }
 
-export default TransportEmissions
+export default StationaryEnergyElectricity

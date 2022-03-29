@@ -38,12 +38,17 @@ export default function RegisterForm() {
         .then((userCredential) => {
           console.log(userCredential)
           var user = userCredential.user;
-          firebase.firestore().collection("users").doc(user.id).set(
-            formik.values
+          firebase.firestore().collection("users").doc(user.uid).set(
+            {
+              firstName:  formik.values.firstName,
+              lastName:  formik.values.lastName,
+              email:  formik.values.email,
+            }
+           
           ).then(()=>{
-            navigate('/', { replace: true });
+          //  navigate('/', { replace: true });
             console.log("added to database")
-          })
+          }).catch(e=> console.log(e))
 
           // Signed in 
       
@@ -53,6 +58,7 @@ export default function RegisterForm() {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorMessage)
+          
           // ..
         });
       console.log(formik.values)

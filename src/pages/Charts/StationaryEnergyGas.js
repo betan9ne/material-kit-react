@@ -9,7 +9,6 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from '../../firebase';
-
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
@@ -29,15 +28,14 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const TransportEmissions =({nb}) => {
+const StationaryEnergyGas =({nb}) => {
     const theme = useTheme();
- 
     let asd=[]
     const [_data, setdata_] = useState([])
     const [labels, setlabels] = useState([])
-
+    const [gasData, setgasData] = useState()
     useEffect(() => {
-      viewSiteInfo(nb, "Transport")
+      viewSiteInfo(nb, "Gas")
     }, [nb])
 
     const viewSiteInfo = (nb, tag) =>{
@@ -60,37 +58,41 @@ const TransportEmissions =({nb}) => {
                 buildings.push(val)
               }
             })
-             //  getGasData(neighbourhood)
-             
-           let group = buildings.reduce((r, a) => {
-            r[a.model] = [...r[a.model] || [], a];
-         return r;
-        }, {});           
-        
-       asd = Object.entries(group)
-
-           getDataandLabels(asd)
+              getGasData(neighbourhood)
+                       
                       })
     }
 
-    const getDataandLabels = (_data) =>{
-      let label = []
-      let data = []
-      
-      _data.forEach(e=>{
-        label.push(e[0])
+    const getGasData = (data)=>{
+   
+
+      let total_water_heating = 0
+      let total_gas_cooking = 0
+    
+        data.filter((val)=>{
+          if(val.gas_water_heating){
+            total_water_heating  = total_water_heating + val.gas_water_heating
+          }
+          if(val.gas_cooking){
+            total_gas_cooking = total_gas_cooking + val.gas_cooking
+          }
+        })
+    
+        let asd = [
+          {
+            label : "Water Heating",
+            data : total_water_heating
+          },
+          {
+            label :"Cooking",
+            data : total_gas_cooking
+          }
+        ]
          
-        let asd = e[1].reduce( function(a, b){
-          return a + parseInt(b['scopeValue']);
-      }, 0);
-      data.push(asd) 
-      })
-   
-      setdata_(data)            
-      setlabels(label)
-  }
+     setgasData(asd)
+     }
+
   
-   
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
           theme.palette.primary.main,
@@ -98,8 +100,8 @@ const TransportEmissions =({nb}) => {
           theme.palette.warning.main,
           theme.palette.error.main
         ],
-        labels: labels.map((a)=>(
-            a
+        labels: gasData && gasData.map((a)=>(
+            a.label
           )),
         stroke: { colors: [theme.palette.background.paper] },
         legend: { floating: true, horizontalAlign: 'center' },
@@ -117,21 +119,20 @@ const TransportEmissions =({nb}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-   console.log(_data, labels)
   return (
     <>
-     <Card>
-      <CardHeader title="Transport Emission" />
+    {gasData &&  <Card>
+      <CardHeader title="Stationary Energy (Gas)" />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={_data.map((a)=>(
-              a
+        <ReactApexChart type="pie" series={gasData.map((a)=>(
+              a.data
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>
-    </Card>    
+    </Card>    }
 </>
             
          
   )
 }
 
-export default TransportEmissions
+export default StationaryEnergyGas

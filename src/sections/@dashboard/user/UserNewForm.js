@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, TextField, Typography, FormHelperText, FormControlLabel } from '@mui/material';
+import { Box, Card, Grid, Stack, Button, CardHeader, Tooltip, TextField, Typography, FormHelperText, FormControlLabel } from '@mui/material';
 // utils
 import { fData } from '../../../utils/formatNumber';
  
@@ -45,6 +45,8 @@ export default function UserNewForm({ isEdit, currentUser }) {
   });
 
   const formik = useFormik({
+
+
     enableReinitialize: true,
     initialValues: {
       name: currentUser?.name || '',
@@ -97,6 +99,42 @@ export default function UserNewForm({ isEdit, currentUser }) {
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
                  <Grid item xs={6} md={6}>
+                 <Card>
+      <CardHeader
+        title="Users"
+        subheader={`You have ${users.length} contacts`}
+        // action={
+        //   <Tooltip title="Add Contact">
+        //     <MIconButton color="primary" size="large">
+        //       <Icon icon={plusFill} width={20} height={20} />
+        //     </MIconButton>
+        //   </Tooltip>
+        // }
+      />
+      <Stack spacing={3} sx={{ p: 3 }}>
+        {users.map((contact) => (
+          <Stack direction="row" alignItems="center" key={contact.id}>
+            
+            <Box sx={{ flexGrow: 1, ml: 2, minWidth: 100 }}>
+              <Typography variant="subtitle2" sx={{ mb: 0.5 }} noWrap>
+                {contact.firstName}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                {contact.email}
+              </Typography>
+            </Box>
+
+            {/* <Tooltip title="Quick Transfer">
+              <MIconButton size="small">
+                <Icon icon={flashFill} width={22} height={22} />
+              </MIconButton>
+            </Tooltip> */}
+          </Stack>
+        ))}
+      </Stack>
+    </Card>
+                 </Grid>
+                 {/* <Grid item xs={6} md={6}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
@@ -124,23 +162,7 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     error={Boolean(touched.phone && errors.phone)}
                     helperText={touched.phone && errors.phone}
                   />
-                  {/* <TextField
-                    select
-                    fullWidth
-                    label="Country"
-                    placeholder="Country"
-                    {...getFieldProps('country')}
-                    SelectProps={{ native: true }}
-                    error={Boolean(touched.country && errors.country)}
-                    helperText={touched.country && errors.country}
-                  >
-                    <option value="" />
-                    {countries.map((option) => (
-                      <option key={option.code} value={option.label}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField> */}
+             
                 </Stack>
 
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
@@ -166,9 +188,27 @@ export default function UserNewForm({ isEdit, currentUser }) {
                 </Box>
               </Stack>
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Form>
     </FormikProvider>
   );
 }
+
+     {/* <TextField
+                    select
+                    fullWidth
+                    label="Country"
+                    placeholder="Country"
+                    {...getFieldProps('country')}
+                    SelectProps={{ native: true }}
+                    error={Boolean(touched.country && errors.country)}
+                    helperText={touched.country && errors.country}
+                  >
+                    <option value="" />
+                    {countries.map((option) => (
+                      <option key={option.code} value={option.label}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField> */}

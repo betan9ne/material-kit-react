@@ -32,7 +32,7 @@ export default function Router() {
         { path: 'models', element: <Models /> },
  
         { path: 'constants', element: <Constants /> },
-        { path: 'user', element: <UserNewForm /> },        
+        { path: 'user', element: <User /> },        
         { path: 'updateValues', element: <UpdateValues /> }        
       ]
     },

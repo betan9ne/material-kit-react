@@ -46,22 +46,11 @@ const [user, setuser] = useState(null)
   };
   
   useEffect(() => {
-    firebase.firestore().collection("users").where("email", "==", firebase.auth().currentUser.email).get().then((snap)=>{
-      const contacts_ = [];
-      snap.docs.forEach(document => {
-        const contact_ = {
-          id: document.id,
-          ...document.data()
-        }
-        contacts_.push(contact_)
-      })
-      setuser(contacts_)
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((snap)=>{
+      setuser(snap.data())
       
     })
-  }, [])
-  
-  console.log(user)
-
+  }, [])  
   const logout = () =>{
     firebase.auth().signOut().then(()=>{
      console.log("logged out")
@@ -101,10 +90,10 @@ const [user, setuser] = useState(null)
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {user && user[0].firstName}
+            {user && user.firstName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user && user[0].email}
+            {user && user.email}
           </Typography>
         </Box>
 

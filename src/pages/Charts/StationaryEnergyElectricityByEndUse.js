@@ -8,7 +8,6 @@ import { Card, CardHeader,Container, Grid } from '@mui/material';
 import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
-import firebase from '../../firebase';
 
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
@@ -29,67 +28,76 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const TransportEmissions =({nb}) => {
+const StationaryEnergyElectricityByEndUse =({data}) => {
     const theme = useTheme();
- 
-    let asd=[]
-    const [_data, setdata_] = useState([])
-    const [labels, setlabels] = useState([])
+    const [graphSummaries, setgraphSummaries] = useState([])
+    const [baselineEmissions, setbaselineEmissions] = useState([])
+
+    let infrastructure = 0
+    let transport = 0
+    let energy = 0
+    let gas = 0
 
     useEffect(() => {
-      viewSiteInfo(nb, "Transport")
-    }, [nb])
+       getData(data)
+    }, [data])
 
-    const viewSiteInfo = (nb, tag) =>{
+
+    const getData = (_data) =>{     
      
-     let neighbourhood = [];
-        let buildings = []
-   //     getPrecinctData(nb.id)
-       
-         firebase.firestore().collection("sites").where("neighbourhood_id","==", nb.id).get().then((doc)=>{
-             doc.docs.forEach(document => {
-              const nb = {
-                id: document.id,
-                ...document.data()
-              }
-              neighbourhood.push(nb)
-            })
-                 neighbourhood.filter((val)=>{
-              if(val.model_tag === tag)
-              {
-                buildings.push(val)
-              }
-            })
-             //  getGasData(neighbourhood)
-             
-           let group = buildings.reduce((r, a) => {
-            r[a.model] = [...r[a.model] || [], a];
-         return r;
-        }, {});           
-        
-       asd = Object.entries(group)
-
-           getDataandLabels(asd)
-                      })
-    }
-
-    const getDataandLabels = (_data) =>{
-      let label = []
-      let data = []
+        _data.filter((val)=>{
+           
+          if(val.model_tag === "Infrastructure")
+          {
+            infrastructure +=val.total
+          }
       
-      _data.forEach(e=>{
-        label.push(e[0])
+          if(val.model_tag === "Transport")
+          {
+           transport +=val.total
+          }
+      
+          if(val.model_tag === "Buildings")
+          {
+           energy +=val.total_carbon_emissions_electricity
+          }
+          if(val.model_tag === "Buildings")
+          {
+           gas +=val.total_carbon_emissions_gas
+          }                
+        }
+        )
+          let asd =[       
+            {
+              label: "Transport",
+              data : transport
+            },
+            {
+              label : "Stationery Energy (Electricity)",
+              data : energy
+            },
+            {
+              label : "Stationery Energy (Gas)",
+              data : gas
+            }
+          ]
+      
+          let scopeData = [
+            {
+              label : "Scope 2",
+              data : energy + infrastructure
+            },
+            {
+              label : "Scope 1",
+              data : gas + transport
+            }
+          ]     
          
-        let asd = e[1].reduce( function(a, b){
-          return a + parseInt(b['scopeValue']);
-      }, 0);
-      data.push(asd) 
-      })
-   
-      setdata_(data)            
-      setlabels(label)
-  }
-  
+          setbaselineEmissions(asd)
+          setgraphSummaries(scopeData)
+       
+      }     
+ 
    
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
@@ -98,8 +106,8 @@ const TransportEmissions =({nb}) => {
           theme.palette.warning.main,
           theme.palette.error.main
         ],
-        labels: labels.map((a)=>(
-            a
+        labels: baselineEmissions.map((a)=>(
+            a.label
           )),
         stroke: { colors: [theme.palette.background.paper] },
         legend: { floating: true, horizontalAlign: 'center' },
@@ -117,14 +125,14 @@ const TransportEmissions =({nb}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-   console.log(_data, labels)
+   
   return (
     <>
      <Card>
       <CardHeader title="Transport Emission" />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={_data.map((a)=>(
-              a
+        <ReactApexChart type="pie" series={baselineEmissions.map((a)=>(
+              a.data/1000
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>
     </Card>    
@@ -134,4 +142,4 @@ const TransportEmissions =({nb}) => {
   )
 }
 
-export default TransportEmissions
+export default StationaryEnergyElectricityByEndUse

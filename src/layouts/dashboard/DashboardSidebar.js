@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -14,7 +14,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import sidebarConfig from './SidebarConfig';
-
+import firebase from './../../firebase'
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -43,8 +43,16 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
-
+  const [user, setuser] = useState(null)
   const isDesktop = useResponsive('up', 'lg');
+
+  useEffect(() => {
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((snap)=>{
+ console.log(snap)
+      setuser(snap.data())
+      
+    })
+  }, [])
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -70,7 +78,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
            
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {user && user.firstName}
               </Typography>
               {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}

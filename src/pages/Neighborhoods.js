@@ -121,7 +121,7 @@ const getBlocks = (id) =>{
       <Typography variant="h4" sx={{ mb: 5 }}>
       Neighborhoods
       </Typography>
-      <Grid container spacing={1}>
+      <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
  
       {/* get list of neightbourhoods */}
@@ -170,26 +170,10 @@ const getBlocks = (id) =>{
         </Grid>
    
     <Grid container xs={10} gap={3} md={10}>  
-    <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
+                <Grid container xs={12} gap={3} md={12}>
+                <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
     New Neighborhoods
       </Button>
-
-                {/* add a new neighborhood */}
-      <Dialog open={open} onClose={()=>setOpen(false)}>
-      <AddNeighborhoods data={handleClose}/>
-      </Dialog>
-        
-                {/* add a new precinct */}
-      <Dialog open={openPrecinct} onClose={()=>setPrecinctOpen(false)}>
-      <AddPrecinct data={()=>setPrecinctOpen(false)} item={neighbourhood}/>
-      </Dialog>
-          
-                {/* add a new block */}
-      <Dialog open={openBlock} onClose={()=>setBlockOpen(false)}>
-      <AddNewBlock data={()=>setBlockOpen(false)} item={precinct}/>
-      </Dialog>
-
-
       {neighbourhood && <Button
               variant="contained"
                onClick={()=>setPrecinctOpen(true)}
@@ -213,9 +197,29 @@ const getBlocks = (id) =>{
               Update Values
             </Button>}
 
-            
-            <br/><br/>    
-      <Charts data={precinctData} nb={neighbourhood} />
+                </Grid>
+
+                {/* add a new neighborhood */}
+      <Dialog open={open} onClose={()=>setOpen(false)}>
+      <AddNeighborhoods data={handleClose}/>
+      </Dialog>
+        
+                {/* add a new precinct */}
+      <Dialog open={openPrecinct} onClose={()=>setPrecinctOpen(false)}>
+      <AddPrecinct data={()=>setPrecinctOpen(false)} item={neighbourhood}/>
+      </Dialog>
+          
+                {/* add a new block */}
+      <Dialog open={openBlock} onClose={()=>setBlockOpen(false)}>
+      <AddNewBlock data={()=>setBlockOpen(false)} item={precinct}/>
+      </Dialog>
+
+     {neighbourhood ? <Charts data={precinctData} nb={neighbourhood} />
+     :
+     <Grid item xs={12} md={12}>
+
+     </Grid>
+     }
        </Grid>
       </Grid>
 
