@@ -5,7 +5,8 @@ import { Card, Typography } from '@mui/material';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import Iconify from '../../../components/Iconify';
-
+import firebase from './../../../firebase'
+import React,{useState, useEffect} from 'react'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -37,14 +38,27 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 const TOTAL = 234;
 
 export default function AppBugReports() {
+  const [docs, setdocs] = useState([])
+
+  useEffect(() => {
+       firebase.firestore().collection("sites").onSnapshot((doc)=>{
+          const models = [];
+          doc.docs.forEach(document => {
+            const nb = {
+              id: document.id,
+              ...document.data()
+            }
+            models.push(nb)
+          })
+          setdocs(models)
+       })
+  }, [])
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Iconify icon="ant-design:bug-filled" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+ 
+      <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Bug Reports
+        Sites
       </Typography>
     </RootStyle>
   );

@@ -24,8 +24,7 @@ export default function LogoOnlyLayout() {
   return (
     <>
       <HeaderStyle>
-        <Logo />
-      </HeaderStyle>
+       </HeaderStyle>
       <Outlet />
     </>
   );

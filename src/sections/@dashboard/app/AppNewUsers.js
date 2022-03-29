@@ -1,11 +1,12 @@
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import React,{useState, useEffect} from 'react'
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 // component
 import Iconify from '../../../components/Iconify';
-
+import firebase from './../../../firebase'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -34,17 +35,31 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1352831;
+ 
 
 export default function AppNewUsers() {
+
+  const [docs, setdocs] = useState([])
+
+  useEffect(() => {
+       firebase.firestore().collection("precinct").onSnapshot((doc)=>{
+          const models = [];
+          doc.docs.forEach(document => {
+            const nb = {
+              id: document.id,
+              ...document.data()
+            }
+            models.push(nb)
+          })
+          setdocs(models)
+       })
+  }, [])
+
   return (
-    <RootStyle>
-      <IconWrapperStyle>
-        <Iconify icon="ant-design:apple-filled" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+    <RootStyle> 
+      <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        New Users
+        Precincts
       </Typography>
     </RootStyle>
   );

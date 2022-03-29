@@ -30,12 +30,7 @@ const sidebarConfig = [
     title: 'user',
     path: '/dashboard/user',
     icon: getIcon('eva:people-fill')
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon('eva:lock-fill')
-  } 
+  }
 ];
 
 export default sidebarConfig;

@@ -7,24 +7,23 @@ import { Button, Dialog, Container, Typography,  TextField, DialogTitle, DialogC
 // components
 import firebase from '../../firebase'
 
-function AddNeighborhoods({data}) {
+function AddNewBlock({data, item}) {
    
-     const [values, setValues] = useState();
+    const [values, setValues] = useState();
 
-    const addneighbourhood = ()=>{      
-        firebase.firestore().collection('neighbourhood').add(
-            {
-                user_id: firebase.auth().currentUser.uid,
-                neighbourhood: values, 
-                status:true, 
-                createdAt: new Date().toLocaleDateString()
+    const addblock = ()=>{
+        firebase.firestore().collection('blocks').add(
+            {block: values, 
+            precinct_id : item.id,
+            neighbourhood_id: item.neighbourhood_id,
+            createdAt: new Date().toLocaleDateString()
             }).then((d)=>{
-                data()
-           alert("Added Successfully")
+            data()
         }).catch((e)=>{
             alert(JSON.stringify(e))
         })
     }
+
 
     const handleChange = (prop) => (event) => {
         setValues(event.target.value);
@@ -32,20 +31,20 @@ function AddNeighborhoods({data}) {
 
   return (
    <>
-    <DialogTitle>Neighborhood</DialogTitle>
+    <DialogTitle>Block</DialogTitle>
     <DialogContent>
       <DialogContentText>
-       Add a new Neighborhood in the field below.
+       Add a new Block to <b>{item.precint}</b> Precinct in the field below.
       </DialogContentText>
       <TextField autoFocus fullWidth type="text" margin="dense"
-       onChange={handleChange('_group')}
-        variant="outlined" label="Enter name of neighborhood here" />
+       onChange={handleChange()}
+        variant="outlined" label="Enter name of block here" />
     </DialogContent>
     <DialogActions>
       <Button color="inherit" onClick={()=>data()}>
         Cancel
       </Button>
-      <Button variant="contained" onClick={()=>addneighbourhood()}>
+      <Button variant="contained" onClick={()=>addblock()}>
         Save
       </Button>
     </DialogActions>
@@ -53,4 +52,4 @@ function AddNeighborhoods({data}) {
   )
 }
 
-export default AddNeighborhoods
+export default AddNewBlock

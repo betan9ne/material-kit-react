@@ -18,30 +18,15 @@ import {
 } from '../../sections/@dashboard/app';
 import OutputSummary from './OutputSummary'
 import { Block } from '../../components/Block';
+import Inputs from './Inputs';
 import CarbonEmissionsBaseline from './CarbonEmissionsBaseline';
+import TransportEmissions from './TransportEmissions';
 // ----------------------------------------------------------------------
 
-export default function Charts({data}) {
+export default function Charts({data, nb}) {
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
-        {/* <Box sx={{ pb: 1 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Block title="Text" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Breadcrumbs>
-                <Link color="inherit" href="#">
-                  Material-UI
-                </Link>
-                <Link color="inherit" href="#">
-                  Core
-                </Link>
-                <Typography sx={{ color: 'text.primary' }}>Breadcrumb</Typography>
-              </Breadcrumbs>
-            </Block>
-          </Grid>
-          </Grid>
-        </Box> */}
         <Grid container spacing={3}>
         
         <Grid item xs={12} md={6} lg={4}>
@@ -50,13 +35,21 @@ export default function Charts({data}) {
           <Grid item xs={12} md={6} lg={4}>
             <CarbonEmissionsBaseline data={data}/>
           </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-            <AppWebsiteVisits />
+          <Grid item xs={12} md={6} lg={4}>
+           {nb &&  <Inputs data={nb}/>}
           </Grid>
 
-          
+          <Grid item xs={12} md={6} lg={4}>
+            <TransportEmissions data={data}/>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <CarbonEmissionsBaseline data={data}/>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+           {nb &&  <Inputs data={nb}/>}
+          </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
@@ -67,17 +60,17 @@ export default function Charts({data}) {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
-          </Grid>
+          </Grid> */}
 
          
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject />
-          </Grid>
+          </Grid> */}
  
         </Grid>
       </Container>

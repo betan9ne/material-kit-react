@@ -16,11 +16,13 @@ import { Block } from '../components/Block';
 import Charts from './Charts/Charts';
 import AddNeighborhoods from './DialogForms/AddNeighborhoods';
 import AddPrecinct from './DialogForms/AddPrecinct';
+import AddNewBlock from './DialogForms/AddNewBlock';
 
 function Neighborhoods() {
 
   const [open, setOpen] = useState(false);
   const [openPrecinct, setPrecinctOpen] = useState(false);
+  const [openBlock, setBlockOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,6 +47,7 @@ const [blockList, setblockList] = useState([])
 
   const handleChangeControlled = (panel) => (event, isExpanded) => {
     setblockId(null)
+    setPrecinct(null)
     setNeighbourhood(panel)
       getPrecinctData(panel.id)
       getListOfPrecints(panel.id)
@@ -53,6 +56,7 @@ const [blockList, setblockList] = useState([])
 
   const handlePrecinctChangeControlled = (panel) => (event, isExpanded) => {
     //  getPrecinctData(panel.id)
+    setPrecinct(panel)
     setblockId(null)
        getBlocks(panel.id)
    setprecinctControlled(isExpanded ? panel.id : false);
@@ -119,9 +123,7 @@ const getBlocks = (id) =>{
       </Typography>
       <Grid container spacing={1}>
       <Grid item xs={2} md={2}>
-      <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
-    New Neighborhoods
-      </Button><br/><br/>
+ 
       {/* get list of neightbourhoods */}
            {docs.map((item, index) => (
             <Accordion
@@ -130,7 +132,7 @@ const getBlocks = (id) =>{
               onChange={handleChangeControlled(item)}
             >
               <AccordionSummary >
-                <Typography variant="h6" sx={{  }}>
+                <Typography variant="h6" noWrap={false} sx={{  }}>
                   {item.neighbourhood}
                 </Typography> 
               </AccordionSummary>
@@ -143,7 +145,7 @@ const getBlocks = (id) =>{
               onChange={handlePrecinctChangeControlled(precinct)}
             >
               <AccordionSummary >
-              <Typography variant="subtitle1" sx={{  flexShrink: 0 }}>{precinct.precint}</Typography>
+              <Typography variant="subtitle1" noWrap={false} sx={{  flexShrink: 0 }}>{precinct.precint}</Typography>
               </AccordionSummary>
            
                   {/* get list of blicks based on Precinct id */}
@@ -168,7 +170,10 @@ const getBlocks = (id) =>{
         </Grid>
    
     <Grid container xs={10} gap={3} md={10}>  
-  
+    <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
+    New Neighborhoods
+      </Button>
+
                 {/* add a new neighborhood */}
       <Dialog open={open} onClose={()=>setOpen(false)}>
       <AddNeighborhoods data={handleClose}/>
@@ -178,6 +183,11 @@ const getBlocks = (id) =>{
       <Dialog open={openPrecinct} onClose={()=>setPrecinctOpen(false)}>
       <AddPrecinct data={()=>setPrecinctOpen(false)} item={neighbourhood}/>
       </Dialog>
+          
+                {/* add a new block */}
+      <Dialog open={openBlock} onClose={()=>setBlockOpen(false)}>
+      <AddNewBlock data={()=>setBlockOpen(false)} item={precinct}/>
+      </Dialog>
 
 
       {neighbourhood && <Button
@@ -185,6 +195,13 @@ const getBlocks = (id) =>{
                onClick={()=>setPrecinctOpen(true)}
             >
               Add Precinct
+            </Button>}
+
+      {precinct && <Button
+              variant="contained"
+               onClick={()=>setBlockOpen(true)}
+            >
+              Add Block
             </Button>}
 
     {blockId && <Button
@@ -198,7 +215,7 @@ const getBlocks = (id) =>{
 
             
             <br/><br/>    
-      <Charts data={precinctData} />
+      <Charts data={precinctData} nb={neighbourhood} />
        </Grid>
       </Grid>
 

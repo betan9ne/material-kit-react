@@ -41,20 +41,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Minimal-UI">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link>
-      </AuthLayout>
-
-      <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Hi, Welcome Back
-        </Typography>
-        <img src="/static/illustrations/illustration_login.png" alt="login" />
-      </SectionStyle>
-
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
@@ -65,19 +51,6 @@ export default function Login() {
           </Stack>        
           <LoginForm />
 
-          <Typography
-            variant="body2"
-            align="center"
-            sx={{
-              mt: 3,
-              display: { sm: 'none' }
-            }}
-          >
-            Don’t have an account?&nbsp;
-            <Link variant="subtitle2" component={RouterLink} to="register" underline="hover">
-              Get started
-            </Link>
-          </Typography>
         </ContentStyle>
       </Container>
     </RootStyle>

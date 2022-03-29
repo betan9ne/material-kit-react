@@ -5,6 +5,7 @@ import { Card, Typography } from '@mui/material';
 import { fShortenNumber } from '../../../utils/formatNumber';
 // component
 import Iconify from '../../../components/Iconify';
+import useGetNeighbourhood from './../../../hooks/useGetNeighbourhood'
 
 // ----------------------------------------------------------------------
 
@@ -33,18 +34,18 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-const TOTAL = 714000;
-
+ 
 export default function AppWeeklySales() {
+   
+  let total = useGetNeighbourhood().docs
   return (
     <RootStyle>
-      <IconWrapperStyle>
+      {/* <IconWrapperStyle>
         <Iconify icon="ant-design:android-filled" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      </IconWrapperStyle> */}
+      <Typography variant="h3">{fShortenNumber(total.length)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Weekly Sales
+        Neighborhoods
       </Typography>
     </RootStyle>
   );

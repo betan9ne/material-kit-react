@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+ 
 // material
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
@@ -8,7 +8,8 @@ import Iconify from '../../components/Iconify';
 import MenuPopover from '../../components/MenuPopover';
 //
 import account from '../../_mocks_/account';
-
+import firebase from './../../firebase'
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -29,19 +30,44 @@ const MENU_OPTIONS = [
   }
 ];
 
+
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+const [user, setuser] = useState(null)
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  
+  useEffect(() => {
+    firebase.firestore().collection("users").where("email", "==", firebase.auth().currentUser.email).get().then((snap)=>{
+      const contacts_ = [];
+      snap.docs.forEach(document => {
+        const contact_ = {
+          id: document.id,
+          ...document.data()
+        }
+        contacts_.push(contact_)
+      })
+      setuser(contacts_)
+      
+    })
+  }, [])
+  
+  console.log(user)
 
+  const logout = () =>{
+    firebase.auth().signOut().then(()=>{
+      navigate('/');
+    })
+  }
+  
   return (
     <>
       <IconButton
@@ -75,38 +101,19 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {user[0].username}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user[0].email}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 1 }} />
 
-        {MENU_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.label}
-            to={option.linkTo}
-            component={RouterLink}
-            onClick={handleClose}
-            sx={{ typography: 'body2', py: 1, px: 2.5 }}
-          >
-            <Iconify
-              icon={option.icon}
-              sx={{
-                mr: 2,
-                width: 24,
-                height: 24
-              }}
-            />
-
-            {option.label}
-          </MenuItem>
-        ))}
+    
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" onClick={()=>logout()} variant="outlined">
             Logout
           </Button>
         </Box>
