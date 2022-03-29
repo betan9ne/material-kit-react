@@ -191,7 +191,7 @@ const getBlocks = (id) =>{
     {blockId && <Button
               variant="contained"
               component={RouterLink}
-              to={"/dashboard/updateValues"} 
+              to={"/updateValues"} 
               state={{data:blockId}}
             >
               Update Values

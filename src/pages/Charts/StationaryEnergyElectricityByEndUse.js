@@ -8,7 +8,7 @@ import { Card, CardHeader,Container, Grid } from '@mui/material';
 import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
-
+import firebase from './../../firebase'
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
@@ -28,112 +28,302 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const StationaryEnergyElectricityByEndUse =({data}) => {
+const StationaryEnergyElectricityByEndUse =({nb}) => {
     const theme = useTheme();
-    const [graphSummaries, setgraphSummaries] = useState([])
-    const [baselineEmissions, setbaselineEmissions] = useState([])
-
-    let infrastructure = 0
-    let transport = 0
-    let energy = 0
-    let gas = 0
-
-    useEffect(() => {
-       getData(data)
-    }, [data])
-
-
-    const getData = (_data) =>{     
-     
-        _data.filter((val)=>{
-           
-          if(val.model_tag === "Infrastructure")
-          {
-            infrastructure +=val.total
-          }
-      
-          if(val.model_tag === "Transport")
-          {
-           transport +=val.total
-          }
-      
-          if(val.model_tag === "Buildings")
-          {
-           energy +=val.total_carbon_emissions_electricity
-          }
-          if(val.model_tag === "Buildings")
-          {
-           gas +=val.total_carbon_emissions_gas
-          }                
-        }
-        )
-          let asd =[       
-            {
-              label: "Transport",
-              data : transport
-            },
-            {
-              label : "Stationery Energy (Electricity)",
-              data : energy
-            },
-            {
-              label : "Stationery Energy (Gas)",
-              data : gas
-            }
-          ]
-      
-          let scopeData = [
-            {
-              label : "Scope 2",
-              data : energy + infrastructure
-            },
-            {
-              label : "Scope 1",
-              data : gas + transport
-            }
-          ]     
-         
-          setbaselineEmissions(asd)
-          setgraphSummaries(scopeData)
-       
-      }     
+    const [Religous, setReligous] = useState([])
+    const [Education, setEducation] = useState([])
+   const [Government, setGovernment] = useState([])
+   const [MuncipalOffice, setMuncipalOffice] = useState([])
+   const [PublicOpenSpace, setPublicOpenSpace] = useState([])
+   const [PublicServiceInfrastructure, setPublicServiceInfrastructure] = useState([])
+   const [BusinessCommercial, setBusinessCommercial] = useState([])
+   const [VacantLand, setVacantLand] = useState([])
+   const [WarehouseLight, setWarehouseLight] = useState([])
+   const [warehouseMed, setwarehouseMed] = useState([])
+   const [warehouseHigh, setwarehouseHigh] = useState([])
+   const [ResidentialLow, setResidentialLow] = useState([])
+   const [ResidentialMed, setResidentialMed] = useState([])
+   const [ResidentialHigh, setResidentialHigh] = useState([])
  
+   let labels = ["Lighting", "Lighting External", "Appliances", "Space Heating", "Cooling", "Water Heating", "Cooking"]
+ 
+   useEffect(() => {
+     viewSiteInfo()
+   }, [nb])
    
-      const chartOptions2 = merge(BaseOptionChart(), {
-        colors: [
-          theme.palette.primary.main,
-          theme.palette.info.main,
-          theme.palette.warning.main,
-          theme.palette.error.main
-        ],
-        labels: baselineEmissions.map((a)=>(
-            a.label
-          )),
-        stroke: { colors: [theme.palette.background.paper] },
-        legend: { floating: true, horizontalAlign: 'center' },
-        dataLabels: { enabled: true, dropShadow: { enabled: false } },
-        tooltip: {
-          fillSeriesColor: false,
-          y: {
-            formatter: (seriesName) => fNumber(seriesName),
-            title: {
-              formatter: (seriesName) => `${seriesName}`
-            }
-          }
-        },
-        plotOptions: {
-          pie: { donut: { labels: { show: false } } }
-        }
+   
+   function viewSiteInfo() {
+    let data = [];
+    firebase.firestore().collection("sites").where("neighbourhood_id", "==", nb.id).where("model_tag", "==", "Buildings").get().then((doc) => {
+      doc.docs.forEach(document => {
+        const nb = {
+          id: document.id,
+          ...document.data()
+        };
+        data.push(nb);
       });
+      getMe(data);
+      createStackData(data);
+    });
+  } 
+
+const getMe = (data) =>{
+ let totalLighting = 0
+// console.log(data)
+ data.filter((val)=>{
+   if(val.model === "Residential (High Density)"){      
    
+     let  data = [
+       val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+       ]
+       setResidentialHigh(data)
+     }
+     if(val.model === "Residential (Medium Density)"){      
+       let  data = [
+         val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+         ]
+         setResidentialMed(data)
+       }
+       if(val.model === "Residential (Low Density)"){      
+         let  data = [
+           val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+           ]
+           setResidentialLow(data)
+         }
+         if(val.model === "Warehouse (High Industrial)"){      
+           let  data = [
+             val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+             ]
+             setwarehouseHigh(data)
+           }
+           if(val.model === "Warehouse (Medium Industrial)"){      
+             let  data = [
+               val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+               ]
+               setwarehouseMed(data)
+             }
+             if(val.model === "Warehouse (Light Industrial)"){      
+               let  data = [
+                 val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+                 ]
+                 setWarehouseLight(data)
+               }
+   if(val.model === "Business & Commercial"){ 
+     let  data = [
+     totalLighting = totalLighting+ (val.lighting/100), val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+     ]
+     setBusinessCommercial(data)
+   }
+   if(val.model === "Education"){      
+     let  data = [
+       val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+       ]
+       setEducation(data)
+     }
+     if(val.model === "Government"){      
+       let  data = [
+         val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+         ]
+         setGovernment(data)
+       }
+       if(val.model === "Municipal Office"){      
+         let  data = [
+           val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+           ]
+           setMuncipalOffice(data)
+         }
+         if(val.model === "Public Open Space"){      
+           let  data = [
+             val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+             ]
+             setPublicOpenSpace(data)
+           }
+           if(val.model === "Public Service Infrastructure"){      
+             let  data = [
+               val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+               ]
+               setPublicServiceInfrastructure(data)
+             }
+             if(val.model === "Religious"){      
+               let  data = [
+                 val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+                 ]
+                 setReligous(data)
+               }
+               if(val.model === "Vacant Land"){      
+                 let  data = [
+                   val.lighting/100, val.lighting_external, val.appliances,val.space_heating, val.cooling, val.water_heating, val.cooking         
+                   ]
+                   setVacantLand(data)
+                 }
+ })
+   
+}
+
+const createStackData = (data) =>{
+  let lighting = [] 
+data.forEach(element =>{
+  
+       if(element.lighting === 0)
+       {
+           let asd = {
+               label : element.model,
+               data : 0
+           }
+           lighting.push(asd)
+       }
+       else{
+           let asd = {
+               label : element.model,
+               data : element.lighting
+           }
+           lighting.push(asd)
+       }
+     
+   
+})
+}
+
+const stackedData = {
+   labels: labels.map((a)=>(
+     a
+   )),
+   datasets: [         
+     {
+       name: 'Business & Commercial',
+       data: BusinessCommercial.map((l)=>(
+       l
+       )),
+  
+     },
+     {
+       name: 'Education',
+       data: Education.map((b)=>(
+         b
+       )),
+
+     },
+     {
+       name: 'Government',
+       data: Government.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Muncipal Office',
+       data: MuncipalOffice.map((a)=>(
+         a
+       )),
+
+     },
+       {
+       name: 'Public Open Space',
+       data: PublicOpenSpace.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Public Service Infrastructure',
+       data: PublicServiceInfrastructure.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Religious',
+       data: Religous.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Vacant Land',
+       data: VacantLand.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Residential High Density',
+       data: ResidentialHigh.map((a)=>(
+         a
+       )),
+
+     },
+     {
+       name: 'Residential Medium Density',
+       data: ResidentialMed.map((a)=>(
+         a
+       )),
+     },
+     {
+       name: 'Residential Low Density',
+       data: ResidentialLow.map((a)=>(
+         a
+       )),
+     },
+     {
+       name: 'Warehouse Light Industrial',
+       data: WarehouseLight.map((a)=>(
+         a
+       ))
+     },
+     {
+       name: 'Warehouse Medium Industrial',
+       data: warehouseMed.map((a)=>(
+         a
+       )),
+     },
+     {
+       name: 'Warehouse High Industrial',
+       data: warehouseHigh.map((a)=>(
+         a
+       ))
+     },
+
+     
+    ],
+    
+ };
+
+ 
+ const chartOptions = merge(BaseOptionChart(), {
+  legend: { floating: true, horizontalAlign: 'center',  },
+  
+    chart: {
+      type: 'bar',
+      height: 400,
+      stacked: true,
+      toolbar:{
+        show:true
+      },
+    },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['transparent']
+  },
+  xaxis: {
+    categories:stackedData.labels.map((a)=>(
+      a
+    ))
+  },
+  tooltip: {
+    y: {
+      formatter: (val) => `$${val}`
+    }
+  }
+});
+
+
   return (
     <>
      <Card>
-      <CardHeader title="Transport Emission" />
+     <CardHeader title="Stationery Energy (Electricity) By End Use" />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={baselineEmissions.map((a)=>(
-              a.data/1000
-            ))} options={chartOptions2} height={280} />
+      <ReactApexChart options={chartOptions} series={stackedData.datasets} type="bar" height={300} />
       </ChartWrapperStyle>
     </Card>    
 </>

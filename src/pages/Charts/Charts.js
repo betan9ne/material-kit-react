@@ -11,6 +11,7 @@ import TransportEmissions from './TransportEmissions';
 import StationaryEnergyElectricity from './StationaryEnergyElectricity.js';
 import StationaryEnergyGas from './StationaryEnergyGas';
 import StationaryEnergyElectricityByBuildingType from './StationaryEnergyElectricityByBuildingType';
+import StationaryEnergyElectricityByEndUse from './StationaryEnergyElectricityByEndUse';
 // ----------------------------------------------------------------------
 
 export default function Charts({data, nb}) {
@@ -42,6 +43,9 @@ export default function Charts({data, nb}) {
 
           <Grid item xs={12} md={12} lg={12}>
             <StationaryEnergyElectricityByBuildingType nb={nb} />
+          </Grid>
+          <Grid item xs={12} md={12} lg={12}>
+            <StationaryEnergyElectricityByEndUse nb={nb} />
           </Grid>
           {/* <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
