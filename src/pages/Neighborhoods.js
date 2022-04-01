@@ -1,22 +1,21 @@
-import { useFormik } from 'formik';
-import { useState, useEffect} from 'react';
-import { Icon } from '@iconify/react';
+import { useState} from 'react';
+
 // material
 import { Link as RouterLink } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+
 import { Container, Accordion, AccordionSummary, Button, Typography, Grid,
-   Dialog, TextField, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
+   Dialog, } from '@mui/material';
 // components
 import Page from '../components/Page';
-import useGetModels from 'src/hooks/useGetModels';
+
 import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
-import OutputSummary from './Charts/OutputSummary';
+
 import firebase from './../firebase'
-import { Block } from '../components/Block';
 import Charts from './Charts/Charts';
 import AddNeighborhoods from './DialogForms/AddNeighborhoods';
 import AddPrecinct from './DialogForms/AddPrecinct';
 import AddNewBlock from './DialogForms/AddNewBlock';
+import Loader from 'src/components/Loader';
 
 function Neighborhoods() {
 
@@ -24,9 +23,7 @@ function Neighborhoods() {
   const [openPrecinct, setPrecinctOpen] = useState(false);
   const [openBlock, setBlockOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
 
   const handleClose = () => {
     setOpen(false);
@@ -45,28 +42,39 @@ const [blockList, setblockList] = useState([])
   const [neighbourhood, setNeighbourhood] = useState(null)
   const [precinct, setPrecinct] = useState(null)
 
+  const [loading, setloading] = useState(false)
+
+  // when the neighborhood is clicked.
   const handleChangeControlled = (panel) => (event, isExpanded) => {
+    setloading(true)
     setblockId(null)
     setPrecinct(null)
+    setprecinctList([])
     setNeighbourhood(panel)
-      getPrecinctData(panel.id)
-      getListOfPrecints(panel.id)
+    getPrecinctData(panel.id)
+    getListOfPrecints(panel.id)
     setControlled(isExpanded ? panel.id : false);
+    setloading(false)
   };
 
+  // wheen the precinct is clicked
   const handlePrecinctChangeControlled = (panel) => (event, isExpanded) => {
-    //  getPrecinctData(panel.id)
-    setPrecinct(panel)
+    setloading(true)
+       setPrecinct(panel)
     setblockId(null)
-       getBlocks(panel.id)
+    setblockList([])
+    getBlocks(panel.id)
    setprecinctControlled(isExpanded ? panel.id : false);
+   setloading(false)
   };
 
+  // when the block is clicked
   const handleBlockChangeControlled = (panel) => (event, isExpanded) => {
+    setloading(true)
     setblockId(null)
     setblockId(panel)
-    //   getBlocks(panel.id)
-       setBlockControlled(isExpanded ? panel.id : false);
+        setBlockControlled(isExpanded ? panel.id : false);
+       setloading(false)
   };
 
 
@@ -117,10 +125,13 @@ const getBlocks = (id) =>{
 
   return (
     <Page title="Dashboard">
+   {loading ? <Loader /> : null} 
    <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
-      Neighborhoods
-      </Typography>
+      
+      Neighborhoods :  {neighbourhood && neighbourhood ?
+        <Typography variant="h4" sx={{ mb: 5 }}>
+         {neighbourhood.neighbourhood} </Typography> : <Typography variant="body1" sx={{ mb: 5 }}>Select a neighbourhood</Typography>}
+      
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
  
@@ -138,25 +149,25 @@ const getBlocks = (id) =>{
               </AccordionSummary>
 
           {/* get list of precinct based on neighbourhood id */}
-              {precinctList && precinctList.map((precinct, index)=>(
+              {precinctList && precinctList.length === 0 ? <Typography variant='body1'>Collecting data</Typography> :  precinctList.map((precinct, index)=>(
               <Accordion
               key={precinct.id}
               expanded={precinctcontrolled === precinct.id}
               onChange={handlePrecinctChangeControlled(precinct)}
             >
-              <AccordionSummary >
-              <Typography variant="subtitle1" noWrap={false} sx={{  flexShrink: 0 }}>{precinct.precint}</Typography>
+             <AccordionSummary >
+              <Typography variant="subtitle1"  noWrap={false} sx={{  flexShrink: 0,  color: 'text.disabled' }}>{precinct.precint}</Typography>
               </AccordionSummary>
            
                   {/* get list of blicks based on Precinct id */}
-              {blockList && blockList.map((block, index)=>(
+              {blockList && blockList.length === 0 ? <Typography variant='body1'>Collecting Data</Typography>  :  blockList.map((block, index)=>(
               <Accordion
               key={block.id}
               expanded={blockcontrolled === block.id}
               onChange={handleBlockChangeControlled(block)}
             >
               <AccordionSummary >
-              <Typography variant="subtitle2" sx={{  flexShrink: 0 }}>{block.block}</Typography>
+              <Typography variant="subtitle2" sx={{  flexShrink: 0,  color: 'warning.main' }}>{block.block}</Typography>
               </AccordionSummary>
            
             </Accordion>
@@ -217,7 +228,9 @@ const getBlocks = (id) =>{
      {neighbourhood ? <Charts data={precinctData} nb={neighbourhood} />
      :
      <Grid item xs={12} md={12}>
-
+        <div style={{display:"flex", height:"80%", justifyContent:"center", alignItems:"center"}}>
+          <Typography variant='h4'>Select a neighborhood to view data</Typography>
+        </div>
      </Grid>
      }
        </Grid>

@@ -1,5 +1,6 @@
 // routes
 import Router from './routes';
+import AdminRoutes from './adminRoutes';
 import LoginRoutes from './loginroutes';
 // theme
 import ThemeConfig from './theme';
@@ -14,11 +15,14 @@ import firebase from './firebase'
 export default function App() {
 
   const [state, setstate] = useState(false)  
+ 
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user)=>{
-      if(user){
-       setstate(true)      
+      if(user){      
+   
+       setstate(true)  
+      
       }
       else{
         setstate(false)

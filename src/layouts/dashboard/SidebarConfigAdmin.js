@@ -15,6 +15,21 @@ const sidebarConfig = [
     title: 'Neighborhoods',
     path: '/Neighborhoods',
     icon: getIcon('eva:people-fill')
+  },
+  {
+    title: 'models',
+    path: '/models',
+    icon: getIcon('eva:people-fill')
+  },
+  {
+    title: 'constants',
+    path: '/constants',
+    icon: getIcon('eva:people-fill')
+  },
+  {
+    title: 'user',
+    path: '/user',
+    icon: getIcon('eva:people-fill')
   }
 ];
 

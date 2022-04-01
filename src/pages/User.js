@@ -33,8 +33,8 @@ import useUsers from '../hooks/useUsers';
 const TABLE_HEAD = [
   { id: 'firstName', label: 'First Name', alignRight: false },
   { id: 'lastName', label: 'Last Name', alignRight: false },
-  { id: 'Email', label: 'Role', alignRight: false },
-  { id: 'Admin', label: 'Verified', alignRight: false },
+  { id: 'Email', label: 'Email', alignRight: false },
+  { id: 'Admin', label: 'Admin', alignRight: false },
   
   { id: '' }
 ];
@@ -184,10 +184,7 @@ export default function User() {
                           aria-checked={isItemSelected}
                         >
                           <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) => handleClick(event, firstName)}
-                            />
+                        
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>

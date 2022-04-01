@@ -44,16 +44,17 @@ const [user, setuser] = useState(null)
   const handleClose = () => {
     setOpen(false);
   };
-  
-  useEffect(() => {
-    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((snap)=>{
-      setuser(snap.data())
+
+  // useEffect(() => {
+  //   firebase.firestore().collection("users").doc().get().then((snap)=>{
+  //     setuser(snap.data())
       
-    })
-  }, [])  
+  //   })
+  // }, [])  
   const logout = () =>{
     firebase.auth().signOut().then(()=>{
      console.log("logged out")
+     navigate("/")
     })
   }
   
@@ -89,12 +90,12 @@ const [user, setuser] = useState(null)
         sx={{ width: 220 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle1" noWrap>
+          {/* <Typography variant="subtitle1" noWrap>
             {user && user.firstName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {user && user.email}
-          </Typography>
+          </Typography> */}
         </Box>
 
         <Divider sx={{ my: 1 }} />

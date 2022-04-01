@@ -14,16 +14,21 @@ import AddSite from './DialogForms/AddSite';
 
 function UpdateValues() {
   const [open, setOpen] = useState(false);
+  const [selectedSite, setselectedSite] = useState(null)
     let location = useLocation()
     let data = location.state.data.block
     let sites = useGetSites(location.state.data.id).docs
     const [docs, setdocs] = useState([])
-    console.log(location.state.data)
-
+ 
     const handleClose = () => {
       setOpen(false);
     };
 
+    const getModel = (model) =>{
+
+      setselectedSite(model)
+      setOpen(true)
+    }
     
     useEffect(() => {
       getModels()
@@ -61,7 +66,7 @@ function UpdateValues() {
   return (
     <Page title="Dashboard">
          <Dialog open={open} onClose={()=>setOpen(false)}>
-      <AddSite data={handleClose}/>
+      <AddSite data={handleClose} model={selectedSite} block={location.state.data} />
       </Dialog>
    <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -106,7 +111,7 @@ function UpdateValues() {
       </Box>
       <Button
         size="small"
-        onClick={()=>setOpen(true)}
+        onClick={()=>getModel(tag)}
         variant={'outlined'}
         color={'primary'}
        

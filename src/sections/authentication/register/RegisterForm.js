@@ -43,6 +43,7 @@ export default function RegisterForm() {
               firstName:  formik.values.firstName,
               lastName:  formik.values.lastName,
               email:  formik.values.email,
+              admin:false
             }
            
           ).then(()=>{
@@ -57,11 +58,11 @@ export default function RegisterForm() {
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log(errorMessage)
+          alert(errorMessage)
           
           // ..
         });
-      console.log(formik.values)
+  //    console.log(formik.values)
     //  navigate('/dashboard', { replace: true });
     }
   });

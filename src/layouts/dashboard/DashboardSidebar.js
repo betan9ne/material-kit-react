@@ -14,6 +14,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import sidebarConfig from './SidebarConfig';
+import sidebarConfigAdmin from './SidebarConfigAdmin';
 import firebase from './../../firebase'
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
   useEffect(() => {
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((snap)=>{
- console.log(snap)
       setuser(snap.data())
       
     })
@@ -88,7 +88,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
+      {user && user.admin ? 
+      <NavSection navConfig={sidebarConfigAdmin} />
+      :
       <NavSection navConfig={sidebarConfig} />
+      }
 
    
     </Scrollbar>
