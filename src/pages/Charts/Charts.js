@@ -14,7 +14,7 @@ import StationaryEnergyElectricityByBuildingType from './StationaryEnergyElectri
 import StationaryEnergyElectricityByEndUse from './StationaryEnergyElectricityByEndUse';
 // ----------------------------------------------------------------------
 
-export default function Charts({data, nb}) {
+export default function Charts({data, nb, chartType}) {
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">

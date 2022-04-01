@@ -42,39 +42,44 @@ const [blockList, setblockList] = useState([])
   const [neighbourhood, setNeighbourhood] = useState(null)
   const [precinct, setPrecinct] = useState(null)
 
-  const [loading, setloading] = useState(false)
+  
+  const [selectedChart, setselectedChart] = useState(null)
 
   // when the neighborhood is clicked.
   const handleChangeControlled = (panel) => (event, isExpanded) => {
-    setloading(true)
+    setselectedChart(0)
+ 
     setblockId(null)
     setPrecinct(null)
     setprecinctList([])
     setNeighbourhood(panel)
-    getPrecinctData(panel.id)
+    getPrecinctData(panel.id, 0)
     getListOfPrecints(panel.id)
     setControlled(isExpanded ? panel.id : false);
-    setloading(false)
+ 
   };
 
   // wheen the precinct is clicked
   const handlePrecinctChangeControlled = (panel) => (event, isExpanded) => {
-    setloading(true)
+    setselectedChart(1)
+ 
        setPrecinct(panel)
     setblockId(null)
     setblockList([])
     getBlocks(panel.id)
+    getPrecinctData(panel.id, 1)
    setprecinctControlled(isExpanded ? panel.id : false);
-   setloading(false)
+ 
   };
 
   // when the block is clicked
   const handleBlockChangeControlled = (panel) => (event, isExpanded) => {
-    setloading(true)
+    setselectedChart(2)
+    getPrecinctData(panel.id, 2)
     setblockId(null)
     setblockId(panel)
         setBlockControlled(isExpanded ? panel.id : false);
-       setloading(false)
+  
   };
 
 
@@ -93,8 +98,22 @@ const getListOfPrecints = (id) =>{
  })
 }
 
-  const getPrecinctData = (id) =>{
-    firebase.firestore().collection("sites").where("neighbourhood_id","==", id).onSnapshot((doc)=>{
+  const getPrecinctData = (id, typeOfChart) =>{
+    let chart = null
+    if(typeOfChart === 0 )
+    {
+      chart = "neighbourhood_id"
+    }
+    else if(typeOfChart === 1 )
+    {
+      chart = "precinct_id"
+    }
+    else if(typeOfChart === 2 )
+    {
+      chart = "block_id"
+    }
+    
+    firebase.firestore().collection("sites").where(chart, "==", id).onSnapshot((doc)=>{
       const data = [];
       doc.docs.forEach(document => {
         const nb = {
@@ -125,12 +144,13 @@ const getBlocks = (id) =>{
 
   return (
     <Page title="Dashboard">
-   {loading ? <Loader /> : null} 
+
    <Container maxWidth="xl">
       
-      Neighborhoods :  {neighbourhood && neighbourhood ?
-        <Typography variant="h4" sx={{ mb: 5 }}>
-         {neighbourhood.neighbourhood} </Typography> : <Typography variant="body1" sx={{ mb: 5 }}>Select a neighbourhood</Typography>}
+   <Typography variant="h4" sx={{ mb: 5 }}> Neighborhoods</Typography>
+     {neighbourhood && neighbourhood ?
+        <Typography variant="body1" sx={{ mb: 5 }}>
+         {neighbourhood.neighbourhood} : {precinct && precinct.precint} : {blockId && blockId.block}</Typography> : <Typography variant="body1" sx={{ mb: 5 }}>Select a neighbourhood</Typography>}
       
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
@@ -225,7 +245,7 @@ const getBlocks = (id) =>{
       <AddNewBlock data={()=>setBlockOpen(false)} item={precinct}/>
       </Dialog>
 
-     {neighbourhood ? <Charts data={precinctData} nb={neighbourhood} />
+     {neighbourhood ? <Charts data={precinctData} nb={neighbourhood} chartType={selectedChart} />
      :
      <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"80%", justifyContent:"center", alignItems:"center"}}>
