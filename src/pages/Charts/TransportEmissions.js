@@ -29,7 +29,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const TransportEmissions =({nb}) => {
+const TransportEmissions =({nb, chartType}) => {
     const theme = useTheme();
  
     let asd=[]
@@ -41,12 +41,25 @@ const TransportEmissions =({nb}) => {
     }, [nb])
 
     const viewSiteInfo = (nb, tag) =>{
-     
-     let neighbourhood = [];
+     console.log("here",nb)
+        let neighbourhood = [];
         let buildings = []
-   //     getPrecinctData(nb.id)
-       
-         firebase.firestore().collection("sites").where("neighbourhood_id","==", nb.id).get().then((doc)=>{
+        let chart = null
+        if(chartType === 0 )
+        {
+          chart = "neighbourhood_id"
+        }
+        else if(chartType === 1 )
+        {
+          chart = "precinct_id"
+        }
+        else if(chartType === 2 )
+        {
+          chart = "block_id"
+        }
+        
+ 
+         firebase.firestore().collection("sites").where(chart,"==", nb.id).get().then((doc)=>{
              doc.docs.forEach(document => {
               const nb = {
                 id: document.id,

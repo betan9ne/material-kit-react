@@ -1,5 +1,5 @@
 // material
-import { Box, Grid, Container, Typography, Breadcrumbs, Link} from '@mui/material';
+import { Box, Grid, Container, Typography, Switch,  Breadcrumbs, Link} from '@mui/material';
 // components
 import Page from '../../components/Page';
 
@@ -22,6 +22,7 @@ export default function Charts({data, nb, chartType}) {
         
         <Grid item xs={12} md={6} lg={4}>
             <OutputSummary data={data}/>
+          
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <CarbonEmissionsBaseline data={data}/>
@@ -31,7 +32,7 @@ export default function Charts({data, nb, chartType}) {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <TransportEmissions  nb={nb}/>
+            <TransportEmissions  nb={nb} chartType={chartType}/>
 
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
