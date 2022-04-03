@@ -28,7 +28,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const StationaryEnergyElectricityByBuildingType =({nb}) => {
+const StationaryEnergyElectricityByBuildingType =({nb, selected, chartType}) => {
     const theme = useTheme();
   
     const [labels, setlabels] = useState([])
@@ -43,13 +43,25 @@ const StationaryEnergyElectricityByBuildingType =({nb}) => {
 
   useEffect(() => {
     viewSiteInfo()
-  }, [nb])
+  }, [nb, selected])
   
   function viewSiteInfo() {
     let data = [];
+    let chart = null
+    if(chartType === 0 )
+    {
+      chart = "neighbourhood_id"
+    }
+    else if(chartType === 1 )
+    {
+      chart = "precinct_id"
+    }
+    else if(chartType === 2 )
+    {
+      chart = "block_id"
+    }
 
-
-    firebase.firestore().collection("sites").where("neighbourhood_id", "==", nb.id).where("model_tag", "==", "Buildings").get().then((doc) => {
+    firebase.firestore().collection("sites").where(chart, "==", selected.id).where("model_tag", "==", "Buildings").get().then((doc) => {
       doc.docs.forEach(document => {
         const nb = {
           id: document.id,
@@ -129,49 +141,49 @@ setAppliances(appliances)
         {
           name: 'Lighting',
           data:   lighting.map((l)=>(
-            l/100
+           ( l/100).toFixed(2)
           )),
 
         },
         {
           name: 'Lighting External',
           data: lighting_external.map((b)=>(
-            b
+            (b).toFixed(2)
           )),
 
         },
         {
           name: 'Appliances',
           data: appliances.map((a)=>(
-            a
+            (a).toFixed(2)
           )),
 
         },
         {
           name: 'Space Heating',
           data: space_heating.map((a)=>(
-            a
+            (a).toFixed(2)
           )),
  
         },
           {
             name: 'Cooling',
           data: cooling.map((a)=>(
-            a
+           ( a).toFixed(2)
           )),
 
         },
         {
           name: 'Water heating',
           data: water_heating.map((a)=>(
-            a
+            (a).toFixed(2)
           )),
 
         },
         {
           name: 'Cooking',
           data: cooking.map((a)=>(
-            a
+            (a).toFixed(2)
           ))
         },  
       ]
@@ -200,7 +212,7 @@ setAppliances(appliances)
       },
       tooltip: {
         y: {
-          formatter: (val) => `$${val}`
+          formatter: (val) => (val).toFixed(2)
         }
       }
     });

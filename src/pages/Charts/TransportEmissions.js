@@ -29,7 +29,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const TransportEmissions =({nb, chartType}) => {
+const TransportEmissions =({nb, selected, chartType}) => {
     const theme = useTheme();
  
     let asd=[]
@@ -37,11 +37,10 @@ const TransportEmissions =({nb, chartType}) => {
     const [labels, setlabels] = useState([])
 
     useEffect(() => {
-      viewSiteInfo(nb, "Transport")
-    }, [nb])
+      viewSiteInfo("Transport")
+    }, [nb, selected])
 
-    const viewSiteInfo = (nb, tag) =>{
-     console.log("here",nb)
+    const viewSiteInfo = (tag) =>{
         let neighbourhood = [];
         let buildings = []
         let chart = null
@@ -59,7 +58,8 @@ const TransportEmissions =({nb, chartType}) => {
         }
         
  
-         firebase.firestore().collection("sites").where(chart,"==", nb.id).get().then((doc)=>{
+         firebase.firestore().collection("sites").where(chart,"==", selected.id).get().then((doc)=>{
+          console.log("id", selected.id, chart)
              doc.docs.forEach(document => {
               const nb = {
                 id: document.id,
@@ -130,7 +130,7 @@ const TransportEmissions =({nb, chartType}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-   console.log(_data, labels)
+  
   return (
     <>
      <Card>

@@ -3,7 +3,7 @@ import { useState} from 'react';
 // material
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Container, Accordion, AccordionSummary, Button, Typography, Grid,
+import { Container, Accordion, AccordionSummary, Card, Breadcrumbs, Button, Typography, Grid,
    Dialog, } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -30,25 +30,29 @@ function Neighborhoods() {
   };
 
   let docs = useGetNeighbourhood().docs
+  // lists
 const [precinctData, setprecinctData] = useState([])
 const [precinctList, setprecinctList] = useState([])
 const [blockList, setblockList] = useState([])
 
+// accordian status
   const [controlled, setControlled] = useState(false);
   const [precinctcontrolled, setprecinctControlled] = useState(false);
   const [blockcontrolled, setBlockControlled] = useState(false);
 
+  //data collected
   const [blockId, setblockId] = useState(null)
   const [neighbourhood, setNeighbourhood] = useState(null)
   const [precinct, setPrecinct] = useState(null)
 
-  
-  const [selectedChart, setselectedChart] = useState(null)
+  //utils
+    const [selectedChart, setselectedChart] = useState(null)
+    const [selected, setselected] = useState(null)
 
   // when the neighborhood is clicked.
   const handleChangeControlled = (panel) => (event, isExpanded) => {
     setselectedChart(0)
- 
+    setselected(panel)
     setblockId(null)
     setPrecinct(null)
     setprecinctList([])
@@ -62,7 +66,7 @@ const [blockList, setblockList] = useState([])
   // wheen the precinct is clicked
   const handlePrecinctChangeControlled = (panel) => (event, isExpanded) => {
     setselectedChart(1)
- 
+    setselected(panel)
        setPrecinct(panel)
     setblockId(null)
     setblockList([])
@@ -75,6 +79,7 @@ const [blockList, setblockList] = useState([])
   // when the block is clicked
   const handleBlockChangeControlled = (panel) => (event, isExpanded) => {
     setselectedChart(2)
+    setselected(panel)
     getPrecinctData(panel.id, 2)
     setblockId(null)
     setblockId(panel)
@@ -115,6 +120,7 @@ const getListOfPrecints = (id) =>{
     
     firebase.firestore().collection("sites").where(chart, "==", id).onSnapshot((doc)=>{
       const data = [];
+     
       doc.docs.forEach(document => {
         const nb = {
           id: document.id,
@@ -148,10 +154,7 @@ const getBlocks = (id) =>{
    <Container maxWidth="xl">
       
    <Typography variant="h4" sx={{ mb: 5 }}> Neighborhoods</Typography>
-     {neighbourhood && neighbourhood ?
-        <Typography variant="body1" sx={{ mb: 5 }}>
-         {neighbourhood.neighbourhood} : {precinct && precinct.precint} : {blockId && blockId.block}</Typography> : <Typography variant="body1" sx={{ mb: 5 }}>Select a neighbourhood</Typography>}
-      
+       
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
  
@@ -201,7 +204,7 @@ const getBlocks = (id) =>{
         </Grid>
    
     <Grid container xs={10} gap={3} md={10}>  
-                <Grid container xs={12} gap={3} md={12}>
+                <Grid container xs={12} gap={3} md={12} style={{paddingLeft:20}}>
                 <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
     New Neighborhoods
       </Button>
@@ -245,7 +248,35 @@ const getBlocks = (id) =>{
       <AddNewBlock data={()=>setBlockOpen(false)} item={precinct}/>
       </Dialog>
 
-     {neighbourhood ? <Charts data={precinctData} nb={neighbourhood} chartType={selectedChart} />
+     {neighbourhood ?
+     <>
+     <Grid style={{paddingLeft:20}}>
+     <Breadcrumbs>
+     <Typography variant="body2"   sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.primary'
+                  }}>{neighbourhood && neighbourhood.neighbourhood}</Typography>
+         <Typography variant="body2"  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.primary'
+                  }}>{precinct && precinct.precint} </Typography>
+         <Typography variant="body2"  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'text.primary'
+                  }}>{blockId && blockId.block}</Typography> 
+           
+     </Breadcrumbs>
+  
+     <Typography variant='body2'>Showing {selectedChart ===0 && "Neighbourhood" ||
+      selectedChart ===1 && "Precinct" ||
+      selectedChart ===2 && "Block"} Charts</Typography>
+     </Grid>
+     <Charts data={precinctData} nb={neighbourhood} selected={selected} chartType={selectedChart} />
+     </>
+      
      :
      <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"80%", justifyContent:"center", alignItems:"center"}}>

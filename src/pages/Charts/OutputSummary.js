@@ -32,13 +32,14 @@ const OutputSummary =({data}) => {
     const theme = useTheme();
     const [graphSummaries, setgraphSummaries] = useState([])
     const [baselineEmissions, setbaselineEmissions] = useState([])
-    const [checked, setChecked] = useState(true)
+    const [checked, setChecked] = useState(false)
 
     let infrastructure = 0
     let transport = 0
     let energy = 0
     let gas = 0
 
+  
     useEffect(() => {
        getData(data)
     }, [data])
@@ -180,7 +181,7 @@ const OutputSummary =({data}) => {
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {s.data/1000}
+            {(s.data/1000).toFixed(2)}
           </Typography>
         </Box>
       </Box>

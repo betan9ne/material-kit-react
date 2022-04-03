@@ -28,7 +28,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const StationaryEnergyElectricityByEndUse =({nb}) => {
+const StationaryEnergyElectricityByEndUse =({nb, selected, chartType}) => {
     const theme = useTheme();
     const [Religous, setReligous] = useState([])
     const [Education, setEducation] = useState([])
@@ -49,12 +49,25 @@ const StationaryEnergyElectricityByEndUse =({nb}) => {
  
    useEffect(() => {
      viewSiteInfo()
-   }, [nb])
+   }, [nb, selected])
    
    
    function viewSiteInfo() {
     let data = [];
-    firebase.firestore().collection("sites").where("neighbourhood_id", "==", nb.id).where("model_tag", "==", "Buildings").get().then((doc) => {
+    let chart = null
+    if(chartType === 0 )
+    {
+      chart = "neighbourhood_id"
+    }
+    else if(chartType === 1 )
+    {
+      chart = "precinct_id"
+    }
+    else if(chartType === 2 )
+    {
+      chart = "block_id"
+    }
+    firebase.firestore().collection("sites").where(chart, "==", selected.id).where("model_tag", "==", "Buildings").get().then((doc) => {
       doc.docs.forEach(document => {
         const nb = {
           id: document.id,
@@ -312,7 +325,7 @@ const stackedData = {
   },
   tooltip: {
     y: {
-      formatter: (val) => `$${val}`
+      formatter: (val) => (val).toFixed(2)
     }
   }
 });

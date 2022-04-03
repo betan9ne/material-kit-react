@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader,Container, Grid, Button, Menu, MenuItem } from '@mui/material';
+import { Card, CardHeader,Typography, Grid, Button, Switch, Menu, MenuItem, Box } from '@mui/material';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //
@@ -35,26 +35,18 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const Inputs =({data}) => {
+const Inputs =({data,  selected, chartType}) => {
 
     const [isOpen, setOpen] = useState(null);
     const [isOpenList, setOpenList] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [isOpenMaxHeight, setOpenMaxHeight] = useState(null);
-  
-    const handleClick = (event) => {
-      setOpenMaxHeight(event.currentTarget);
+    const [checked, setChecked] = useState(false)
+
+    const handleChange = (event) => {
+      setChecked(event.target.checked);
     };
-  
-    const handleClickListItem = (event) => {
-      setOpenList(event.currentTarget);
-    };
-  
-    const handleMenuItemClick = (event, index) => {
-      setSelectedIndex(index);
-      setOpenList(null);
-    };
-  
+
     const handleOpen = (event) => {
       setOpen(event.currentTarget);
     };
@@ -81,7 +73,20 @@ const Inputs =({data}) => {
         let residential = []
         let traffic = []
         let transport = []
-        firebase.firestore().collection("sites").where("neighbourhood_id","==", data.id).get().then((doc)=>{
+        let chart = null
+        if(chartType === 0 )
+        {
+          chart = "neighbourhood_id"
+        }
+        else if(chartType === 1 )
+        {
+          chart = "precinct_id"
+        }
+        else if(chartType === 2 )
+        {
+          chart = "block_id"
+        }
+        firebase.firestore().collection("sites").where(chart,"==", selected.id).get().then((doc)=>{
             doc.docs.forEach(document => {
              const nb = {
                id: document.id,
@@ -157,7 +162,7 @@ const Inputs =({data}) => {
             
          getDataandLabels(asd)
         })
-    }, [data.id, tag])
+    }, [selected, tag])
 
     const showINfo = (tag) =>{
         settag(tag)
@@ -229,6 +234,37 @@ const Inputs =({data}) => {
       } >
       
       </CardHeader>
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <Switch 
+               checked={checked}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
+            />
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            </div>
+    {/* {checked ? 
+      <Grid container xs={12} spacing={1}>
+        
+        {_data.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s.label}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {s.data/1000}
+          </Typography>
+        </Box>
+      </Box>
+    
+  
+    </Card>
+          </Grid>
+        ))}
+      </Grid>
+      : */}
       <ChartWrapperStyle dir="ltr">
             
  

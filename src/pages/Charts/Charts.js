@@ -14,7 +14,7 @@ import StationaryEnergyElectricityByBuildingType from './StationaryEnergyElectri
 import StationaryEnergyElectricityByEndUse from './StationaryEnergyElectricityByEndUse';
 // ----------------------------------------------------------------------
 
-export default function Charts({data, nb, chartType}) {
+export default function Charts({data, nb, selected, chartType}) {
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -28,25 +28,25 @@ export default function Charts({data, nb, chartType}) {
             <CarbonEmissionsBaseline data={data}/>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-          <Inputs data={nb}/>
+          <Inputs data={nb} selected={selected} chartType={chartType}/>
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <TransportEmissions  nb={nb} chartType={chartType}/>
+            <TransportEmissions  nb={nb} selected={selected} chartType={chartType}/>
 
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-          <StationaryEnergyElectricity nb={nb}/>
+          <StationaryEnergyElectricity nb={nb} selected={selected} chartType={chartType}/>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <StationaryEnergyGas nb={nb} />
+            <StationaryEnergyGas nb={nb} selected={selected} chartType={chartType}/>
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <StationaryEnergyElectricityByBuildingType nb={nb} />
+            <StationaryEnergyElectricityByBuildingType nb={nb}  selected={selected} chartType={chartType} />
           </Grid>
           <Grid item xs={12} md={12} lg={12}>
-            <StationaryEnergyElectricityByEndUse nb={nb} />
+            <StationaryEnergyElectricityByEndUse nb={nb} selected={selected} chartType={chartType} />
           </Grid>
           {/* <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />

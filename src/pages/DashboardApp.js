@@ -13,7 +13,7 @@ import {
 
 } from '../sections/@dashboard/app';
 import { alpha, styled } from '@mui/material/styles';
-import { Card } from '@mui/material';
+import { Card, CardContent } from '@mui/material';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
@@ -44,10 +44,28 @@ export default function DashboardApp() {
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
-        <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome</Typography>
-        </Box>
-        <Grid container spacing={3}>
+   
+        <Grid container spacing={3} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Grid item xs={12} sm={12} md={12}>
+        <CardContent
+        sx={{
+          color: 'grey.800',
+          p: { md: 0 },
+          pl: { md: 5 }
+        }}
+      >
+        <Typography gutterBottom variant="h4">
+          Hi, Welcome,
+          <br /> to NetZero
+        </Typography>
+
+        <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
+         Welcome message for users when they open the website for the first time.
+        </Typography>
+
+  
+      </CardContent>
+        </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
@@ -65,7 +83,7 @@ export default function DashboardApp() {
                 <RootStyle>
             <Typography variant="h3">Neighborhoods</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              Neighborhoods
+              what is a Neighborhood?
             </Typography>
           </RootStyle>
           </Grid>
@@ -73,7 +91,7 @@ export default function DashboardApp() {
           <RootStyle>
             <Typography variant="h3">Precincts</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              Neighborhoods
+              What is a Precinct?
             </Typography>
           </RootStyle>
           </Grid>
@@ -81,7 +99,7 @@ export default function DashboardApp() {
           <RootStyle>
             <Typography variant="h3">Blocks</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              Neighborhoods
+              What is a Block?
             </Typography>
           </RootStyle>
           </Grid>
@@ -89,26 +107,11 @@ export default function DashboardApp() {
           <RootStyle>
             <Typography variant="h3">Sites</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              Neighborhoods
+              What is a Site?
             </Typography>
           </RootStyle>
           </Grid>
 
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid> */}
  
         </Grid>
       </Container>

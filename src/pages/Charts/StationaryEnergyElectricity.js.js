@@ -28,22 +28,35 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const StationaryEnergyElectricity =({nb}) => {
+const StationaryEnergyElectricity =({nb, selected, chartType}) => {
     const theme = useTheme();
     let asd=[]
     const [_data, setdata_] = useState([])
     const [labels, setlabels] = useState([])
     useEffect(() => {
-      viewSiteInfo(nb, "Buildings")
-    }, [nb])
+      viewSiteInfo(selected, "Buildings")
+    }, [nb, selected])
 
-    const viewSiteInfo = (nb, tag) =>{
+    const viewSiteInfo = (selected, tag) =>{
      
      let neighbourhood = [];
         let buildings = []
-   //     getPrecinctData(nb.id)
+
+        let chart = null
+        if(chartType === 0 )
+        {
+          chart = "neighbourhood_id"
+        }
+        else if(chartType === 1 )
+        {
+          chart = "precinct_id"
+        }
+        else if(chartType === 2 )
+        {
+          chart = "block_id"
+        }
        
-         firebase.firestore().collection("sites").where("neighbourhood_id","==", nb.id).get().then((doc)=>{
+         firebase.firestore().collection("sites").where(chart,"==", selected.id).get().then((doc)=>{
              doc.docs.forEach(document => {
               const nb = {
                 id: document.id,
