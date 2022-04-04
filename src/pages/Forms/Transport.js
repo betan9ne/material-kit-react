@@ -9,18 +9,24 @@ import { Form, FormikProvider } from 'formik';
 import firebase from './../../firebase'
 
 const  Transport = ({data}) => {
-  const [group, setgroup] = useState(data._group)
+
+  useEffect(() => {
+     
+  }, [data])
+  
   const [values, setValues] = useState({
-    ...data,
-    emissions:data.emissions,
-    _group:data._group
+    emissions:data.emissions
   });
   const updateData = () =>{
    
     firebase.firestore().collection("models").doc(data.id).update(
-       values
+       {
+         emissions: values.emissions,
+         
+       }
     ).then((doc)=>{
       alert("updated")
+      setValues(null)
     }).catch((e)=>{
       alert(e)
     })
@@ -34,19 +40,25 @@ const  Transport = ({data}) => {
     <>
     <Stack spacing={3}>
     <Stack direction={{ xs: 'column', sm: 'row' }}  spacing={{ xs: 3, sm: 2 }} >
+    <div>
+    <Typography>{data.emissions}</Typography>
     <TextField
       fullWidth
       label="Emissions"
       onChange={handleChange('emissions')}      
-      defaultValue={data.emissions}
+     
     />
-
+    </div>
+    {/* <div>
+    <Typography>{data._group}</Typography>
     <TextField
       fullWidth
       label="Fuel Type"
-      value={group}
+     
       onChange={handleChange('_group')}
     />
+    </div> */}
+    
     
   </Stack>
   

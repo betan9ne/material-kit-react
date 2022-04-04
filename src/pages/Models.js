@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useState, useEffect} from 'react';
 // material
-import { Container, Stack, Typography, Grid, TextField } from '@mui/material';
+import { Container, Stack, Typography, Grid, TextField, Button } from '@mui/material';
 // components
 import Page from '../components/Page';
 import useGetModels from 'src/hooks/useGetModels';
@@ -55,31 +55,32 @@ export default function Models() {
         </Typography>
 
         <Grid container spacing={3}>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={8} md={8}>
         {docs.map((tag)=>{
           return(
             <>
             <Typography variant="h5" sx={{ mb: 5 }}>
             {tag.l}
                   </Typography>
+                  <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
                   {tag.tag.map((t, index)=>{
                     return(
-                      <Typography onClick={()=>pickAModel(t)} variant="subtitle2" key={index} sx={{ mb: 5 }}>
+                      <Button onClick={()=>pickAModel(t)} variant="contained" color={t === selectedModel ? "primary" : "inherit"} style={{marginRight:20}}  key={index} sx={{ mb: 5 }}>
                       {t.model}
-                      </Typography>
+                      </Button>
                     )
                   })}
+                  </div>
                   </>
           )
          
         })}
         </Grid>
       
-      {selectedModel &&   <Grid item xs={6} md={6}>Update Values
+      {selectedModel &&   <Grid item xs={4} md={4}>Update Values
         <br/><br/>
-        <Typography variant="h5" sx={{ mb: 5 }}>
+        <Typography variant="h5" sx={{ mb: 6 }}>
             {selectedModel && selectedModel.model}
-            {/* {JSON.stringify(selectedModel)} */}
                   </Typography>
         {selectedModel && selectedModel.tag === "Infrastructure" && <Infrastructure data={selectedModel} />}
         {selectedModel && selectedModel.tag === "Buildings" && <Buildings data={selectedModel} />}

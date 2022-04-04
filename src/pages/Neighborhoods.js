@@ -154,10 +154,13 @@ const getBlocks = (id) =>{
    <Container maxWidth="xl">
       
    <Typography variant="h4" sx={{ mb: 5 }}> Neighborhoods</Typography>
-       
+
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
- 
+      <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
+    New Neighborhoods
+      </Button><br/><br/>
+    
       {/* get list of neightbourhoods */}
            {docs.map((item, index) => (
             <Accordion
@@ -205,9 +208,7 @@ const getBlocks = (id) =>{
    
     <Grid container xs={10} gap={3} md={10}>  
                 <Grid container xs={12} gap={3} md={12} style={{paddingLeft:20}}>
-                <Button variant="outlined" color="warning" onClick={()=>setOpen(true)}>
-    New Neighborhoods
-      </Button>
+     
       {neighbourhood && <Button
               variant="contained"
                onClick={()=>setPrecinctOpen(true)}
