@@ -53,7 +53,7 @@ const Buildings = ({data}) => {
   return (
       <>
        <Stack spacing={3}>
-       {data.id}
+      
     <Stack direction={{ xs: 'column', sm: 'row' }}  spacing={{ xs: 3, sm: 2 }} >
     <div>
     <Typography>{data.appliances}</Typography>

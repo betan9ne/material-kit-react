@@ -56,7 +56,7 @@ export default function DashboardApp() {
       >
         <Typography gutterBottom variant="h4">
           Hi, Welcome,
-          <br /> to NetZero
+          <br /> to EcoDistricts
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>

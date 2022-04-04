@@ -190,6 +190,7 @@ const Inputs =({data,  selected, chartType}) => {
         setlabels(label)
     }
 
+    console.log(fullData)
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
           theme.palette.primary.main,
@@ -242,34 +243,42 @@ const Inputs =({data,  selected, chartType}) => {
             />
             <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
             </div>
-    {/* {checked ? 
-      <Grid container xs={12} spacing={1}>
+    {checked ? 
+      <Grid style={{display:"flex", height:420, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} container xs={12} spacing={1}>
         
-        {_data.map((s) => (
+      <Grid   item xs={8} md={8}>
+        {fullData.labels.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>
           <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
         <Typography variant="subtitle2" noWrap>
-          {s.label}
+          {s}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {s.data/1000}
-          </Typography>
-        </Box>
-      </Box>
-    
-  
-    </Card>
+          </Box> </Card>
           </Grid>
         ))}
+        </Grid>
+
+        <Grid   item xs={4} md={4}>
+        {fullData.data.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s}
+        </Typography>
+          </Box> </Card>
+          </Grid>
+        ))}
+        </Grid>
+
       </Grid>
-      : */}
+      :
       <ChartWrapperStyle dir="ltr">
             
  
         <ReactApexChart type="pie" series={_data} options={chartOptions2} height={280} />
-      </ChartWrapperStyle>
+      </ChartWrapperStyle>}
     </Card>    
 </>
             

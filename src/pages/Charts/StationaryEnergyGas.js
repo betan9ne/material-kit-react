@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader,Container, Grid } from '@mui/material';
+import { Card, CardHeader,Container, Grid, Box, Switch, Typography } from '@mui/material';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //
@@ -30,10 +30,9 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 const StationaryEnergyGas =({nb, selected, chartType}) => {
     const theme = useTheme();
-    let asd=[]
-    const [_data, setdata_] = useState([])
-    const [labels, setlabels] = useState([])
+  
     const [gasData, setgasData] = useState()
+    const [checked, setChecked] = useState(false)
     useEffect(() => {
       viewSiteInfo(selected, "Gas")
     }, [nb, selected])
@@ -131,15 +130,52 @@ const StationaryEnergyGas =({nb, selected, chartType}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
+
+      const handleChange = (event) => {
+        setChecked(event.target.checked);
+      };
+
   return (
     <>
     {gasData &&  <Card>
       <CardHeader title="Stationary Energy (Gas)" />
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <Switch 
+               checked={checked}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
+            />
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            </div>
+            {checked ? 
+      <Grid container xs={12} spacing={1}>
+        
+        {gasData.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s.label}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {(s.data).toFixed(2)}
+          </Typography>
+        </Box>
+      </Box>
+    
+  
+    </Card>
+          </Grid>
+        ))}
+      </Grid>
+    
+     :  
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={gasData.map((a)=>(
               a.data
             ))} options={chartOptions2} height={280} />
-      </ChartWrapperStyle>
+      </ChartWrapperStyle>}
     </Card>    }
 </>
             

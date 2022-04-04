@@ -169,7 +169,7 @@ const getBlocks = (id) =>{
               onChange={handleChangeControlled(item)}
             >
               <AccordionSummary >
-                <Typography variant="h6" noWrap={false} sx={{  }}>
+                <Typography variant="subtitle1" noWrap={false} sx={{  }}>
                   {item.neighbourhood}
                 </Typography> 
               </AccordionSummary>

@@ -147,27 +147,35 @@ const TransportEmissions =({nb, selected, chartType}) => {
             </div>
 
             {checked ? 
-      <Grid container xs={12} spacing={1}>
-        
+      <Grid container xs={12} style={{height:420, overflowY:"scroll",}} >
+      
+      <Grid   item xs={8} md={8}>
+        {labels.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s}
+        </Typography>
+      </Box>
+    </Card>
+          </Grid>
+        ))}
+        </Grid>
+
+      <Grid   item xs={4} md={4}>
         {_data.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>
           <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
         <Typography variant="subtitle2" noWrap>
-          {s.label}
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {(s.data/1000).toFixed(2)}
-          </Typography>
-        </Box>
+          {s}
+        </Typography>        
       </Box>
-    
-  
     </Card>
           </Grid>
         ))}
-      </Grid>
+        </Grid> </Grid>
     
      :
       <ChartWrapperStyle dir="ltr">

@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader,Container, Grid } from '@mui/material';
+import { Card, CardHeader,Typography, Switch, Box, Grid } from '@mui/material';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //
@@ -33,6 +33,7 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
     let asd=[]
     const [_data, setdata_] = useState([])
     const [labels, setlabels] = useState([])
+    const [checked, setChecked] = useState(false)
     useEffect(() => {
       viewSiteInfo(selected, "Buildings")
     }, [nb, selected])
@@ -128,16 +129,59 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-   
+      const handleChange = (event) => {
+        setChecked(event.target.checked);
+      };
   return (
     <>
      <Card>
       <CardHeader title="Stationary Energy (Electricity)" />
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <Switch 
+               checked={checked}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
+            />
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            </div>
+
+            {checked ? 
+      <Grid container xs={12} style={{height:420, overflowY:"scroll",}} >
+      
+      <Grid   item xs={8} md={8}>
+        {labels.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s}
+        </Typography>
+      </Box>
+    </Card>
+          </Grid>
+        ))}
+        </Grid>
+
+      <Grid   item xs={4} md={4}>
+        {_data.map((s) => (
+          <Grid key={s.id} item xs={12} md={12}>
+          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
+        <Typography variant="subtitle2" noWrap>
+          {s}
+        </Typography>        
+      </Box>
+    </Card>
+          </Grid>
+        ))}
+        </Grid> </Grid>
+    
+     :
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={_data.map((a)=>(
               a
             ))} options={chartOptions2} height={280} />
-      </ChartWrapperStyle>
+      </ChartWrapperStyle>}
     </Card>    
 </>
             
