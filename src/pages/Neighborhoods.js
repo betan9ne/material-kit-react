@@ -4,7 +4,7 @@ import { useState} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Container, Accordion, AccordionSummary, Card, Breadcrumbs, Button, Typography, Grid,
-   Dialog, } from '@mui/material';
+   Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 // components
 import Page from '../components/Page';
 
@@ -20,10 +20,13 @@ import Loader from 'src/components/Loader';
 function Neighborhoods() {
 
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [openPrecinct, setPrecinctOpen] = useState(false);
   const [openBlock, setBlockOpen] = useState(false);
 
-
+  const handleDeleteClose = () => {
+    setOpenDelete(false);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -133,6 +136,30 @@ const getListOfPrecints = (id) =>{
    })
   }
 
+const deleteRecord = (id) =>{
+  let collection = null
+  if(selectedChart === 0 )
+  {
+    collection = "neighbourhood"
+  }
+  else if(selectedChart === 1 )
+  {
+    collection = "precinct"
+  }
+  else if(selectedChart === 2 )
+  {
+    collection = "blocks"
+  }
+
+  firebase.firestore().collection(collection).doc(id).delete().then(()=>{
+    alert("Record was deleted successfully")
+    setOpenDelete(false)
+    window.location.reload()
+  }).catch((e)=>{
+    alert(e)
+  })
+}
+
 const getBlocks = (id) =>{
   firebase.firestore().collection("blocks").where("precinct_id","==", id).onSnapshot((doc)=>{
     const neighbourhood = [];
@@ -151,9 +178,26 @@ const getBlocks = (id) =>{
   return (
     <Page title="Dashboard">
 
+{/* are you sure you weant to dleete this item */}
+<Dialog open={openDelete} onClose={handleDeleteClose}>
+        <DialogTitle>Delete Record</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Are you sure you want to delete this record from the database.
+         
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteClose}>Cancel</Button>
+          <Button onClick={()=>deleteRecord(selected.id)} autoFocus>
+            Approve
+          </Button>
+        </DialogActions>
+      </Dialog>
+{/* end of dialog box */}
    <Container maxWidth="xl">
       
-   <Typography variant="h4" sx={{ mb: 5 }}> Neighborhoods</Typography>
+   <Typography variant="h4" sx={{ mb: 5 }}>Neighborhoods</Typography>
 
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
@@ -169,31 +213,39 @@ const getBlocks = (id) =>{
               onChange={handleChangeControlled(item)}
             >
               <AccordionSummary >
-                <Typography variant="subtitle1" noWrap={false} sx={{  }}>
-                  {item.neighbourhood}
-                </Typography> 
+              <Button variant="contained" style={{width:"100%"}} color={item && neighbourhood && item.id === neighbourhood.id ? "primary" : "inherit"} >
+              {item.neighbourhood}
+              </Button>
+           
               </AccordionSummary>
 
           {/* get list of precinct based on neighbourhood id */}
-              {precinctList && precinctList.length === 0 ? <Typography variant='body1'>Collecting data</Typography> :  precinctList.map((precinct, index)=>(
+              {precinctList &&  precinctList.length === 0 ? <Typography variant='body1'>Collecting data</Typography> :  precinctList.map((precinct_, index)=>(
               <Accordion
-              key={precinct.id}
-              expanded={precinctcontrolled === precinct.id}
-              onChange={handlePrecinctChangeControlled(precinct)}
+              key={precinct_.id}
+              expanded={precinctcontrolled === precinct_.id}
+              onChange={handlePrecinctChangeControlled(precinct_)}
             >
              <AccordionSummary >
-              <Typography variant="subtitle1"  noWrap={false} sx={{  flexShrink: 0,  color: 'text.disabled' }}>{precinct.precint}</Typography>
+             <Button variant="contained" style={{width:"100%", marginLeft:20}} color={precinct && precinct_.id === precinct.id ? "secondary" : "inherit"} >
+              {precinct_.precint}
+              </Button>
+           
+              
               </AccordionSummary>
            
                   {/* get list of blicks based on Precinct id */}
-              {blockList && blockList.length === 0 ? <Typography variant='body1'>Collecting Data</Typography>  :  blockList.map((block, index)=>(
+              {blockList && blockList.length === 0 ? <Typography variant='body1'>Collecting Data</Typography>  :  blockList.map((block_, index)=>(
               <Accordion
-              key={block.id}
-              expanded={blockcontrolled === block.id}
-              onChange={handleBlockChangeControlled(block)}
+              key={block_.id}
+              expanded={blockcontrolled === block_.id}
+              onChange={handleBlockChangeControlled(block_)}
             >
               <AccordionSummary >
-              <Typography variant="subtitle2" sx={{  flexShrink: 0,  color: 'warning.main' }}>{block.block}</Typography>
+              <Button variant="contained" style={{width:"100%", marginLeft:40}} color={blockId && block_.id === blockId.id ? "warning" : "inherit"} >
+              {block_.block}
+              </Button>
+              
               </AccordionSummary>
            
             </Accordion>
@@ -209,12 +261,17 @@ const getBlocks = (id) =>{
     <Grid container xs={10} gap={3} md={10}>  
                 <Grid container xs={12} gap={3} md={12} style={{paddingLeft:20}}>
      
-      {neighbourhood && <Button
+      {neighbourhood &&
+      <>
+      <Button
               variant="contained"
                onClick={()=>setPrecinctOpen(true)}
             >
               Add Precinct
-            </Button>}
+            </Button>
+    
+            </> 
+            }
 
       {precinct && <Button
               variant="contained"
@@ -231,7 +288,20 @@ const getBlocks = (id) =>{
             >
               Update Values
             </Button>}
-
+            
+            {
+              neighbourhood &&
+              <Button
+              variant="contained"
+               onClick={()=>setOpenDelete(true)}
+               color="error"
+            >
+              Delete {selectedChart === 0 && neighbourhood.neighbourhood}
+              {selectedChart === 1 && precinct.precint}
+              {selectedChart === 2 && blockId.block}
+            </Button>}
+            
+          
                 </Grid>
 
                 {/* add a new neighborhood */}
@@ -271,11 +341,11 @@ const getBlocks = (id) =>{
            
      </Breadcrumbs>
   
-     <Typography variant='body2'>Showing {selectedChart ===0 && "Neighbourhood" ||
-      selectedChart ===1 && "Precinct" ||
-      selectedChart ===2 && "Block"} Charts</Typography>
+     <Typography variant='body2'>Showing {selectedChart ===0 && "Neighbourhood"}
+      {selectedChart ===1 && "Precinct"}
+      {selectedChart ===2 && "Block"} Charts</Typography>
      </Grid>
-     <Charts data={precinctData} nb={neighbourhood} selected={selected} chartType={selectedChart} />
+      <Charts data={precinctData} nb={neighbourhood} selected={selected} chartType={selectedChart} />
      </>
       
      :

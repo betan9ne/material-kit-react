@@ -148,7 +148,7 @@ function UpdateValues() {
           </Typography>
         </Box>
       </Box>
-    
+{/*     
       <Button
         size="small"
         onClick={()=>alert(s.model)}
@@ -157,7 +157,7 @@ function UpdateValues() {
        
       >
       Edit
-      </Button>
+      </Button> */}
     </Card>
           </Grid>
         ))}

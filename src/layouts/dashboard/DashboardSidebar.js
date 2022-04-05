@@ -18,7 +18,7 @@ import sidebarConfigAdmin from './SidebarConfigAdmin';
 import firebase from './../../firebase'
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 220;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {

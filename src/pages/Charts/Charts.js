@@ -48,29 +48,6 @@ export default function Charts({data, nb, selected, chartType}) {
           <Grid item xs={12} md={12} lg={12}>
             <StationaryEnergyElectricityByEndUse nb={nb} selected={selected} chartType={chartType} />
           </Grid>
-          {/* <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
-          </Grid> */}
-
-         
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid> */}
- 
         </Grid>
       </Container>
     </Page>
