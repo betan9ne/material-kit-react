@@ -76,7 +76,7 @@ export default function User() {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   let USERLIST = useUsers().docs
   const handleRequestSort = (event, property) => {
@@ -138,14 +138,7 @@ export default function User() {
           <Typography variant="h4" gutterBottom>
             Users
           </Typography>
-          {/* <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            New User
-          </Button> */}
+    
         </Stack>
 
         <Card>
@@ -179,13 +172,11 @@ export default function User() {
                           hover
                           key={id}
                           tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
+                      
                         >
-                          <TableCell padding="checkbox">
+                          {/* <TableCell padding="checkbox">
                         
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
                                <Typography variant="subtitle2" noWrap>
@@ -195,11 +186,7 @@ export default function User() {
                           </TableCell>
                           <TableCell align="left">{lastName}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{admin ? 'Yes' : 'No'}</TableCell>
-                          
-                          <TableCell align="right">
-                            <UserMoreMenu />
-                          </TableCell>
+                          <TableCell align="left">{admin ? 'Yes' : 'No'}</TableCell>   
                         </TableRow>
                       );
                     })}

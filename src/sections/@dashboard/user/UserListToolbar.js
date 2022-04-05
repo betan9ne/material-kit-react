@@ -68,7 +68,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
           }
         />
       )}
-
+{/* 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
@@ -81,7 +81,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
             <Iconify icon="ic:round-filter-list" />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </RootStyle>
   );
 }

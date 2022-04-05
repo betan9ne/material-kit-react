@@ -15,6 +15,7 @@ import Models from './pages/Models';
 import Constants from './pages/Constants';
 import Neighborhoods from './pages/Neighborhoods';
 import UpdateValues from './pages/UpdateValues';
+import ResetPasswordForm from './pages/ResetPasswordForm';
  
 
 // ----------------------------------------------------------------------
@@ -30,6 +31,7 @@ export default function LoginRoutes() {
         children: [
           { path: '/', element:<Login /> },  
           { path: '/register', element:<Register /> },  
+          { path: '/reset_password', element:<ResetPasswordForm /> },  
            ]
       }
     ]);

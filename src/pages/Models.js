@@ -49,13 +49,13 @@ export default function Models() {
 
   return (
     <Page title="Dashboard">
-      <Container>
+      <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           Models
         </Typography>
 
         <Grid container spacing={3}>
-        <Grid item xs={8} md={8}>
+        <Grid item xs={9} md={9}>
         {docs.map((tag)=>{
           return(
             <>
@@ -77,7 +77,7 @@ export default function Models() {
         })}
         </Grid>
       
-      {selectedModel &&   <Grid item xs={4} md={4}>Update Values
+      {selectedModel &&   <Grid item xs={3} md={3}>Update Values
         <br/><br/>
         <Typography variant="h5" sx={{ mb: 6 }}>
             {selectedModel && selectedModel.model}

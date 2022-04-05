@@ -54,6 +54,7 @@ const [user, setuser] = useState(null)
   const logout = () =>{
     firebase.auth().signOut().then(()=>{
      console.log("logged out")
+     window.location.reload(false)
      navigate("/")
     })
   }

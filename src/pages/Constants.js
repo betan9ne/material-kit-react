@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useState, useEffect} from 'react';
 // material
-import { Container, Stack, Typography, Grid, TextField } from '@mui/material';
+import { Container, Stack, Typography, Button, Grid, TextField } from '@mui/material';
 // components
 import Page from '../components/Page';
 import useGetModels from 'src/hooks/useGetModels';
@@ -63,9 +63,9 @@ function Constants() {
       <Grid item xs={6} md={6}>      
           <>  {docs.map((t, index)=>{
                     return(
-                      <Typography onClick={()=>pickAModel(t)} variant="subtitle2" key={index} sx={{ mb: 5 }}>
+                      <Button variant="contained" color={t === selectedModel ? "primary" : "inherit"} style={{marginRight:20}}  onClick={()=>pickAModel(t)}  key={index} sx={{ mb: 5 }}>
                       {t.type}
-                      </Typography>
+                      </Button>
                     )
                   })}
                 </>     

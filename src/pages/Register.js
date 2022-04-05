@@ -44,14 +44,7 @@ export default function Register() {
       <AuthLayout>
       
       </AuthLayout>
-
-      {/* <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-           
-        </Typography>
-     
-      </SectionStyle> */}
-
+ 
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 5 }}>

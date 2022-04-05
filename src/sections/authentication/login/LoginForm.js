@@ -104,7 +104,7 @@ const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
           <Link component={RouterLink} variant="subtitle2" to="/register" underline="hover">
             Create an Account
           </Link>
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
+          <Link component={RouterLink} variant="subtitle2" to="/reset_password" underline="hover">
             Forgot password?
           </Link>
         </Stack>
