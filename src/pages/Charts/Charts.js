@@ -21,12 +21,13 @@ export default function Charts({data, nb, selected, chartType}) {
         <Grid container spacing={3}>
         
         <Grid item xs={12} md={6} lg={4}>
-            <OutputSummary data={data}/>
-          
+            <OutputSummary data={data}/>          
           </Grid>
+
           <Grid item xs={12} md={6} lg={4}>
             <CarbonEmissionsBaseline data={data}/>
           </Grid>
+
           <Grid item xs={12} md={6} lg={4}>
           <Inputs data={nb} selected={selected} chartType={chartType}/>
           </Grid>

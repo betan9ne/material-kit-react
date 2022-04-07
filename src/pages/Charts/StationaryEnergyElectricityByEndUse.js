@@ -312,6 +312,9 @@ const stackedData = {
       toolbar:{
         show:true
       },
+      animations: {
+        enabled: false
+      }
     },
   stroke: {
     show: true,

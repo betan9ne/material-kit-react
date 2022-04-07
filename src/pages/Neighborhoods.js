@@ -51,9 +51,11 @@ const [blockList, setblockList] = useState([])
   //utils
     const [selectedChart, setselectedChart] = useState(null)
     const [selected, setselected] = useState(null)
+    const [status, setstatus] = useState(false)
 
   // when the neighborhood is clicked.
   const handleChangeControlled = (panel) => (event, isExpanded) => {
+    setstatus(true)
     setselectedChart(0)
     setselected(panel)
     setblockId(null)
@@ -63,7 +65,7 @@ const [blockList, setblockList] = useState([])
     getPrecinctData(panel.id, 0)
     getListOfPrecints(panel.id)
     setControlled(isExpanded ? panel.id : false);
- 
+ setstatus(false)
   };
 
   // wheen the precinct is clicked

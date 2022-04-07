@@ -110,6 +110,9 @@ const CarbonEmissionsBaseline =({data}) => {
           theme.palette.warning.main,
           theme.palette.error.main
         ],
+        animations: {
+          enabled: false
+        },
         labels: baselineEmissions.map((a)=>(
             a.label
           )),

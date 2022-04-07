@@ -199,6 +199,9 @@ setAppliances(appliances)
           toolbar:{
             show:true
           },
+          animations: {
+            enabled: false
+          }
         },
       stroke: {
         show: true,

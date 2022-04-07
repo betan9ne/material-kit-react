@@ -113,6 +113,9 @@ const OutputSummary =({data}) => {
         labels: graphSummaries.map((a)=>(
             a.label
           )),
+          animations: {
+            enabled: false
+          },
         stroke: { colors: [theme.palette.background.paper] },
         legend: { floating: true, horizontalAlign: 'center' },
         dataLabels: { enabled: true, dropShadow: { enabled: false } },

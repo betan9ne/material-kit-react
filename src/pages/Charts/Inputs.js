@@ -198,6 +198,9 @@ const Inputs =({data,  selected, chartType}) => {
           theme.palette.warning.main,
           theme.palette.error.main
         ],
+        animations: {
+          enabled: false
+        },
         labels: labels,
         stroke: { colors: [theme.palette.background.paper] },
         legend: { floating: true, horizontalAlign: 'center' },
@@ -246,7 +249,7 @@ const Inputs =({data,  selected, chartType}) => {
     {checked ? 
       <Grid style={{display:"flex", height:420, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} container xs={12} spacing={1}>
         
-      <Grid   item xs={8} md={8}>
+      <Grid   item xs={7} md={7}>
         {fullData.labels.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>
           <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
@@ -259,7 +262,7 @@ const Inputs =({data,  selected, chartType}) => {
         ))}
         </Grid>
 
-        <Grid   item xs={4} md={4}>
+        <Grid   item xs={5} md={5}>
         {fullData.data.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>
           <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>

@@ -111,6 +111,9 @@ const StationaryEnergyGas =({nb, selected, chartType}) => {
           theme.palette.warning.main,
           theme.palette.error.main
         ],
+        animations: {
+          enabled: false
+        },
         labels: gasData && gasData.map((a)=>(
             a.label
           )),
