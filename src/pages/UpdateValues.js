@@ -2,9 +2,9 @@
 import { useState, useEffect} from 'react';
 
 // material
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import {Link,  Link as RouterLink, useLocation } from 'react-router-dom';
 
-import { Container, Card, Box, Link, Button, Dialog, Typography, Grid, Breadcrumbs, } from '@mui/material';
+import { Container, Card, Box, Button, Dialog, Typography, Grid, Breadcrumbs, } from '@mui/material';
 // components
 import Page from '../components/Page';
 
@@ -73,9 +73,10 @@ function UpdateValues() {
             Update {data}
       </Typography>
       <Breadcrumbs>
-                <Link color="inherit" href="/neighborhoods" sx={{ display: 'flex', alignItems: 'center' }}>
-                     Neighborhoods
-                </Link>
+      <Link  to="/Blocks"
+            state={{data:location.state.data}}
+             style={{ display: 'flex', color:"inherit", textDecoration:"none", justifyContent:"center", alignItems:"center" }}>
+               {data}        </Link>
                 <Typography
                   sx={{
                     display: 'flex',
@@ -105,7 +106,7 @@ function UpdateValues() {
       <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
         <Typography variant="subtitle2" noWrap>
-          { tag.model}
+          { tag.model} 
         </Typography>
         
       </Box>

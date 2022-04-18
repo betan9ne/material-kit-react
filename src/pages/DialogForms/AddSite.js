@@ -8,13 +8,14 @@ import { Button, Dialog, Container, Typography,  TextField, DialogTitle, DialogC
 import firebase from '../../firebase'
 
 function AddSite({model, block, data}) {
+   
     let constantData = useConstants().docs
     const [values, setValues] = useState();
     const [scopeValue, setscopeValue] = useState("")
     const [modelInput1, setmodelInput1] = useState("")
       
     const handleChange = (value, category, tag) => {
-        console.log(value, category)
+       
         if(tag === 2){
             setmodelInput1(value)
         }
@@ -25,7 +26,7 @@ function AddSite({model, block, data}) {
        //     setcategory(category)
       }
 
-      console.log(model, block, data)
+
       const calculate  =() =>{
    
         let electricity = constantData[2].value 

@@ -25,7 +25,8 @@ export default function Charts({data, nb, selected, chartType}) {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <CarbonEmissionsBaseline data={data}/>
+          
+          <CarbonEmissionsBaseline data={data}/>
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>

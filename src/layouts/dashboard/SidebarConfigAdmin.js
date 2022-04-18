@@ -12,8 +12,8 @@ const sidebarConfig = [
     icon: getIcon('eva:pie-chart-2-fill')
   },
   {
-    title: 'Neighborhoods',
-    path: '/Neighborhoods',
+    title: 'Projects',
+    path: '/Projects',
     icon: getIcon('eva:people-fill')
   },
   {
