@@ -9,6 +9,11 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from '../../firebase';
+import Iconify from '../../components/Iconify';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} color={"red"} width={30} height={30} />;
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
@@ -142,13 +147,16 @@ const StationaryEnergyGas =({nb, selected, chartType}) => {
     <>
     {gasData &&  <Card>
       <CardHeader title="Stationary Energy (Gas)" />
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <div style={{display:"flex", justifyContent:"space-between",  marginLeft:15, marginRight:15,alignItems:"center"}}>
+      {getIcon('mdi:gas-burner')} 
+      <div>
             <Switch 
                checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
             />
             <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            </div>
             </div>
             {checked ? 
       <Grid container xs={12} spacing={1}>

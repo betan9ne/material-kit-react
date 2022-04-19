@@ -28,7 +28,7 @@ const [user, setuser] = useState(null)
   useEffect(() => {
     firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((doc)=>{
       setuser(doc.data())
-      console.log(doc.data())
+    
   })
   }, [])
   
@@ -40,9 +40,9 @@ const [user, setuser] = useState(null)
       children: [
         { path: '/', element: <DashboardApp /> },
         { path: '/Projects', element: <Projects /> },
-        { path: '/Neighborhoods', element: <Neighborhoods /> },
-        { path: '/Precincts', element: <Precincts /> },
-        { path: '/Blocks', element: <Blocks /> },
+        { path: '/Neighborhoods/:id', element: <Neighborhoods /> },
+        { path: '/Precincts/:id', element: <Precincts /> },
+        { path: '/Blocks/:id', element: <Blocks /> },
         { path: '/models', element: user && user.admin ? <Models /> :  <Navigate to="/404" /> },
  
         { path: 'constants', element: user && user.admin ? <Constants/>  :  <Navigate to="/404" /> },

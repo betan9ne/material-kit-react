@@ -9,6 +9,11 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from '../../firebase';
+import Iconify from '../../components/Iconify';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
@@ -102,7 +107,7 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
   }
   
  
-   
+  
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
           theme.palette.primary.main,
@@ -138,14 +143,18 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
   return (
     <>
      <Card>
-      <CardHeader title="Stationary Energy (Electricity)" />
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <Switch 
+
+      <CardHeader title={"Stationary Energy (Electricity)"} />
+     
+      <div style={{display:"flex", justifyContent:"space-between",  marginLeft:15, marginRight:15,alignItems:"center"}}>
+      {getIcon('healthicons:electricity')}
+            
+            <div><Switch 
                checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
             />
-            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
 
             {checked ? 

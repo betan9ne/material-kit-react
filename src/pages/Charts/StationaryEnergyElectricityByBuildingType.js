@@ -9,8 +9,8 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from './../../firebase'
-const CHART_HEIGHT = 372;
-const LEGEND_HEIGHT = 72;
+const CHART_HEIGHT = 482;
+const LEGEND_HEIGHT = 42;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
@@ -40,6 +40,7 @@ const StationaryEnergyElectricityByBuildingType =({nb, selected, chartType}) => 
   const [cooling, setCooling] = useState([])
   const [space_heating, setSpaceHeating] = useState([])
   const [water_heating, setWaterHeating] = useState([])
+  
 
   useEffect(() => {
     viewSiteInfo()
@@ -148,42 +149,42 @@ setAppliances(appliances)
         {
           name: 'Lighting External',
           data: lighting_external.map((b)=>(
-            (b).toFixed(2)
+            (b/100).toFixed(2)
           )),
 
         },
         {
           name: 'Appliances',
           data: appliances.map((a)=>(
-            (a).toFixed(2)
+            (a/100).toFixed(2)
           )),
 
         },
         {
           name: 'Space Heating',
           data: space_heating.map((a)=>(
-            (a).toFixed(2)
+            (a/100).toFixed(2)
           )),
  
         },
           {
             name: 'Cooling',
           data: cooling.map((a)=>(
-           ( a).toFixed(2)
+           (a/100).toFixed(2)
           )),
 
         },
         {
           name: 'Water heating',
           data: water_heating.map((a)=>(
-            (a).toFixed(2)
+            (a/100).toFixed(2)
           )),
 
         },
         {
           name: 'Cooking',
           data: cooking.map((a)=>(
-            (a).toFixed(2)
+            (a/100).toFixed(2)
           ))
         },  
       ]
@@ -194,7 +195,7 @@ setAppliances(appliances)
       
         chart: {
           type: 'bar',
-          height: 400,
+          height: 500,
           stacked: true,
           toolbar:{
             show:true
@@ -255,7 +256,7 @@ setAppliances(appliances)
      <Card>
       <CardHeader title="Stationery Energy (Electricity) By Building Type" />
       <ChartWrapperStyle dir="ltr">
-      <ReactApexChart options={chartOptions} series={state.series} type="bar" height={300} />
+      <ReactApexChart options={chartOptions} series={state.series} type="bar" height={400} />
       </ChartWrapperStyle>
     </Card>    
 </>

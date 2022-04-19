@@ -8,6 +8,11 @@ import { Card, CardHeader,Box,Switch, Typography, Grid } from '@mui/material';
 import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
+import Iconify from '../../components/Iconify';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
@@ -164,13 +169,15 @@ const OutputSummary =({data}) => {
     <>
      <Card>
       <CardHeader title="GHG Emissions - Baseline" />
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <div style={{display:"flex", justifyContent:"space-between", marginLeft:15, marginRight:15, alignItems:"center"}}>
+      {getIcon('ic:round-eco')}
+      <div>
             <Switch 
                checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
             />
-            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
     {checked ? 
       <Grid container xs={12} spacing={1}>

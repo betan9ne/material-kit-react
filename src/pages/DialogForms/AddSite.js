@@ -42,7 +42,7 @@ function AddSite({model, block, data}) {
                 model_tag: model.tag,
                 modeInput: modelInput1,
                 scopeValue : scopeValue,
-                total: scopeValue * modelInput1 * model.emissions
+                total: scopeValue * modelInput1
             }
             console.log(asd)
             //end of transport object
@@ -58,15 +58,17 @@ function AddSite({model, block, data}) {
             block_id: block.id,
             model:model.model,
             model_tag: model.tag,
-            scopeValue : scopeValue,
-            total: scopeValue * model.watts * model.hours
+            scopeValue :  parseFloat(scopeValue),
+            total: scopeValue * parseFloat(model.watts) *  parseFloat(model.hours)
         }
+        console.log(asd,  model.watts, model.hours)
         //end of infrastrucure object
        sendToDB(asd)
         return
         }
 else if(model.tag === "Residential Pools")
 {
+    let electricity = constantData[2].value 
             //residential  object
             let asd = {
                 precinct_id: block.precinct_id,
@@ -74,9 +76,10 @@ else if(model.tag === "Residential Pools")
                 block_id: block.id,
                 model:model.model,
                 model_tag: model.tag,
-                scopeValue : scopeValue,
-                total: scopeValue * model.watts * model.hours *electricity
+                scopeValue : parseFloat(scopeValue),
+                total: parseFloat(scopeValue) * model.watts * model.hours * electricity
             }
+            console.log(asd,  model.watts, model.hours)
             sendToDB(asd)
             //end of residential object
 }
@@ -84,8 +87,8 @@ else if(model.tag === "Residential Pools")
         else if(model.tag=== "Buildings")
         {
   //buildings object
-  let f1 = (parseInt(scopeValue) * parseInt(model.electricity) * electricity)
-  let f2 = (parseInt(scopeValue) * parseInt(model.gas) * gas)
+  let f1 = (parseFloat(scopeValue) * parseFloat(model.electricity) * electricity)
+  let f2 = (parseFloat(scopeValue) * parseFloat(model.gas) * gas)
   let asd = {
       precinct_id: block.precinct_id,
       neighbourhood_id: block.neighbourhood_id,
@@ -93,8 +96,8 @@ else if(model.tag === "Residential Pools")
       model:model.model,
       model_tag: model.tag,
       scopeValue : scopeValue,
-      total_carbon_emissions_electricity : parseInt(scopeValue) * parseInt(model.electricity) * electricity,
-      lighting :f1 * model.lighting,
+      total_carbon_emissions_electricity : parseFloat(scopeValue) * parseFloat(model.electricity) * electricity,
+      lighting :f1 * model.lighting/100,
       lighting_external : f1*model.lighting_external/100,
       appliances : f1*model.appliances/100,
       space_heating : f1*model.space_heating/100,
@@ -104,8 +107,9 @@ else if(model.tag === "Residential Pools")
       cooking: f1*model.cooking/100,
       gas_water_heating: f2*model.gas_water_heating/100,
       gas_cooking: f2*model.gas_cooking/100,
-      total_carbon_emissions_gas : parseInt(scopeValue) * parseInt(model.gas) * gas,     
+      total_carbon_emissions_gas : parseFloat(scopeValue) * parseFloat(model.gas) * gas,     
   }
+  console.log(asd)
   //end of buildings
  sendToDB(asd)
  return
@@ -166,7 +170,7 @@ else if(model.tag === "Residential Pools")
             {model.tag === "Infrastructure" ? <>
             <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model)}
-                    variant="outlined" label="Enter number of street lights" />
+                    variant="outlined" label="Enter number of lights" />
                           </> : <>            
                              
             </>
@@ -176,6 +180,10 @@ else if(model.tag === "Residential Pools")
             <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model)}
                     variant="outlined" label="Enter area" />
+                {/* <TextField autoFocus fullWidth type="number" margin="dense"
+                onChange={(e) => handleChange(e.target.value, model, 2)}
+                    variant="outlined" label="Enter number of Kms annually" /> */}
+
                      </> : <>            
                              
             </>

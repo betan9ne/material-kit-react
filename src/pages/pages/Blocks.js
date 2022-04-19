@@ -12,18 +12,10 @@ import Charts from '../Charts/Charts';
 function Blocks() {
   const location = useLocation()
   const {data} = location.state
-  const [open, setOpen] = useState(false);
+console.log(location.state)
  
   const [precinctData, setprecinctData] = useState([])
-  const anchorRef = useRef(null);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+ 
   useEffect(() => {
     getPrecinctData()
   }, [data])
@@ -73,10 +65,10 @@ function Blocks() {
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                     Neighborhood
                 </Link>
-                <Link  to="/Neighborhoods"
-         state={{data:data}}
+                <Link  to={"/Precincts/"+location.state.id}
+         state={{data:location.state}}
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
-                    Precinct
+                    {location.state.precint}
                 </Link>
                 <Typography
                   sx={{
@@ -110,7 +102,16 @@ function Blocks() {
        {precinctData.length > 0 ? <Charts data={precinctData} nb={data} selected={data} chartType={2} /> : 
        <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"100%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <Typography variant='h4' align='center'>There is no data here.<br/> You can add data at block level.</Typography>
+          <Typography variant='h4' align='center'>There is no data here.<br/> 
+          <Button
+              variant="contained"
+              color='primary' fullWidth
+              component={RouterLink}
+              style={{marginRight:20}}
+              to={"/updateValues"} 
+              state={{data:data}}
+            >Update Sites</Button> to get started.
+          </Typography>
           
         </div>
      </Grid>

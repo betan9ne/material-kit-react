@@ -9,6 +9,11 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from '../../firebase';
+import Iconify from '../../components/Iconify';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
@@ -59,7 +64,7 @@ const TransportEmissions =({nb, selected, chartType}) => {
         
  
          firebase.firestore().collection("sites").where(chart,"==", selected.id).get().then((doc)=>{
-          console.log("id", selected.id, chart)
+       
              doc.docs.forEach(document => {
               const nb = {
                 id: document.id,
@@ -94,7 +99,7 @@ const TransportEmissions =({nb, selected, chartType}) => {
         label.push(e[0])
          
         let asd = e[1].reduce( function(a, b){
-          return a + parseInt(b['scopeValue']);
+          return a + parseFloat(b['total']);
       }, 0);
       data.push(asd) 
       })
@@ -140,13 +145,15 @@ const TransportEmissions =({nb, selected, chartType}) => {
     <>
      <Card>
       <CardHeader title="Transport Emission" />
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <div style={{display:"flex", justifyContent:"space-between", marginLeft:15, marginRight:15, alignItems:"center"}}>
+      {getIcon('ant-design:car-filled')}
+      <div>
             <Switch 
                checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
             />
-            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
 
             {checked ? 

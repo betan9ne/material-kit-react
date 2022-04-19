@@ -7,7 +7,7 @@ const useGetNeighbour = (id) => {
 
     useEffect(() => {
          firebase.firestore().collection("neighbourhood").doc(id).onSnapshot((doc)=>{
-            console.log(doc.docs)
+          
             setdocs("")
          })
     }, [])

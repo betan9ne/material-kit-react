@@ -14,6 +14,7 @@ import AddPrecinct from '../DialogForms/AddPrecinct';
 function Neighborhoods() {
   const location = useLocation()
   const {data} = location.state
+
   const [open, setOpen] = useState(false);
   const [precinctList, setprecinctList] = useState([])
   const [precinctData, setprecinctData] = useState([])
@@ -21,9 +22,6 @@ function Neighborhoods() {
   const [openPrecinct, setPrecinctOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -42,7 +40,7 @@ function Neighborhoods() {
         neighbourhood.push(nb)
       })
       setprecinctList(neighbourhood)
-      console.log(neighbourhood)
+
    })
   }
 
@@ -105,52 +103,42 @@ function Neighborhoods() {
         </CardContent>
         </Grid>
 
-        <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
-        <MenuPopover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{ width: 220 }}
-      >
-       
-        {precinctList.map((p, index)=>(
-          <Box sx={{ p: 2, pt: 1.5 }} key={index}>
-          <Link  to="/Precincts"
-            state={{data:p}}
-             style={{ display: 'flex', color:"inherit", textDecoration:"none", justifyContent:"center", alignItems:"center" }}>
-          <Typography  color="inherit" sx={{textAlign:"center"}}  variant="body1">
-            {p.precint}
-          </Typography>
-          </Link>
-        </Box>
-        ))
-
-        }
-       
-      </MenuPopover>
-          <Button variant="contained"   onClick={handleOpen}  ref={anchorRef} sx={{width:"100%"}}  color="warning"  >{precinctList.length} Precincts</Button>
-          </Grid>
-
-          <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
-          <Button
-          fullWidth
-              variant="contained"
+      <div style={{marginLeft:60}}>
+        <Button
+               variant="contained"
                onClick={()=>setPrecinctOpen(true)}
                style={{marginRight:20}}
             >
-              Add Precinct
+              + {precinctList.length} Precinct
             </Button>
-          </Grid>
+        
+        {precinctList.map((p, index)=>(
+           
+              <Button variant="outlined" style={{marginRight:20}} key={index} onClick={handleOpen}  ref={anchorRef} color="primary"  >
+              <Link  to={"/Precincts/"+p.id}
+            state={
+             {
+               data:p,
+               ...data,
 
-          {/* <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
-          <Button variant="contained" sx={{width:"100%"}}  color="error"  >Delete Neighborhood</Button>
-          </Grid> */}
-          
+             }
+              }
+             style={{ display: 'flex', color:"inherit", textDecoration:"none", justifyContent:"center", alignItems:"center" }}>{p.precint} </Link></Button>
+        
+          ))
+
+        }
+        </div>
+        
+
+          <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
+        
+          </Grid>     
           <Grid item xs={12} sm={12} md={12}   >
         {precinctData.length > 0 ?  <Charts data={precinctData} nb={data} selected={data} chartType={0} /> : 
         <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"100%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <Typography variant='h4' align='center'>There is no data here.<br/> You can add data at block level.</Typography>
+          <Typography variant='h4' align='center'>There is no data here.<br/> You can add data at block level.<br/>Create a Precinct to view your blocks</Typography>
           
         </div>
      </Grid>

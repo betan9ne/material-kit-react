@@ -182,7 +182,7 @@ const getListOfPrecints = (id) =>{
       neighbourhood.push(nb)
     })
     setprecinctList(neighbourhood)
-    console.log(neighbourhood)
+ 
  })
 }
 
@@ -250,7 +250,7 @@ const getBlocks = (id) =>{
       }
       neighbourhood.push(nb)
     })
-    console.log(neighbourhood)
+    
     setblockList(neighbourhood)
  })
 }

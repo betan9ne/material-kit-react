@@ -14,17 +14,17 @@ const sidebarConfig = [
   {
     title: 'Projects',
     path: '/Projects',
-    icon: getIcon('eva:people-fill')
+    icon: getIcon('bx:building')
   },
   {
     title: 'models',
     path: '/models',
-    icon: getIcon('eva:people-fill')
+    icon: getIcon('bxs:data')
   },
   {
     title: 'constants',
     path: '/constants',
-    icon: getIcon('eva:people-fill')
+    icon: getIcon('eva:options-2-fill')
   },
   {
     title: 'user',

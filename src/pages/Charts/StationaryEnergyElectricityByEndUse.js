@@ -9,8 +9,8 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from './../../firebase'
-const CHART_HEIGHT = 372;
-const LEGEND_HEIGHT = 72;
+const CHART_HEIGHT = 472;
+const LEGEND_HEIGHT = 52;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
@@ -205,94 +205,94 @@ const stackedData = {
      {
        name: 'Business & Commercial',
        data: BusinessCommercial.map((l)=>(
-       l
+       (l/100).toFixed(2)
        )),
   
      },
      {
        name: 'Education',
        data: Education.map((b)=>(
-         b
+        (b/100).toFixed(2)
        )),
 
      },
      {
        name: 'Government',
        data: Government.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Muncipal Office',
        data: MuncipalOffice.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
        {
        name: 'Public Open Space',
        data: PublicOpenSpace.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Public Service Infrastructure',
        data: PublicServiceInfrastructure.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Religious',
        data: Religous.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Vacant Land',
        data: VacantLand.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Residential High Density',
        data: ResidentialHigh.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
 
      },
      {
        name: 'Residential Medium Density',
        data: ResidentialMed.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
      },
      {
        name: 'Residential Low Density',
        data: ResidentialLow.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
      },
      {
        name: 'Warehouse Light Industrial',
        data: WarehouseLight.map((a)=>(
-         a
+        (a/100).toFixed(2)
        ))
      },
      {
        name: 'Warehouse Medium Industrial',
        data: warehouseMed.map((a)=>(
-         a
+        (a/100).toFixed(2)
        )),
      },
      {
        name: 'Warehouse High Industrial',
        data: warehouseHigh.map((a)=>(
-         a
+        (a/100).toFixed(2)
        ))
      },
 
@@ -339,7 +339,7 @@ const stackedData = {
      <Card>
      <CardHeader title="Stationery Energy (Electricity) By End Use" />
       <ChartWrapperStyle dir="ltr">
-      <ReactApexChart options={chartOptions} series={stackedData.datasets} type="bar" height={300} />
+      <ReactApexChart options={chartOptions} series={stackedData.datasets} type="bar" height={400} />
       </ChartWrapperStyle>
     </Card>    
 </>

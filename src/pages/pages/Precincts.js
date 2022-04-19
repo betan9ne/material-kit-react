@@ -10,9 +10,12 @@ import firebase from "../../firebase"
 import MenuPopover from '../../components/MenuPopover';
 import Charts from '../Charts/Charts';
 import AddNewBlock from '../DialogForms/AddNewBlock';
+
 function Precincts() {
   const location = useLocation()
+ 
   const {data} = location.state
+
   const [open, setOpen] = useState(false);
   const [precinctList, setprecinctList] = useState([])
   const [precinctData, setprecinctData] = useState([])
@@ -20,9 +23,6 @@ function Precincts() {
   const [openBlock, setBlockOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function Precincts() {
         neighbourhood.push(nb)
       })
       setprecinctList(neighbourhood)
-      console.log(neighbourhood)
+   
    })
   }
 
@@ -49,9 +49,8 @@ function Precincts() {
   const getPrecinctData = () =>{
  
     
-    firebase.firestore().collection("sites").where("precinct_id", "==", data.id).onSnapshot((doc)=>{
-      const data = [];
-     
+    firebase.firestore().collection("sites").where("precinct_id", "==", data.id).onSnapshot((doc)=>{    
+      const data = [];     
       doc.docs.forEach(document => {
         const nb = {
           id: document.id,
@@ -91,8 +90,8 @@ function Precincts() {
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                      Projects
                 </Link>
-        <Link  to="/Neighborhoods"
-         state={{data:data}}
+        <Link  to={"/Neighborhoods/"+data.neighbourhood_id}
+         state={{data:location.state}}
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                      {data.neighbourhood_name}
                 </Link>
@@ -109,44 +108,44 @@ function Precincts() {
         </CardContent>
         </Grid>
 
-        <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
-        <MenuPopover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{ width: 220 }}
-      >
+        <div style={{marginLeft:60}}>
+        <Button
+               variant="contained"
+               onClick={()=>setBlockOpen(true)}
+               style={{marginRight:20}}
+            >
+              + {precinctList.length} Blocks
+            </Button>
        
         {precinctList.map((p, index)=>(
-          <Box sx={{ p: 2, pt: 1.5 }} key={index}>
-          <Link  to="/Blocks"
-            state={{data:p}}
-             style={{ display: 'flex', color:"inherit", textDecoration:"none", justifyContent:"center", alignItems:"center" }}>
-          <Typography  color="inherit" sx={{textAlign:"center"}}  variant="body1">
-            {p.block}
-          </Typography>
-          </Link>
-        </Box>
+          <Button variant="outlined" style={{marginRight:20}} key={index} onClick={handleOpen}  ref={anchorRef} color="primary"  >
+              <Link  to={"/Blocks/"+p.id}
+            state={{data:p, ...data}}
+             style={{ display: 'flex', color:"inherit", textDecoration:"none", justifyContent:"center", alignItems:"center" }}>{p.block} </Link></Button>
+ 
         ))
 
         }
-       
-      </MenuPopover>
+        </div>
+{/*  
           <Button variant="contained"   onClick={handleOpen}  ref={anchorRef} sx={{width:"100%"}}  color="warning"  >{precinctList.length} Blocks</Button>
-          </Grid>
+          */}
 
           <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
-          <Button variant="contained" sx={{width:"100%"}}  color="primary"  onClick={()=>setBlockOpen(true)} >Add Block</Button>
+          {/* <Button variant="contained" sx={{width:"100%"}}  color="primary"  onClick={()=>setBlockOpen(true)} >Add Block</Button> */}
           </Grid>
 
           {/* <Grid item xs={12} sm={2} md={2} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
           <Button variant="contained" sx={{width:"100%"}}  color="error"  >Delete Precinct</Button>
           </Grid> */}
           <Grid item xs={12} sm={12} md={12}   >
-          {precinctData.length > 0 ? <Charts data={precinctData} nb={data} selected={data} chartType={2} /> : 
+          {precinctData.length > 0 ? <Charts data={precinctData} nb={data} selected={data} chartType={1} /> : 
        <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"100%", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-          <Typography variant='h4' align='center'>There is no data here.<br/> You can add data at block level.</Typography>
+
+          <Typography variant='h4' align='center'>There is no data here.<br/>
+          <Button variant="contained" sx={{width:"100%"}}  color="primary"  onClick={()=>setBlockOpen(true)} >Add Block</Button>
+           to get started.</Typography>
           
         </div>
      </Grid>

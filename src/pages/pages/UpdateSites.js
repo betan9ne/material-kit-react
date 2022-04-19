@@ -12,7 +12,11 @@ import firebase from './../../firebase'
 import useGetSites from './../../hooks/useGetSites'
 import AddSite from './../DialogForms/AddSite';
 import UpdateItem from './UpdateItem';
+import Iconify from '../../components/Iconify';
 
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 function UpdateSites() {
   const [open, setOpen] = useState(false);
   const [selectedSite, setselectedSite] = useState(null)
@@ -79,12 +83,16 @@ function UpdateSites() {
 
     <Grid container spacing={3} style={{marginTop:30}}>
 
-    {docs && docs.map((s) => (
+    {docs && docs.map((s, index) => (
          
-      <Grid container spacing={3} style={{}}>
-      <Grid  item xs={12} sm={12} md={12} >
+      <Grid container spacing={3} key={index} style={{}}>
+      <Grid  item xs={12} sm={12} md={12} sx={{display:"flex", marginTop:5, marginLeft:5}} >
       <br/>
-        <Typography variant="h6" noWrap>
+      {s.l === "Transport" && getIcon('ant-design:car-filled')}
+      {s.l === "Buildings" && getIcon('fa6-solid:building-columns')}
+      {s.l === "Infrastructure" && getIcon('bxs:traffic')}
+      {s.l === "Residential Pools" && getIcon('fa-solid:swimming-pool')}
+        <Typography variant="h6" sx={{marginLeft:2}} noWrap>
           {s.l}
         </Typography>
         </Grid>

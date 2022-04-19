@@ -9,15 +9,14 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from './../../firebase'
+import Iconify from '../../components/Iconify';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
-
-const style = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
+ 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
  
   height: CHART_HEIGHT,
@@ -38,9 +37,6 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 const Inputs =({data,  selected, chartType}) => {
 
     const [isOpen, setOpen] = useState(null);
-    const [isOpenList, setOpenList] = useState(null);
-    const [selectedIndex, setSelectedIndex] = useState(1);
-    const [isOpenMaxHeight, setOpenMaxHeight] = useState(null);
     const [checked, setChecked] = useState(false)
 
     const handleChange = (event) => {
@@ -54,17 +50,13 @@ const Inputs =({data,  selected, chartType}) => {
     const handleClose = () => {
       setOpen(null);
     };
-  
-    const handleMaxHeightClose = () => {
-      setOpenMaxHeight(null);
-    };
 
     const theme = useTheme();
     const [labels, setlabels] = useState([])
     const [_data, setdata_] = useState([])
     const [tag, settag] = useState(0)
     const [fullData, setfullData] = useState([])
-
+    let menu = ['Area', 'People', 'Infrastructure', 'Vehicle']
 
     let asd = []
     useEffect(() => {
@@ -137,23 +129,20 @@ const Inputs =({data,  selected, chartType}) => {
 
                 switch (tag) {
                     case 0:
-                        console.log(tag)
+                      
                     asd =  Object.entries(group)
                         break;
                 
                     case 1:
-                        console.log(tag)
-                    asd =  Object.entries(groupResidential)
+                     asd =  Object.entries(groupResidential)
                         break;
                 
                     case 2:
-                        console.log(tag)
-                    asd =  Object.entries(groupTraffic)
+                      asd =  Object.entries(groupTraffic)
                         break;
                 
                     case 3:
-                        console.log(tag)
-                    asd =  Object.entries(groupTransport)
+                     asd =  Object.entries(groupTransport)
                         break;
                 
                     default:
@@ -170,14 +159,15 @@ const Inputs =({data,  selected, chartType}) => {
     }
 
     const getDataandLabels = (_data) =>{
-         
+       
         let label = []
         let data = []
         
         _data.forEach(e=>{
             label.push(e[0])           
           let asd = e[1].reduce( function(a, b){
-            return a + parseInt(b['scopeValue']);
+
+            return a + parseFloat(b[tag === 0 || tag === 1 ? 'scopeValue' : 'total']);
         }, 0);
         data.push(asd) 
         })     
@@ -190,7 +180,7 @@ const Inputs =({data,  selected, chartType}) => {
         setlabels(label)
     }
 
-    console.log(fullData)
+
       const chartOptions2 = merge(BaseOptionChart(), {
         colors: [
           theme.palette.primary.main,
@@ -218,9 +208,10 @@ const Inputs =({data,  selected, chartType}) => {
           pie: { donut: { labels: { show: false } } }
         }
       });
-      let menu = ['Area', 'People', 'Infrastructure', 'Vehicle']
+    
   return (
     <>
+  
      <Card>
       <CardHeader title={`${menu[tag]} Input Summary`} action={
           <>
@@ -238,13 +229,15 @@ const Inputs =({data,  selected, chartType}) => {
       } >
       
       </CardHeader>
-      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <div style={{display:"flex", justifyContent:"space-between", marginLeft:15, marginRight:15, alignItems:"center"}}>
+      {getIcon('fontisto:area-chart')}
+      <div>
             <Switch 
                checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
             />
-            <Typography>Show {checked ? "Charts" : "Figures"}</Typography>
+            <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
     {checked ? 
       <Grid style={{display:"flex", height:420, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} container xs={12} spacing={1}>

@@ -26,7 +26,7 @@ function Projects() {
   const handleClose = () => {
     setOpen(false);
   };
-console.log(docs)
+
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -45,7 +45,7 @@ console.log(docs)
         <Typography gutterBottom variant="h4">
       Projects
         </Typography>
-       
+        <Typography variant="subtitle2">Click to view neighborhood</Typography>
       </CardContent>
         </Grid>
           <Grid item xs={12} sm={6} md={4} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
@@ -58,16 +58,16 @@ New Neighborhood
            
            docs.map((a, index)=>(
            
-            <Grid item xs={12} sm={6} md={4} style={{textAlign:"center"}}>
+            <Grid item xs={12} key={index} sm={6} md={4} style={{textAlign:"center"}}>
             <RootStyle>
-            <Link  to="/Neighborhoods"
+            <Link  to={"/Neighborhoods/"+a.id}
             state={{data:a}}
              style={{ display: 'grid', color:"inherit", textDecoration:"none", justifyContent:"center",  }}>
               <Typography variant="h4" sx={{ opacity: 0.72 }}>
                 {a.neighbourhood}
               </Typography>
               
-              <Typography variant="subtitle1">Click to view neighborhood</Typography>
+             
                 </Link>
              
               </RootStyle>

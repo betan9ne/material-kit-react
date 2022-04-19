@@ -30,7 +30,7 @@ export default function App() {
       
         })
   }, [state])
-  console.log(state)
+
   
   return (
     <ThemeConfig>

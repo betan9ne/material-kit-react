@@ -179,7 +179,7 @@ export default function User() {
                           </TableCell> */}
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                               <Typography variant="subtitle2" noWrap>
+                               <Typography variant="subtitle2" sx={{marginLeft:2}} noWrap>
                                 {firstName}
                               </Typography>
                             </Stack>

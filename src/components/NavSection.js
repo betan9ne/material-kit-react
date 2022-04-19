@@ -75,9 +75,9 @@ function NavItem({ item, active }) {
       <>
         <ListItemStyle
           onClick={handleOpen}
-          sx={{
-            ...(isActiveRoot && activeRootStyle)
-          }}
+          // sx={{
+          //   ...(isActiveRoot && activeRootStyle)
+          // }}
         >
           <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
           <ListItemText disableTypography primary={title} />
@@ -99,9 +99,9 @@ function NavItem({ item, active }) {
                   key={title}
                   component={RouterLink}
                   to={path}
-                  sx={{
-                    ...(isActiveSub && activeSubStyle)
-                  }}
+                  // sx={{
+                  //   ...(isActiveSub && activeSubStyle)
+                  // }}
                 >
                   <ListItemIconStyle>
                     <Box
