@@ -7,6 +7,7 @@ import { fShortenNumber } from '../../../utils/formatNumber';
 // component
 import Iconify from '../../../components/Iconify';
 import firebase from './../../../firebase'
+import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -41,24 +42,29 @@ export default function AppNewUsers() {
 
   const [docs, setdocs] = useState([])
 
+  let neigh = useGetNeighbourhood().docs
+ 
   useEffect(() => {
-       firebase.firestore().collection("precinct").onSnapshot((doc)=>{
-          const models = [];
-          doc.docs.forEach(document => {
-            const nb = {
-              id: document.id,
-              ...document.data()
-            }
-            models.push(nb)
-          })
-          setdocs(models)
-       })
-  }, [])
+    const models = [];
+    neigh.forEach((a)=>{
+      firebase.firestore().collection("precinct").where("neighbourhood_id","==",a.id).get().then((doc)=>{ 
+        doc.docs.forEach(document => {
+         
+          models.push(document.id)
+           })
+         
+        setdocs(models)
+        console.log(models)   
+     })
+     
+    })
+ 
+  }, [neigh])
 
   return (
     <RootStyle> 
       <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>      
         Precincts
       </Typography>
     </RootStyle>

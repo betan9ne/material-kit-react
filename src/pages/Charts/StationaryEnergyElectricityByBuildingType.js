@@ -192,7 +192,20 @@ setAppliances(appliances)
 
     const chartOptions = merge(BaseOptionChart(), {
       legend: { floating: true, horizontalAlign: 'center',  },
-      
+      colors: [
+        theme.palette.primary.main,
+        theme.palette.info.main,
+        theme.palette.warning.main,
+        theme.palette.error.main,
+        theme.palette.primary.light,
+        theme.palette.info.light,
+        theme.palette.warning.light,
+        theme.palette.error.light,
+        theme.palette.primary.dark,
+        theme.palette.info.dark,
+        theme.palette.warning.dark,
+        theme.palette.error.dark,
+      ],
         chart: {
           type: 'bar',
           height: 500,

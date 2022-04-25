@@ -20,28 +20,28 @@ export default function Charts({data, nb, selected, chartType}) {
       <Container maxWidth="xl">
         <Grid container spacing={3}>
         
-        <Grid item xs={12} md={6} lg={4}>
-            <OutputSummary data={data}/>          
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-          
-          <CarbonEmissionsBaseline data={data}/>
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={12} lg={12}>
           <Inputs data={nb} selected={selected} chartType={chartType}/>
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
+            <OutputSummary data={data}/>          
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={4}>          
+          <CarbonEmissionsBaseline data={data}/>
+          </Grid> 
+
+          <Grid item xs={12} md={6} lg={4}>
+            <StationaryEnergyGas nb={nb} selected={selected} chartType={chartType}/>
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
             <TransportEmissions  nb={nb} selected={selected} chartType={chartType}/>
 
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
           <StationaryEnergyElectricity nb={nb} selected={selected} chartType={chartType}/>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <StationaryEnergyGas nb={nb} selected={selected} chartType={chartType}/>
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>

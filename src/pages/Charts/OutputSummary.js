@@ -180,7 +180,7 @@ const OutputSummary =({data}) => {
             <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
     {checked ? 
-      <Grid container xs={12} spacing={1}>
+      <Grid container sx={{height:420}} xs={12} spacing={1}>
         
         {graphSummaries.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>

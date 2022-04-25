@@ -14,8 +14,8 @@ import Iconify from '../../components/Iconify';
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
-const CHART_HEIGHT = 372;
-const LEGEND_HEIGHT = 72;
+const CHART_HEIGHT = 480;
+const LEGEND_HEIGHT = 200;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
@@ -113,7 +113,15 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
           theme.palette.primary.main,
           theme.palette.info.main,
           theme.palette.warning.main,
-          theme.palette.error.main
+          theme.palette.error.main,
+          theme.palette.primary.light,
+          theme.palette.info.light,
+          theme.palette.warning.light,
+          theme.palette.error.light,
+          theme.palette.primary.dark,
+          theme.palette.info.dark,
+          theme.palette.warning.dark,
+          theme.palette.error.dark,
         ],
         animations: {
           enabled: false
@@ -158,7 +166,7 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
             </div>
 
             {checked ? 
-      <Grid container xs={12} style={{height:420, overflowY:"scroll",}} >
+      <Grid container xs={12} style={{height:520, overflowY:"scroll",}} >
       
       <Grid   item xs={8} md={8}>
         {labels.map((s) => (

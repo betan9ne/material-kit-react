@@ -3,13 +3,17 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader,Typography, Grid, Button, Switch, Menu, MenuItem, Box } from '@mui/material';
+import {  Button, CardHeader, Grid, Card} from '@mui/material';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from './../../firebase'
 import Iconify from '../../components/Iconify';
+import Area from '../Tables/Area';
+import Infrastructure from '../Tables/Infrastructure';
+import People from '../Tables/People';
+import Vehicles from '../Tables/Vehicles';
 
 // ----------------------------------------------------------------------
 
@@ -56,9 +60,16 @@ const Inputs =({data,  selected, chartType}) => {
     const [_data, setdata_] = useState([])
     const [tag, settag] = useState(0)
     const [fullData, setfullData] = useState([])
-    let menu = ['Area', 'People', 'Infrastructure', 'Vehicle']
 
+    const [area, setarea] = useState([])
+    const [people, setpeople] = useState([])
+    const [infrastructure, setinfrastructure] = useState([])
+    const [vehicle, setvehicle] = useState([])
+
+    let menu = ['Area', 'People', 'Infrastructure', 'Vehicle']
+ 
     let asd = []
+
     useEffect(() => {
         let neighbourhood = [];
         let buildings = []
@@ -104,9 +115,7 @@ const Inputs =({data,  selected, chartType}) => {
              {
                  transport.push(val)
              }             
-           })
-            
-       
+           })      
                let groupResidential = residential.reduce((r, a)=>{
                    r[a.model] = [...r[a.model] || [], a]
                    return r
@@ -126,28 +135,33 @@ const Inputs =({data,  selected, chartType}) => {
                     r[a.model] = [...r[a.model] || [], a];
                     return r;
                 }, {}); 
+              
+                setarea(Object.entries(group))
+                setpeople(Object.entries(groupResidential))
+                setinfrastructure(Object.entries(groupTraffic))
+                setvehicle(Object.entries(groupTransport))
 
-                switch (tag) {
-                    case 0:
+                // switch (tag) {
+                //     case 0:
                       
-                    asd =  Object.entries(group)
-                        break;
+                //     asd =  Object.entries(group)
+                //         break;
                 
-                    case 1:
-                     asd =  Object.entries(groupResidential)
-                        break;
+                //     case 1:
+                //      asd =  Object.entries(groupResidential)
+                //         break;
                 
-                    case 2:
-                      asd =  Object.entries(groupTraffic)
-                        break;
+                //     case 2:
+                //       asd =  Object.entries(groupTraffic)
+                //         break;
                 
-                    case 3:
-                     asd =  Object.entries(groupTransport)
-                        break;
+                //     case 3:
+                //      asd =  Object.entries(groupTransport)
+                //         break;
                 
-                    default:
-                        break;
-                }
+                //     default:
+                //         break;
+                // }
             
          getDataandLabels(asd)
         })
@@ -159,23 +173,22 @@ const Inputs =({data,  selected, chartType}) => {
     }
 
     const getDataandLabels = (_data) =>{
-       
+     
         let label = []
         let data = []
         
         _data.forEach(e=>{
             label.push(e[0])           
-          let asd = e[1].reduce( function(a, b){
-
+            let asd = e[1].reduce( function(a, b){
             return a + parseFloat(b[tag === 0 || tag === 1 ? 'scopeValue' : 'total']);
-        }, 0);
-        data.push(asd) 
+              }, 0);
+           data.push(asd) 
         })     
         let sdf  = {
             labels : label,
             data : data
         }
-        setfullData(sdf)
+        setfullData(_data)
         setdata_(data)            
         setlabels(label)
     }
@@ -209,74 +222,37 @@ const Inputs =({data,  selected, chartType}) => {
         }
       });
     
+
   return (
-    <>
-  
-     <Card>
-      <CardHeader title={`${menu[tag]} Input Summary`} action={
-          <>
-        <Button variant="outlined" onClick={handleOpen}>
-              {menu[tag]}
-            </Button>
-            <Menu keepMounted id="simple-menu" anchorEl={isOpen} onClose={handleClose} open={Boolean(isOpen)}>
-              {menu.map((option, index) => (
-                <MenuItem key={option} onClick={()=>showINfo(index)}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
-            </>
-      } >
+    <div style={{}}>
+   
+      <CardHeader title="Input Summary">
       
       </CardHeader>
-      <div style={{display:"flex", justifyContent:"space-between", marginLeft:15, marginRight:15, alignItems:"center"}}>
-      {getIcon('fontisto:area-chart')}
-      <div>
-            <Switch 
-               checked={checked}
-      onChange={handleChange}
-      inputProps={{ 'aria-label': 'controlled' }}
-            />
-            <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
-            </div>
-    {checked ? 
-      <Grid style={{display:"flex", height:420, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} container xs={12} spacing={1}>
-        
-      <Grid   item xs={7} md={7}>
-        {fullData.labels.map((s) => (
-          <Grid key={s.id} item xs={12} md={12}>
-          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
-      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
-        <Typography variant="subtitle2" noWrap>
-          {s}
-        </Typography>
-          </Box> </Card>
-          </Grid>
-        ))}
-        </Grid>
-
-        <Grid   item xs={5} md={5}>
-        {fullData.data.map((s) => (
-          <Grid key={s.id} item xs={12} md={12}>
-          <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
-      <Box sx={{ flexGrow: 1, minWidth: 0, pl: 2, pr: 1 }}>
-        <Typography variant="subtitle2" noWrap>
-          {s}
-        </Typography>
-          </Box> </Card>
-          </Grid>
-        ))}
-        </Grid>
-
-      </Grid>
-      :
-      <ChartWrapperStyle dir="ltr">
-            
  
+      <Grid container spacing={3} sx={{marginTop:5}}>
+      <Grid style={{display:"flex", gridAutoColumns:"1fr", gridAutoFlow:"column"}} item xs={12}>
+      
+          <Area data={area}/>
+ 
+      </Grid> 
+      <Grid style={{display:"flex", height:520, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} item xs={6} spacing={1}>
+      <Vehicles data={vehicle}/>
+      </Grid>    
+      <Grid style={{display:"flex", height:520, overflowY:"hidden", gridAutoColumns:"1fr", gridAutoFlow:"column", marginTop:20}} item xs={6} spacing={1}>
+      <Infrastructure data={infrastructure}/>
+      </Grid> 
+      <Grid style={{display:"flex", height:520, overflowY:"hidden", gridAutoColumns:"1fr", gridAutoFlow:"column",  marginTop:20}} item xs={6} spacing={1}>
+      <People data={people}/>
+      </Grid>    
+ 
+</Grid>
+{/*      
+      <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={_data} options={chartOptions2} height={280} />
-      </ChartWrapperStyle>}
-    </Card>    
-</>
+      </ChartWrapperStyle>} */}
+     
+</div>
             
          
   )

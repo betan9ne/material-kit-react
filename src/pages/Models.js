@@ -12,7 +12,11 @@ import Buildings from './Forms/Building';
 import Transport from './Forms/Transport';
 import ResidentalPools from './Forms/ResidentalPools';
 // ----------------------------------------------------------------------
+import Iconify from '../components/Iconify';
 
+// ----------------------------------------------------------------------
+
+const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 export default function Models() {
 
   const [docs, setdocs] = useState([])
@@ -59,13 +63,19 @@ export default function Models() {
         {docs.map((tag)=>{
           return(
             <>
-            <Typography variant="h5" sx={{ mb: 5 }}>
+            <Grid  item xs={12} sm={12} md={12} sx={{display:"flex",  marginLeft:1}} >
+            {tag.l === "Transport" && getIcon('ant-design:car-filled')}
+      {tag.l === "Buildings" && getIcon('fa6-solid:building-columns')}
+      {tag.l === "Infrastructure" && getIcon('bxs:traffic')}
+      {tag.l === "Residential Pools" && getIcon('fa-solid:swimming-pool')}
+            <Typography variant="h5" sx={{ mb: 5, marginLeft:2 }}>
             {tag.l}
                   </Typography>
+</Grid>
                   <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
                   {tag.tag.map((t, index)=>{
                     return(
-                      <Button onClick={()=>pickAModel(t)} variant="contained" color={t === selectedModel ? "primary" : "inherit"} style={{marginRight:20}}  key={index} sx={{ mb: 5 }}>
+                      <Button onClick={()=>pickAModel(t)}  variant="contained" color={t === selectedModel ? "primary" : "inherit"} style={{marginRight:20}}  key={index} sx={{ mb: 5 }}>
                       {t.model}
                       </Button>
                     )
@@ -77,7 +87,7 @@ export default function Models() {
         })}
         </Grid>
       
-      {selectedModel &&   <Grid item xs={3} md={3}>Update Values
+      {selectedModel &&   <Grid item xs={3} md={3}>Values
         <br/><br/>
         <Typography variant="h5" sx={{ mb: 6 }}>
             {selectedModel && selectedModel.model}

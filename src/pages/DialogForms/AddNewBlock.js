@@ -1,14 +1,19 @@
 import { useFormik } from 'formik';
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 
 // material
 
 import { Button, Dialog, Container, Typography,  TextField, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 // components
 import firebase from '../../firebase'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function AddNewBlock({data, item}) {
-   
+  const [openSnack, setOpenSnack] = useState(false);
     const [values, setValues] = useState();
 
     const addblock = ()=>{
@@ -18,12 +23,20 @@ function AddNewBlock({data, item}) {
             neighbourhood_id: item.neighbourhood_id,
             createdAt: new Date().toLocaleDateString()
             }).then((d)=>{
+              
             data()
+            setOpenSnack(true)
         }).catch((e)=>{
             alert(JSON.stringify(e))
         })
     }
-
+    const handleSnackClose = (event, reason) => {
+      // if (reason === 'clickaway') {
+      //   return;
+      // }
+  
+      setOpenSnack(false);
+    };
 
     const handleChange = (prop) => (event) => {
         setValues(event.target.value);
@@ -32,6 +45,11 @@ function AddNewBlock({data, item}) {
   return (
    <>
     <DialogTitle>Block</DialogTitle>
+    <Snackbar open={openSnack} autoHideDuration={5000} onClose={handleSnackClose}>
+        <Alert severity="info" sx={{ width: '100%' }}>
+          Site deleted successfully
+        </Alert>
+      </Snackbar>
     <DialogContent>
       <DialogContentText>
        Add a new Block to <b>{item.precint}</b> Precinct in the field below.

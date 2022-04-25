@@ -152,7 +152,7 @@ const CarbonEmissionsBaseline =({data}) => {
             <Typography>Show {checked ? "Charts" : "Figures"}</Typography></div>
             </div>
     {checked ? 
-      <Grid container xs={12} spacing={1}>
+      <Grid container xs={12} sx={{height:420}} spacing={1}>
         
         {baselineEmissions.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>

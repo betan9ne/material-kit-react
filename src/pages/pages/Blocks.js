@@ -12,8 +12,7 @@ import Charts from '../Charts/Charts';
 function Blocks() {
   const location = useLocation()
   const {data} = location.state
-console.log(location.state)
- 
+
   const [precinctData, setprecinctData] = useState([])
  
   useEffect(() => {

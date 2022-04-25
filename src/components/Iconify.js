@@ -12,5 +12,5 @@ Iconify.propTypes = {
 };
 
 export default function Iconify({ icon, sx, ...other }) {
-  return <Box component={Icon} icon={icon} sx={{ ...sx, color:"green" }} {...other} />;
+  return <Box component={Icon} icon={icon} sx={{ ...sx, color:"#00AB55" }} {...other} />;
 }

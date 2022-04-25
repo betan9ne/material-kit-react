@@ -78,13 +78,11 @@ function UpdateSites() {
                   }}
                 >
                  {data}     
-                </Typography>
+          </Typography>
     </Breadcrumbs>
 
     <Grid container spacing={3} style={{marginTop:30}}>
-
-    {docs && docs.map((s, index) => (
-         
+    {docs && docs.map((s, index) => (         
       <Grid container spacing={3} key={index} style={{}}>
       <Grid  item xs={12} sm={12} md={12} sx={{display:"flex", marginTop:5, marginLeft:5}} >
       <br/>
@@ -99,13 +97,8 @@ function UpdateSites() {
       {s.tag.map((tag, index)=>(
             <UpdateItem data={tag} key={index} block={location.state.data} />
       ))}
-  
-        
     </Grid>
-      
- 
-  
-        ))}
+    ))}
 
        
     </Grid>

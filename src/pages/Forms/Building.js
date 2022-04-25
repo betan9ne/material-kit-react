@@ -143,7 +143,7 @@ const Buildings = ({data}) => {
     />
     </div>
   </Stack>
-  <LoadingButton type="submit" variant="contained" onClick={()=>updateData()} >
+  <LoadingButton disabled type="submit" variant="contained" onClick={()=>updateData()} >
                     Save Changes
                   </LoadingButton></Stack>
   </>

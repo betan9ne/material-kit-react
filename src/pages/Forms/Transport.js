@@ -62,7 +62,7 @@ const  Transport = ({data}) => {
     
   </Stack>
   
-     <LoadingButton type="submit" onClick={()=>updateData()} variant="contained" >
+     <LoadingButton disabled type="submit" onClick={()=>updateData()} variant="contained" >
                     Save Changes
                   </LoadingButton> 
                   </Stack>

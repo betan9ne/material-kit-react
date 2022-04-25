@@ -7,6 +7,7 @@ import { fShortenNumber } from '../../../utils/formatNumber';
 import Iconify from '../../../components/Iconify';
 import firebase from './../../../firebase'
 import React,{useState, useEffect} from 'react'
+import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -38,20 +39,29 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function AppItemOrders() {
   const [docs, setdocs] = useState([])
+  let neigh = useGetNeighbourhood().docs
+  const models = [];
 
   useEffect(() => {
-       firebase.firestore().collection("blocks").onSnapshot((doc)=>{
-          const models = [];
-          doc.docs.forEach(document => {
-            const nb = {
-              id: document.id,
-              ...document.data()
-            }
-            models.push(nb)
-          })
-          setdocs(models)
-       })
+    //getFigures()
+       
   }, [])
+
+  const getFigures = () =>{
+    neigh.forEach((a)=>{
+    
+      firebase.firestore().collection("blocks").where("neighbourhood_id","==", a.id).onSnapshot((doc)=>{
+        doc.docs.forEach(document => {
+          const nb = {
+            id: document.id,
+          }
+          models.push(nb)
+        })
+        console.log(models)
+        setdocs(models)
+     })
+    })
+  }
   return (
     <RootStyle> 
       <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>

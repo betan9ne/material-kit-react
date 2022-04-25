@@ -159,7 +159,7 @@ const StationaryEnergyGas =({nb, selected, chartType}) => {
             </div>
             </div>
             {checked ? 
-      <Grid container xs={12} spacing={1}>
+      <Grid container xs={12} sx={{height:420}} spacing={1}>
         
         {gasData.map((s) => (
           <Grid key={s.id} item xs={12} md={12}>

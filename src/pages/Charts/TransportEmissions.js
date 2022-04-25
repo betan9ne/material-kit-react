@@ -15,8 +15,9 @@ import Iconify from '../../components/Iconify';
 
 const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
 
-const CHART_HEIGHT = 372;
-const LEGEND_HEIGHT = 72;
+const CHART_HEIGHT = 480;
+const LEGEND_HEIGHT = 200;
+
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
@@ -157,7 +158,7 @@ const TransportEmissions =({nb, selected, chartType}) => {
             </div>
 
             {checked ? 
-      <Grid container xs={12} style={{height:420, overflowY:"scroll",}} >
+      <Grid container xs={12} style={{height:520, overflowY:"scroll",}} >
       
       <Grid   item xs={8} md={8}>
         {labels.map((s) => (

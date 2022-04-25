@@ -14,21 +14,16 @@ function AddSite({model, block, data}) {
     const [scopeValue, setscopeValue] = useState("")
     const [modelInput1, setmodelInput1] = useState("")
       
-    const handleChange = (value, category, tag) => {
-       
+    const handleChange = (value, category,  tag) => {
         if(tag === 2){
             setmodelInput1(value)
         }
         else{
             setscopeValue(value)
         }
-            
-       //     setcategory(category)
-      }
-
+    }
 
       const calculate  =() =>{
-   
         let electricity = constantData[2].value 
         let gas = constantData[1].value 
         if(model.tag === "Transport")
@@ -40,13 +35,13 @@ function AddSite({model, block, data}) {
                 block_id: block.id,
                 model:model.model,
                 model_tag: model.tag,
-                modeInput: modelInput1,
-                scopeValue : scopeValue,
-                total: scopeValue * modelInput1
+                modeInput: parseFloat(modelInput1),
+                scopeValue : parseFloat(scopeValue),
+                total: scopeValue * modelInput1 * model.emissions
             }
             console.log(asd)
             //end of transport object
-       sendToDB(asd)
+        sendToDB(asd)
             return
         }
         else if(model.tag === "Infrastructure")
@@ -86,17 +81,21 @@ else if(model.tag === "Residential Pools")
 
         else if(model.tag=== "Buildings")
         {
+
   //buildings object
-  let f1 = (parseFloat(scopeValue) * parseFloat(model.electricity) * electricity)
-  let f2 = (parseFloat(scopeValue) * parseFloat(model.gas) * gas)
+  let f1 = (parseFloat(model.model.includes("Residential") ? modelInput1 : scopeValue) * parseFloat(model.electricity) * electricity)
+  let f2 = (parseFloat(model.model.includes("Residential") ? modelInput1 : scopeValue) * parseFloat(model.gas) * gas)
   let asd = {
       precinct_id: block.precinct_id,
       neighbourhood_id: block.neighbourhood_id,
       block_id: block.id,
       model:model.model,
       model_tag: model.tag,
-      scopeValue : scopeValue,
-      total_carbon_emissions_electricity : parseFloat(scopeValue) * parseFloat(model.electricity) * electricity,
+      modeInput: model.model.includes("Residential") && parseFloat(modelInput1), //people
+      scopeValue : parseFloat(scopeValue), //area
+      total_carbon_emissions_electricity : 
+                    model.model.includes("Residential") ? parseFloat(modelInput1) * parseFloat(model.electricity) * electricity : 
+                    parseFloat(scopeValue) * parseFloat(model.electricity) * electricity,
       lighting :f1 * model.lighting/100,
       lighting_external : f1*model.lighting_external/100,
       appliances : f1*model.appliances/100,
@@ -107,7 +106,7 @@ else if(model.tag === "Residential Pools")
       cooking: f1*model.cooking/100,
       gas_water_heating: f2*model.gas_water_heating/100,
       gas_cooking: f2*model.gas_cooking/100,
-      total_carbon_emissions_gas : parseFloat(scopeValue) * parseFloat(model.gas) * gas,     
+      total_carbon_emissions_gas : parseFloat(model.model.includes("Residential") ? modelInput1 : scopeValue) * parseFloat(model.gas) * gas,     
   }
   console.log(asd)
   //end of buildings
@@ -160,10 +159,8 @@ else if(model.tag === "Residential Pools")
                     variant="outlined" label="Enter number of cars" />
                 <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model, 2)}
-                    variant="outlined" label="Enter number of Kms annually" />
-       
-                      </> : <>            
-                            
+                    variant="outlined" label="Enter number of Kms annually" />       
+                      </> : <>  
             </>
             }
 
@@ -171,18 +168,19 @@ else if(model.tag === "Residential Pools")
             <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model)}
                     variant="outlined" label="Enter number of lights" />
-                          </> : <>            
-                             
+                          </> : <>   
             </>
             }
 
             {model.tag === "Buildings" ? <>
+            {/* scopevalue people*/}
             <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model)}
                     variant="outlined" label="Enter area" />
-                {/* <TextField autoFocus fullWidth type="number" margin="dense"
+                    {/* area modelINput1*/}
+               {model.model.includes("Residential") &&  <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model, 2)}
-                    variant="outlined" label="Enter number of Kms annually" /> */}
+                    variant="outlined" label="Enter People" />}
 
                      </> : <>            
                              
@@ -193,8 +191,7 @@ else if(model.tag === "Residential Pools")
             <TextField autoFocus fullWidth type="number" margin="dense"
                 onChange={(e) => handleChange(e.target.value, model)}
                     variant="outlined" label="Enter area" />
-                     </> : <>            
-                             
+                     </> : <>  
             </>
             } 
     </DialogContent>
@@ -204,7 +201,7 @@ else if(model.tag === "Residential Pools")
         Cancel
       </Button>
       <Button variant="contained" onClick={()=>calculate()}>
-      Calculate and Save
+      Calculate and Save 
       </Button>
      </>}
    

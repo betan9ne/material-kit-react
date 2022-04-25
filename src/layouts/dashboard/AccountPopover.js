@@ -9,26 +9,9 @@ import MenuPopover from '../../components/MenuPopover';
 //
 import account from '../../_mocks_/account';
 import firebase from './../../firebase'
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate,  } from 'react-router-dom';
 // ----------------------------------------------------------------------
-
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: 'eva:home-fill',
-    linkTo: '/'
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-    linkTo: '#'
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-    linkTo: '#'
-  }
-];
+ 
 
 
 // ----------------------------------------------------------------------
@@ -44,18 +27,13 @@ const [user, setuser] = useState(null)
   const handleClose = () => {
     setOpen(false);
   };
-
-  // useEffect(() => {
-  //   firebase.firestore().collection("users").doc().get().then((snap)=>{
-  //     setuser(snap.data())
-      
-  //   })
-  // }, [])  
+  
   const logout = () =>{
     firebase.auth().signOut().then(()=>{
   
+  //   
+     navigate("/", { replace: true });
      window.location.reload(false)
-     navigate("/")
     })
   }
   
@@ -98,11 +76,6 @@ const [user, setuser] = useState(null)
             {user && user.email}
           </Typography> */}
         </Box>
-
-        <Divider sx={{ my: 1 }} />
-
-    
-
         <Box sx={{ p: 2, pt: 1.5 }}>
           <Button fullWidth color="inherit" onClick={()=>logout()} variant="outlined">
             Logout
