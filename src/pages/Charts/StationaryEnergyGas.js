@@ -183,7 +183,7 @@ const StationaryEnergyGas =({nb, selected, chartType}) => {
     
      :  
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={gasData.map((a)=>(
+        <ReactApexChart type="donut" series={gasData.map((a)=>(
               a.data
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>}

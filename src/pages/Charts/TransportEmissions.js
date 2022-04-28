@@ -190,7 +190,7 @@ const TransportEmissions =({nb, selected, chartType}) => {
     
      :
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={_data.map((a)=>(
+        <ReactApexChart type="donut" series={_data.map((a)=>(
               a
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>}

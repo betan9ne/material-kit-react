@@ -18,52 +18,38 @@ const RootStyle = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.info.lighter
 }));
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  width: theme.spacing(8),
-  height: theme.spacing(8),
-  justifyContent: 'center',
-  marginBottom: theme.spacing(3),
-  color: theme.palette.info.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.info.dark, 0)} 0%, ${alpha(
-    theme.palette.info.dark,
-    0.24
-  )} 100%)`
-}));
-
-// ----------------------------------------------------------------------
-
- 
 
 export default function AppNewUsers() {
 
-  const [docs, setdocs] = useState([])
+  const [docs, setdocs] = useState(0)
 
   let neigh = useGetNeighbourhood().docs
  
+const neighbourhoods = []
+ 
   useEffect(() => {
-    const models = [];
-    neigh.forEach((a)=>{
-      firebase.firestore().collection("precinct").where("neighbourhood_id","==",a.id).get().then((doc)=>{ 
-        doc.docs.forEach(document => {
-         
-          models.push(document.id)
-           })
-         
-        setdocs(models)
-        console.log(models)   
-     })
-     
-    })
+
+    getPrecincts()
  
   }, [neigh])
+ 
+  function getPrecincts(){
+    setdocs(0)
+    neigh.forEach((a)=>{
+      neighbourhoods.push(a.id)   
+    })
+    neighbourhoods.forEach((a)=>{
+      firebase.firestore().collection("precinct").where("neighbourhood_id","==",a).get().then((doc)=>{ 
+        doc.docs.forEach(document => {   
+          setdocs(prevState => (prevState +1))
+           })    
+     })
+    })
+  }
 
   return (
     <RootStyle> 
-      <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>
+      <Typography variant="h1">{fShortenNumber(docs)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>      
         Precincts
       </Typography>

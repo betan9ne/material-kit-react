@@ -203,7 +203,7 @@ const OutputSummary =({data}) => {
       </Grid>
     
      :  <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={graphSummaries.map((a)=>(
+        <ReactApexChart type="donut" series={graphSummaries.map((a)=>(
               a.data/1000
             ))} options={chartOptions} height={280} />
       </ChartWrapperStyle>}

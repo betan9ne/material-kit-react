@@ -37,7 +37,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const getIcon = (name) => <Iconify icon={name} width={30} height={30} />;
+const getIcon = (name) => <Iconify icon={name} width={40} height={40} />;
 
 function Area({data}) {
   const theme = useTheme();
@@ -87,13 +87,24 @@ const chartOptions2 = merge(BaseOptionChart(), {
     enabled: false
   },
   labels: labels,
-  stroke: { show: false },
-  legend: { horizontalAlign: 'center' },
+  stroke: {show:false },
+  legend: { floating: true, horizontalAlign: 'center' },
+  dataLabels: { enabled: true, dropShadow: { enabled: false } },
+  tooltip: {
+    fillSeriesColor: false,
+    y: {
+      formatter: (seriesName) => fNumber(seriesName),
+      title: {
+        formatter: (seriesName) => `${seriesName}`
+      }
+    }
+  },
   plotOptions: { pie: { donut: { size: '75%' } } }
 });
 
   return (
     <Grid container xs={12} md={12}>
+    
     <Grid item  xs={12} md={4}>
     <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="donut" series={_data} options={chartOptions2} height={320} />
@@ -104,7 +115,7 @@ const chartOptions2 = merge(BaseOptionChart(), {
      <Typography textAlign={"center"}>Area</Typography>
      </div> */}
     {fullData.map((a, index)=>(
-      <Card key={index} sx={{ display: 'flex', justifyContent:"space-between",paddingTop:2, paddingBottom:2, paddingRight:2, paddingLeft:2}}>
+      <div key={index} style={{ display: 'flex', justifyContent:"space-between", borderBottom:"1px solid #e0e0e0", marginRight:"20px", marginLeft:"20px", padding:"15px 20px"}}>
          <Typography variant="body2" noWrap>
         {a[0]} 
 
@@ -115,25 +126,22 @@ const chartOptions2 = merge(BaseOptionChart(), {
       </Typography> */}
       
       <Typography variant="body2" noWrap sx={{textAlign:"right"}}>
-      {a[1][0].scopeValue && `${a[1][0].scopeValue}`}
+      {a[1][0].scopeValue && fNumber(a[1][0].scopeValue)}
       </Typography>
-      <Typography variant="body2" noWrap> 
+      {/* <Typography variant="body2" noWrap> 
         {a[1][0].total && fNumber(parseInt(a[1][0].total))}
-      </Typography>
+      </Typography> */}
 </div>
-</Card>
+</div>
     ))}
       </Grid>
       <Grid item xs={12} md={3} sx={{display:"flex", alignItems:"center"}}>
       <RootStyle>
-      {/* <IconWrapperStyle>
-        <Iconify icon="ant-design:android-filled" width={24} height={24} />
-      </IconWrapperStyle> */}
       {getIcon('bxs:building-house')} 
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Total Area
       </Typography>
-      <Typography variant="h3">{fNumber(total)}</Typography>
+      <Typography variant="h2">{fNumber(total)}</Typography>
     </RootStyle>
       </Grid>
       </Grid>

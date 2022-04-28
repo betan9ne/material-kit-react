@@ -9,13 +9,13 @@ import { fNumber } from '../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../components/charts';
 import firebase from './../../firebase'
-const CHART_HEIGHT = 472;
-const LEGEND_HEIGHT = 52;
+const CHART_HEIGHT = 572;
+const LEGEND_HEIGHT = 152;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
+  
   '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
     overflow: 'visible'
   },

@@ -19,11 +19,17 @@ export default function Charts({data, nb, selected, chartType}) {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Grid container spacing={3}>
-        
+        <Grid xs={12} md={12} sx={{marginLeft:5}}>
+        <br/><rb/>
+          <Typography variant='h5'>Input Summary</Typography>
+        </Grid>  
         <Grid item xs={12} md={12} lg={12}>
           <Inputs data={nb} selected={selected} chartType={chartType}/>
           </Grid>
-
+        <Grid xs={12} md={12} sx={{marginLeft:5}}>
+        <br/><rb/>
+          <Typography variant='h5'>Output Summary</Typography>
+        </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <OutputSummary data={data}/>          
           </Grid>

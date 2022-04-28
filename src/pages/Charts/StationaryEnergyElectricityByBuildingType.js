@@ -14,8 +14,7 @@ const LEGEND_HEIGHT = 42;
 
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
-  marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
+  marginTop: theme.spacing(5), 
   '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
     overflow: 'visible'
   },
@@ -188,10 +187,10 @@ setAppliances(appliances)
           ))
         },  
       ]
-    };
+};
 
     const chartOptions = merge(BaseOptionChart(), {
-      legend: { floating: true, horizontalAlign: 'center',  },
+      legend: {  horizontalAlign: 'center',  },
       colors: [
         theme.palette.primary.main,
         theme.palette.info.main,
@@ -206,10 +205,11 @@ setAppliances(appliances)
         theme.palette.warning.dark,
         theme.palette.error.dark,
       ],
+       
         chart: {
           type: 'bar',
           height: 500,
-          stacked: true,
+          stacked: true,        
           toolbar:{
             show:true
           },
@@ -217,52 +217,22 @@ setAppliances(appliances)
             enabled: false
           }
         },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
+   
+
       xaxis: {
+        
         categories:stackedData_.map((a)=>(
           a.l
         ))
       },
       tooltip: {
         y: {
-          formatter: (val) => (val).toFixed(2)
+          formatter: (val) => fNumber(val)
         }
       }
-    });
+    })
+    ;
   
-
-
-   
-      // const chartOptions2 = merge(BaseOptionChart(), {
-      //   colors: [
-      //     theme.palette.primary.main,
-      //     theme.palette.info.main,
-      //     theme.palette.warning.main,
-      //     theme.palette.error.main
-      //   ],
-      //   labels: baselineEmissions.map((a)=>(
-      //       a.label
-      //     )),
-      //   stroke: { colors: [theme.palette.background.paper] },
-      //   legend: { floating: true, horizontalAlign: 'center' },
-      //   dataLabels: { enabled: true, dropShadow: { enabled: false } },
-      //   tooltip: {
-      //     fillSeriesColor: false,
-      //     y: {
-      //       formatter: (seriesName) => fNumber(seriesName),
-      //       title: {
-      //         formatter: (seriesName) => `${seriesName}`
-      //       }
-      //     }
-      //   },
-      //   plotOptions: {
-      //     pie: { donut: { labels: { show: false } } }
-      //   }
-      // });
    
   return (
     <>

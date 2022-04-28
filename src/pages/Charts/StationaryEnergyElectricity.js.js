@@ -20,7 +20,7 @@ const LEGEND_HEIGHT = 200;
 const ChartWrapperStyle = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
+  
   '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
     overflow: 'visible'
   },
@@ -123,6 +123,13 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
           theme.palette.warning.dark,
           theme.palette.error.dark,
         ],
+             
+        chart: {
+           
+          toolbar:{
+            show:true
+          },
+             },
         animations: {
           enabled: false
         },
@@ -198,7 +205,7 @@ const StationaryEnergyElectricity =({nb, selected, chartType}) => {
     
      :
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={_data.map((a)=>(
+        <ReactApexChart type="donut" series={_data.map((a)=>(
               a
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>}

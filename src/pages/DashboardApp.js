@@ -45,27 +45,7 @@ export default function DashboardApp() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
    
-        <Grid container spacing={3} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-        <Grid item xs={12} sm={12} md={12}>
-        <CardContent
-        sx={{
-          color: 'grey.800',
-          p: { md: 0 },
-          pl: { md: 5 }
-        }}
-      >
-        <Typography gutterBottom variant="h4">
-          Hi, Welcome,
-          <br /> to EcoDistricts
-        </Typography>
-
-        <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-         Welcome message for users when they open the website for the first time.
-        </Typography>
-
-  
-      </CardContent>
-        </Grid>
+        <Grid container spacing={2} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>  
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
@@ -79,7 +59,7 @@ export default function DashboardApp() {
             <AppBugReports />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
                 <RootStyle>
             <Typography variant="h4">Neighborhoods</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -87,7 +67,7 @@ export default function DashboardApp() {
             </Typography>
           </RootStyle>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
           <RootStyle>
             <Typography variant="h4">Precincts</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -95,7 +75,7 @@ export default function DashboardApp() {
             </Typography>
           </RootStyle>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
           <RootStyle>
             <Typography variant="h4">Blocks</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -103,7 +83,7 @@ export default function DashboardApp() {
             </Typography>
           </RootStyle>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={4}>
           <RootStyle>
             <Typography variant="h4">Sites</Typography>
             <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -112,7 +92,7 @@ export default function DashboardApp() {
           </RootStyle>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={12}>
+          <Grid item xs={12} sm={12} md={4}>
         <CardContent
         sx={{
           color: 'grey.800',
@@ -125,7 +105,7 @@ export default function DashboardApp() {
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-         CLick here to learn more
+         Click here to learn more
         </Typography>
 
   

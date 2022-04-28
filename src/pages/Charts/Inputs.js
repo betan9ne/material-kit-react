@@ -3,7 +3,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import {  Button, CardHeader, Grid, Card} from '@mui/material';
+import {  Button, Typography, Grid, Card} from '@mui/material';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //
@@ -225,33 +225,25 @@ const Inputs =({data,  selected, chartType}) => {
 
   return (
     <div style={{}}>
-   
-      <CardHeader title="Input Summary">
-      
-      </CardHeader>
+  
  
       <Grid container spacing={3} sx={{marginTop:5}}>
       <Grid style={{display:"flex", gridAutoColumns:"1fr", gridAutoFlow:"column"}} item xs={12}>
-      
+   
           <Area data={area}/>
  
       </Grid> 
-      <Grid style={{display:"flex", height:520, overflowY:"scroll", gridAutoColumns:"1fr", gridAutoFlow:"column"}} item xs={6} spacing={1}>
-      <Vehicles data={vehicle}/>
-      </Grid>    
-      <Grid style={{display:"flex", height:520, overflowY:"hidden", gridAutoColumns:"1fr", gridAutoFlow:"column", marginTop:20}} item xs={6} spacing={1}>
-      <Infrastructure data={infrastructure}/>
-      </Grid> 
-      <Grid style={{display:"flex", height:520, overflowY:"hidden", gridAutoColumns:"1fr", gridAutoFlow:"column",  marginTop:20}} item xs={6} spacing={1}>
+      <Grid style={{display:"flex", gridAutoColumns:"1fr", gridAutoFlow:"column",  marginTop:20}} item xs={12} md={8} spacing={1}>
       <People data={people}/>
       </Grid>    
+      <Grid style={{display:"flex", overflowY:"hidden", gridAutoColumns:"1fr", gridAutoFlow:"column", marginTop:20}} item md={4} xs={12} spacing={1}>
+      <Infrastructure data={infrastructure}/>
+      </Grid> 
+      <Grid style={{display:"flex",   gridAutoColumns:"1fr", gridAutoFlow:"column"}} item xs={12} md={12} spacing={1}>
+      <Vehicles data={vehicle}/>
+      </Grid>    
  
-</Grid>
-{/*      
-      <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={_data} options={chartOptions2} height={280} />
-      </ChartWrapperStyle>} */}
-     
+</Grid>     
 </div>
             
          

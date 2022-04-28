@@ -38,33 +38,30 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
  
 
 export default function AppItemOrders() {
-  const [docs, setdocs] = useState([])
+  const [docs, setdocs] = useState(0)
   let neigh = useGetNeighbourhood().docs
-  const models = [];
-
+  let blok = []
   useEffect(() => {
-    //getFigures()
-       
-  }, [])
-
-  const getFigures = () =>{
+    getPrecincts() 
+  }, [neigh])
+ 
+  function getPrecincts(){
+    setdocs(0)
     neigh.forEach((a)=>{
-    
-      firebase.firestore().collection("blocks").where("neighbourhood_id","==", a.id).onSnapshot((doc)=>{
-        doc.docs.forEach(document => {
-          const nb = {
-            id: document.id,
-          }
-          models.push(nb)
-        })
-        console.log(models)
-        setdocs(models)
+      blok.push(a.id)   
+    })
+    blok.forEach((a)=>{
+      firebase.firestore().collection("blocks").where("neighbourhood_id","==",a).get().then((doc)=>{ 
+        doc.docs.forEach(document => {   
+          setdocs(prevState => (prevState +1))
+           })    
      })
     })
   }
+
   return (
     <RootStyle> 
-      <Typography variant="h3">{fShortenNumber(docs.length)}</Typography>
+      <Typography variant="h1">{fShortenNumber(docs)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Blocks
       </Typography>

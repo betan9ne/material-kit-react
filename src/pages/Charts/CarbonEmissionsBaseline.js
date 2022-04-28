@@ -176,7 +176,7 @@ const CarbonEmissionsBaseline =({data}) => {
       :
 
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={baselineEmissions.map((a)=>(
+        <ReactApexChart type="donut" series={baselineEmissions.map((a)=>(
               a.data/1000
             ))} options={chartOptions2} height={280} />
       </ChartWrapperStyle>}
