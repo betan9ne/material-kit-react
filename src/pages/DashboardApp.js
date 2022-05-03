@@ -46,53 +46,8 @@ export default function DashboardApp() {
       <Container maxWidth="xl">
    
         <Grid container spacing={2} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>  
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-                <RootStyle>
-            <Typography variant="h4">Neighborhoods</Typography>
-            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              what is a Neighborhood?
-            </Typography>
-          </RootStyle>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-          <RootStyle>
-            <Typography variant="h4">Precincts</Typography>
-            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              What is a Precinct?
-            </Typography>
-          </RootStyle>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-          <RootStyle>
-            <Typography variant="h4">Blocks</Typography>
-            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              What is a Block?
-            </Typography>
-          </RootStyle>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-          <RootStyle>
-            <Typography variant="h4">Sites</Typography>
-            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-              What is a Site?
-            </Typography>
-          </RootStyle>
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={4}>
+      
+        <Grid item xs={12} sm={12} md={12}>
         <CardContent
         sx={{
           color: 'grey.800',
@@ -106,12 +61,54 @@ export default function DashboardApp() {
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
          Click here to learn more
-        </Typography>
-
-  
-      </CardContent>
+        </Typography> </CardContent>
         </Grid>
- 
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWeeklySales />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <AppNewUsers />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <AppItemOrders />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <AppBugReports />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+                <RootStyle>
+            <Typography variant="h4">Neighbourhoods</Typography>
+            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+              what is a Neighbourhood?
+            </Typography>
+          </RootStyle>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+          <RootStyle>
+            <Typography variant="h4">Precincts</Typography>
+            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+              What is a Precinct?
+            </Typography>
+          </RootStyle>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+          <RootStyle>
+            <Typography variant="h4">Blocks</Typography>
+            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+              What is a Block?
+            </Typography>
+          </RootStyle>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+          <RootStyle>
+            <Typography variant="h4">Sites</Typography>
+            <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+              What is a Site?
+            </Typography>
+          </RootStyle>
+          </Grid>
         </Grid>
       </Container>
     </Page>

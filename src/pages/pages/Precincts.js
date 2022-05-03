@@ -24,7 +24,7 @@ function Precincts() {
   const handleOpen = () => {
     setOpen(true);
   };
-
+console.log(data)
   useEffect(() => {
     getListOfPrecints() 
     getPrecinctData()
@@ -90,7 +90,7 @@ function Precincts() {
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                      Projects
                 </Link>
-        <Link  to={"/Neighborhoods/"+data.neighbourhood_id}
+        <Link  to={"/Neighbourhoods/"+data.neighbourhood_id}
          state={{data:location.state}}
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                      {data.neighbourhood_name}

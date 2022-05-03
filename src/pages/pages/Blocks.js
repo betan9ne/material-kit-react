@@ -16,7 +16,7 @@ function Blocks() {
   const [precinctData, setprecinctData] = useState([])
  
   useEffect(() => {
-    getPrecinctData()
+    // getPrecinctData()
   }, [data])
   const getPrecinctData = () =>{
  
@@ -59,10 +59,10 @@ function Blocks() {
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
                      Projects
                 </Link>
-        <Link  to="/Neighborhoods"
+        <Link  to="/Neighbourhoods"
          state={{data:data}}
             style={{ display: 'flex', color:"inherit", alignItems: 'center' }}>
-                    Neighborhood
+                    Neighbourhood
                 </Link>
                 <Link  to={"/Precincts/"+location.state.id}
          state={{data:location.state}}

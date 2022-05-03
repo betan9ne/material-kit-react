@@ -237,7 +237,7 @@ setAppliances(appliances)
   return (
     <>
      <Card>
-      <CardHeader title="Stationery Energy (Electricity) By Building Type" />
+      <CardHeader title="Stationary Energy (Electricity) By Building Type" />
       <ChartWrapperStyle dir="ltr">
       <ReactApexChart options={chartOptions} series={state.series} type="bar" height={400} />
       </ChartWrapperStyle>

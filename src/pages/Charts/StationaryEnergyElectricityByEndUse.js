@@ -350,7 +350,7 @@ const stackedData = {
   return (
     <>
      <Card>
-     <CardHeader title="Stationery Energy (Electricity) By End Use" />
+     <CardHeader title="Stationary Energy (Electricity) By End Use" />
       <ChartWrapperStyle dir="ltr">
       <ReactApexChart options={chartOptions} series={stackedData.datasets} type="bar" height={400} />
       </ChartWrapperStyle>

@@ -33,7 +33,7 @@ function AddPrecinct({data, item}) {
     <DialogTitle>Precinct</DialogTitle>
     <DialogContent>
       <DialogContentText>
-       Add a new Precinct to <b>{item.neighbourhood}</b> Neighborhood in the field below.
+       Add a new Precinct to <b>{item.neighbourhood}</b> Neighbourhood in the field below.
       </DialogContentText>
       <TextField autoFocus fullWidth type="text" margin="dense"
        onChange={handleChange()}

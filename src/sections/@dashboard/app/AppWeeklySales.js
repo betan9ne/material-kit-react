@@ -30,7 +30,7 @@ export default function AppWeeklySales() {
       </IconWrapperStyle> */}
       <Typography variant="h1">{fShortenNumber(total.length)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Neighborhoods
+        Neighbourhoods
       </Typography>
     </RootStyle>
   );

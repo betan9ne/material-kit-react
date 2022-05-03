@@ -11,7 +11,7 @@ import MenuPopover from '../../components/MenuPopover';
 import Charts from '../Charts/Charts';
 import AddPrecinct from '../DialogForms/AddPrecinct';
 
-function Neighborhoods() {
+function Neighbourhoods() {
   const location = useLocation()
   const {data} = location.state
 
@@ -24,6 +24,9 @@ function Neighborhoods() {
     setOpen(true);
   };
 
+  const breadcrumb = {
+    n_id : data.id
+  }
   useEffect(() => {
     getListOfPrecints() 
     getPrecinctData()
@@ -80,7 +83,7 @@ function Neighborhoods() {
         }}
       >
         <Typography gutterBottom variant="subtitle2">
-      Neighborhood
+      Neighbourhood
         </Typography>
         <Typography gutterBottom variant="h4">
       {data.neighbourhood}
@@ -120,6 +123,7 @@ function Neighborhoods() {
              {
                data:p,
                ...data,
+               ...breadcrumb
 
              }
               }
@@ -150,4 +154,4 @@ function Neighborhoods() {
   )
 }
 
-export default Neighborhoods
+export default Neighbourhoods

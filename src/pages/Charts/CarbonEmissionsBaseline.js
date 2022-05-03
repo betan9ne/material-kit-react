@@ -81,11 +81,11 @@ const CarbonEmissionsBaseline =({data}) => {
               data : transport
             },
             {
-              label : "Stationery Energy (Electricity)",
+              label : "Stationary Energy (Electricity)",
               data : energy
             },
             {
-              label : "Stationery Energy (Gas)",
+              label : "Stationary Energy (Gas)",
               data : gas
             }
           ]

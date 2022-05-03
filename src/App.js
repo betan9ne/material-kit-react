@@ -1,6 +1,6 @@
 // routes
 import Router from './routes';
-import AdminRoutes from './adminRoutes';
+ 
 import LoginRoutes from './loginroutes';
 // theme
 import ThemeConfig from './theme';

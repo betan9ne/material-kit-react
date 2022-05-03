@@ -7,7 +7,7 @@ import { Button, Dialog, Container, Typography,  TextField, DialogTitle, DialogC
 // components
 import firebase from '../../firebase'
 
-function AddNeighborhoods({data}) {
+function AddNeighbourhoods({data}) {
    
      const [values, setValues] = useState();
 
@@ -32,14 +32,14 @@ function AddNeighborhoods({data}) {
 
   return (
    <>
-    <DialogTitle>Neighborhood</DialogTitle>
+    <DialogTitle>Neighbourhood</DialogTitle>
     <DialogContent>
       <DialogContentText>
-       Add a new Neighborhood in the field below.
+       Add a new Neighbourhood in the field below.
       </DialogContentText>
       <TextField autoFocus fullWidth type="text" margin="dense"
        onChange={handleChange('_group')}
-        variant="outlined" label="Enter name of neighborhood here" />
+        variant="outlined" label="Enter name of Neighbourhood here" />
     </DialogContent>
     <DialogActions>
       <Button color="inherit" onClick={()=>data()}>
@@ -53,4 +53,4 @@ function AddNeighborhoods({data}) {
   )
 }
 
-export default AddNeighborhoods
+export default AddNeighbourhoods

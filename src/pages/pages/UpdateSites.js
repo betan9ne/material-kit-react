@@ -26,7 +26,7 @@ function UpdateSites() {
     const [docs, setdocs] = useState([])
   
     useEffect(() => {
-      getModels()
+      // getModels()
       
   }, [])
 

@@ -11,7 +11,7 @@ import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import {useEffect, useState} from 'react'
-import Neighborhoods from './pages/pages/Neighborhoods';
+import Neighbourhoods from './pages/pages/neighbourhoods';
 import UpdateValues from './pages/UpdateValues';
  import firebase from './firebase'
 import Models from './pages/Models';
@@ -40,7 +40,7 @@ const [user, setuser] = useState(null)
       children: [
         { path: '/', element: <DashboardApp /> },
         { path: '/Projects', element: <Projects /> },
-        { path: '/Neighborhoods/:id', element: <Neighborhoods /> },
+        { path: '/Neighbourhoods/:id', element: <Neighbourhoods /> },
         { path: '/Precincts/:id', element: <Precincts /> },
         { path: '/Blocks/:id', element: <Blocks /> },
         { path: '/models', element: user && user.admin ? <Models /> :  <Navigate to="/404" /> },

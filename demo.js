@@ -1,6 +1,6 @@
 <Grid item xs={2} md={2}>
 <Button variant="contained" color="primary" onClick={()=>setOpen(true)}>
-New Neighborhoods
+New Neighbourhoods
 </Button><br/><br/>
 
 {/* get list of neightbourhoods */}

@@ -14,7 +14,7 @@ import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
 
 import firebase from './../firebase'
 import Charts from './Charts/Charts';
-import AddNeighborhoods from './DialogForms/AddNeighborhoods';
+import AddNeighbourhoods from './DialogForms/AddNeighbourhoods';
 import AddPrecinct from './DialogForms/AddPrecinct';
 import AddNewBlock from './DialogForms/AddNewBlock';
 import Loader from 'src/components/Loader';
@@ -95,7 +95,7 @@ const StyledTreeItem = styled((props) => (
 }));
 
 
-function Neighborhoods() {
+function Neighbourhoods() {
 
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -131,7 +131,7 @@ const [blockList, setblockList] = useState([])
     const [selected, setselected] = useState(null)
     const [status, setstatus] = useState(false)
 
-  // when the neighborhood is clicked.
+  // when the Neighbourhood is clicked.
   const handleChangeControlled = (panel) => (event, isExpanded) => {
     setstatus(true)
     setselectedChart(0)
@@ -277,12 +277,12 @@ const getBlocks = (id) =>{
 {/* end of dialog box */}
    <Container maxWidth="xl">
       
-   <Typography variant="h4" sx={{ mb: 5 }}>Neighborhoods</Typography>
+   <Typography variant="h4" sx={{ mb: 5 }}>Neighbourhoods</Typography>
 
       <Grid container  spacing={1}>
       <Grid item xs={2} md={2}>
 <Button variant="contained" color="primary" onClick={()=>setOpen(true)}>
-New Neighborhoods
+New Neighbourhoods
 </Button><br/><br/>
 
 {/* get list of neightbourhoods */}
@@ -387,9 +387,9 @@ New Neighborhoods
           
                 </Grid>
 
-                {/* add a new neighborhood */}
+                {/* add a new Neighbourhood */}
       <Dialog open={open} onClose={()=>setOpen(false)}>
-      <AddNeighborhoods data={handleClose}/>
+      <AddNeighbourhoods data={handleClose}/>
       </Dialog>
         
                 {/* add a new precinct */}
@@ -455,7 +455,7 @@ New Neighborhoods
      :
      <Grid item xs={12} md={12}>
         <div style={{display:"flex", height:"80%", justifyContent:"center", alignItems:"center"}}>
-          <Typography variant='h4'>Select a neighborhood to view data</Typography>
+          <Typography variant='h4'>Select a Neighbourhood to view data</Typography>
         </div>
      </Grid>
      }
@@ -468,4 +468,4 @@ New Neighborhoods
   )
 }
 
-export default Neighborhoods
+export default Neighbourhoods

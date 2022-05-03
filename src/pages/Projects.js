@@ -7,7 +7,7 @@ import { useState} from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import { Card, CardContent } from '@mui/material';
 import useGetNeighbourhood from 'src/hooks/useGetNeighbourhood';
-import AddNeighborhoods from './DialogForms/AddNeighborhoods';
+import AddNeighbourhoods from './DialogForms/AddNeighbourhoods';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
@@ -31,7 +31,7 @@ function Projects() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
       <Dialog open={open} onClose={()=>setOpen(false)}>
-      <AddNeighborhoods data={handleClose}/>
+      <AddNeighbourhoods data={handleClose}/>
       </Dialog>
         <Grid container spacing={3} style={{}}>
         <Grid item xs={12} sm={12} md={12}>
@@ -45,13 +45,13 @@ function Projects() {
         <Typography gutterBottom variant="h4">
       Projects
         </Typography>
-        <Typography variant="subtitle2">Click to view neighborhood</Typography>
+        <Typography variant="subtitle2">Click to view Neighbourhood</Typography>
       </CardContent>
         </Grid>
           <Grid item xs={12} sm={6} md={4} style={{textAlign:"center", display:"flex", justifyContent:"center", alignItems:"center"}}  >
           <Button variant="contained" color="primary" onClick={()=>setOpen(true)}>
           +
-New Neighborhood
+New Neighbourhood
 </Button>
           </Grid>
          {
@@ -60,7 +60,7 @@ New Neighborhood
            
             <Grid item xs={12} key={index} sm={6} md={4} style={{textAlign:"center"}}>
             <RootStyle>
-            <Link  to={"/Neighborhoods/"+a.id}
+            <Link  to={"/Neighbourhoods/"+a.id}
             state={{data:a}}
              style={{ display: 'grid', color:"inherit", textDecoration:"none", justifyContent:"center",  }}>
               <Typography variant="h4" sx={{ opacity: 0.72 }}>
